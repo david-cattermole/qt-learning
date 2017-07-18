@@ -1,9 +1,9 @@
 """
 
 Usage:
->>> import qtTests.standaloneBaseWindow
->>> reload(qtTests.standaloneBaseWindow)
->>> qtTests.standaloneBaseWindow.main()
+>>> import qtLearn.standaloneBaseWindow
+>>> reload(qtLearn.standaloneBaseWindow)
+>>> qtLearn.standaloneBaseWindow.main()
 """
 
 import sys
@@ -22,12 +22,12 @@ except ImportError:
     from PyQt4.QtCore import *
     from PyQt4.QtGui import *
 
-import qtTests.ui_baseWindow
-reload(qtTests.ui_baseWindow)
+import qtLearn.ui_baseWindow
+reload(qtLearn.ui_baseWindow)
 
 
 class StandaloneBaseWindow(QMainWindow,
-                           qtTests.ui_baseWindow.Ui_MainWindow):
+                           qtLearn.ui_baseWindow.Ui_MainWindow):
     def __init__(self, name=None, subLayout=None, *args, **kwargs):
         super(StandaloneBaseWindow, self).__init__(*args, **kwargs)
 

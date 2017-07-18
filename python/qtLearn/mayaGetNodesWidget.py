@@ -1,9 +1,9 @@
 """
 
 Usage:
->>> import qtTests.mayaGetNodesWidget
->>> reload(qtTests.mayaGetNodesWidget)
->>> widget = qtTests.mayaGetNodesWidget.MayaGetNodeWidget()
+>>> import qtLearn.mayaGetNodesWidget
+>>> reload(qtLearn.mayaGetNodesWidget)
+>>> widget = qtLearn.mayaGetNodesWidget.MayaGetNodeWidget()
 """
 
 import maya.cmds
@@ -22,9 +22,9 @@ except ImportError:
     from PyQt4.QtCore import *
     from PyQt4.QtGui import *
 
-import qtTests.ui_mayaGetNodesWidget
+import qtLearn.ui_mayaGetNodesWidget
 
-reload(qtTests.ui_mayaGetNodesWidget)
+reload(qtLearn.ui_mayaGetNodesWidget)
 
 
 class NodeListViewModel(QAbstractListModel):
@@ -75,7 +75,7 @@ class NodeListViewModel(QAbstractListModel):
         pass
 
 
-class MayaGetNodesWidget(QWidget, qtTests.ui_mayaGetNodesWidget.Ui_Widget):
+class MayaGetNodesWidget(QWidget, qtLearn.ui_mayaGetNodesWidget.Ui_Widget):
     def __init__(self, parent=None, *args, **kwargs):
         super(self.__class__, self).__init__(parent=parent, *args, **kwargs)
         self.setupUi(parent)

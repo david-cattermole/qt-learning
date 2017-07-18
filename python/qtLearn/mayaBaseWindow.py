@@ -1,9 +1,9 @@
 """
 
 Usage:
->>> import qtTests.mayaBaseWindow
->>> reload(qtTests.mayaBaseWindow)
->>> qtTests.mayaBaseWindow.main()
+>>> import qtLearn.mayaBaseWindow
+>>> reload(qtLearn.mayaBaseWindow)
+>>> qtLearn.mayaBaseWindow.main()
 
 >>> import sys
 >>> import os.path
@@ -27,8 +27,8 @@ except ImportError:
     from PySide import __version__
     from shiboken import wrapInstance
 
-import qtTests.ui_baseWindow
-reload(qtTests.ui_baseWindow)
+import qtLearn.ui_baseWindow
+reload(qtLearn.ui_baseWindow)
 
 def getMayaMainWindow():
     mainWindowPtr = omui.MQtUtil.mainWindow()
@@ -46,7 +46,7 @@ def findWidget(name, clsTyp):
 
 class MayaBaseWindow(MayaQWidgetBaseMixin,
                      QMainWindow,
-                     qtTests.ui_baseWindow.Ui_MainWindow):
+                     qtLearn.ui_baseWindow.Ui_MainWindow):
     def __init__(self, name=None, rootWidget=None, subLayout=None, *args, **kwargs):
         # print 'MayaBaseWindow:', self.__class__
         super(MayaBaseWindow, self).__init__(*args, **kwargs)

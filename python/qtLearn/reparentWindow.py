@@ -1,9 +1,9 @@
 """
 
 Usage:
->>> import qtTests.reparentWindow
->>> reload(qtTests.reparentWindow)
->>> qtTests.reparentWindow.main()
+>>> import qtLearn.reparentWindow
+>>> reload(qtLearn.reparentWindow)
+>>> qtLearn.reparentWindow.main()
 """
 
 import os
@@ -25,15 +25,15 @@ except ImportError:
     from PyQt4.QtCore import *
     from PyQt4.QtGui import *
 
-import qtTests.mayaGetNodesWidget
-import qtTests.ui_reparent
-import qtTests.ui_reparent_getNodes
-import qtTests.mayaBaseWindow
+import qtLearn.mayaGetNodesWidget
+import qtLearn.ui_reparent
+import qtLearn.ui_reparent_getNodes
+import qtLearn.mayaBaseWindow
 
-reload(qtTests.mayaGetNodesWidget)
-reload(qtTests.ui_reparent)
-reload(qtTests.ui_reparent_getNodes)
-reload(qtTests.mayaBaseWindow)
+reload(qtLearn.mayaGetNodesWidget)
+reload(qtLearn.ui_reparent)
+reload(qtLearn.ui_reparent_getNodes)
+reload(qtLearn.mayaBaseWindow)
 
 
 # class ReparentForm(QWidget, qtTests.ui_reparent.Ui_Form):
@@ -55,15 +55,15 @@ reload(qtTests.mayaBaseWindow)
 #         return self.endFrameSpinBox.value()
 
 
-class ReparentGetNodes(QWidget, qtTests.ui_reparent_getNodes.Ui_Form):
+class ReparentGetNodes(QWidget, qtLearn.ui_reparent_getNodes.Ui_Form):
     def __init__(self, parent=None, *args, **kwargs):
         super(ReparentGetNodes, self).__init__(parent=parent, *args, **kwargs)
         self.setupUi(parent)
-        self.getChildNodesStub = qtTests.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getChildNodesStub)
-        self.getParentNodeStub = qtTests.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getParentNodeStub)
+        self.getChildNodesStub = qtLearn.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getChildNodesStub)
+        self.getParentNodeStub = qtLearn.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getParentNodeStub)
 
 
-class ReparentForm(QWidget, qtTests.ui_reparent.Ui_Form):
+class ReparentForm(QWidget, qtLearn.ui_reparent.Ui_Form):
     def __init__(self, parent=None, *args, **kwargs):
         super(ReparentForm, self).__init__(parent=parent, *args, **kwargs)
         self.setupUi(self)
@@ -87,7 +87,7 @@ class ReparentForm(QWidget, qtTests.ui_reparent.Ui_Form):
         return
 
 
-class ReparentWindow(qtTests.mayaBaseWindow.MayaBaseWindow):
+class ReparentWindow(qtLearn.mayaBaseWindow.MayaBaseWindow):
     def __init__(self, parent=None, *args, **kwargs):
         super(ReparentWindow, self).__init__(parent=parent,
                                              subLayout=ReparentForm,
@@ -123,7 +123,7 @@ class ReparentWindow(qtTests.mayaBaseWindow.MayaBaseWindow):
 
 def main(show=True, widthHeight=(400, 540)):
     name = 'ReparentWindow'
-    window = qtTests.mayaBaseWindow.findWidget(name, QWidget)
+    window = qtLearn.mayaBaseWindow.findWidget(name, QWidget)
     if window:
         window.close()
     ui = ReparentWindow(name=name)
