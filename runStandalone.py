@@ -11,6 +11,6 @@ package_path = os.path.abspath(os.path.join(path, 'python'))
 sys.path.insert(0, package_path)
 
 if __name__ == '__main__':
-    import qtTests.standaloneBaseWindow
-    qtTests.standaloneBaseWindow.main()
+    import qtLearn.standaloneBaseWindow
+    qtLearn.standaloneBaseWindow.main()
 
