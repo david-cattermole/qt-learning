@@ -1,7 +1,17 @@
-#!/bin/env mayapy
+"""
+Compiles *.ui files in the 'ui' directory, and saves them into 'python/qtLearn'.
+
+Usage (PyQt4):
+$ cd <project root>
+$ python compileUI.py
+
+Usage (PySide - Maya):
+$ cd <project root>
+$ mayapy compileUI.py
+
+"""
 import sys
 import os
-import pprint
 try:
     from pysideuic import compileUi
 except ImportError:
@@ -25,6 +35,6 @@ def main(in_path_dir, out_path_dir):
 if __name__ == '__main__':
     # Compile
     in_path_dir = './ui'
-    out_path_dir = './python/qtTests'
+    out_path_dir = './python/qtLearn'
     main(in_path_dir, out_path_dir)
     exit()
