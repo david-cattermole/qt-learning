@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/davidc/dev/qtTests/ui/reparent_timeRange.ui'
+# Form implementation generated from reading ui file '/home/davidc/dev/qt-learning/ui/reparent_timeRange.ui'
 #
-# Created: Tue Jul 18 08:04:42 2017
+# Created: Tue Jul 18 23:12:00 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,25 +27,28 @@ class Ui_Form(object):
         self.timeRangeLayout.addItem(spacerItem)
         self.verticalLayout.addLayout(self.timeRangeLayout)
         self.frameLayout = QtGui.QFormLayout()
+        self.frameLayout.setFieldGrowthPolicy(QtGui.QFormLayout.ExpandingFieldsGrow)
         self.frameLayout.setObjectName("frameLayout")
         self.startFrameLabel = QtGui.QLabel(Form)
         self.startFrameLabel.setObjectName("startFrameLabel")
         self.frameLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.startFrameLabel)
-        self.startFrameSpinBox = QtGui.QSpinBox(Form)
-        self.startFrameSpinBox.setMinimum(-999999)
-        self.startFrameSpinBox.setMaximum(999999)
-        self.startFrameSpinBox.setProperty("value", 1001)
-        self.startFrameSpinBox.setObjectName("startFrameSpinBox")
-        self.frameLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.startFrameSpinBox)
         self.endFrameLabel = QtGui.QLabel(Form)
         self.endFrameLabel.setObjectName("endFrameLabel")
         self.frameLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.endFrameLabel)
         self.endFrameSpinBox = QtGui.QSpinBox(Form)
+        self.endFrameSpinBox.setButtonSymbols(QtGui.QAbstractSpinBox.NoButtons)
         self.endFrameSpinBox.setMinimum(-999999)
         self.endFrameSpinBox.setMaximum(999999)
         self.endFrameSpinBox.setProperty("value", 1101)
         self.endFrameSpinBox.setObjectName("endFrameSpinBox")
         self.frameLayout.setWidget(1, QtGui.QFormLayout.FieldRole, self.endFrameSpinBox)
+        self.startFrameSpinBox = QtGui.QSpinBox(Form)
+        self.startFrameSpinBox.setButtonSymbols(QtGui.QAbstractSpinBox.NoButtons)
+        self.startFrameSpinBox.setMinimum(-999999)
+        self.startFrameSpinBox.setMaximum(999999)
+        self.startFrameSpinBox.setProperty("value", 1001)
+        self.startFrameSpinBox.setObjectName("startFrameSpinBox")
+        self.frameLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.startFrameSpinBox)
         self.verticalLayout.addLayout(self.frameLayout)
 
         self.retranslateUi(Form)

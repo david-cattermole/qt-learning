@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/davidc/dev/qtTests/ui/reparent_subFrame.ui'
+# Form implementation generated from reading ui file '/home/davidc/dev/qt-learning/ui/reparent_subFrame.ui'
 #
-# Created: Tue Jul 18 08:04:42 2017
+# Created: Tue Jul 18 23:12:00 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(349, 66)
+        Form.resize(322, 138)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
         self.subFrameLayout = QtGui.QHBoxLayout()
@@ -29,12 +29,59 @@ class Ui_Form(object):
         self.subFrameOptionsLayout = QtGui.QFormLayout()
         self.subFrameOptionsLayout.setFieldGrowthPolicy(QtGui.QFormLayout.ExpandingFieldsGrow)
         self.subFrameOptionsLayout.setObjectName("subFrameOptionsLayout")
+        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.doubleSpinBox = QtGui.QDoubleSpinBox(Form)
+        self.doubleSpinBox.setFrame(True)
+        self.doubleSpinBox.setReadOnly(False)
+        self.doubleSpinBox.setButtonSymbols(QtGui.QAbstractSpinBox.NoButtons)
+        self.doubleSpinBox.setSuffix("")
+        self.doubleSpinBox.setDecimals(2)
+        self.doubleSpinBox.setMaximum(360.0)
+        self.doubleSpinBox.setProperty("value", 180.0)
+        self.doubleSpinBox.setObjectName("doubleSpinBox")
+        self.horizontalLayout.addWidget(self.doubleSpinBox)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
+        self.subFrameOptionsLayout.setLayout(2, QtGui.QFormLayout.FieldRole, self.horizontalLayout)
+        self.angleLabel = QtGui.QLabel(Form)
+        self.angleLabel.setObjectName("angleLabel")
+        self.subFrameOptionsLayout.setWidget(2, QtGui.QFormLayout.LabelRole, self.angleLabel)
+        self.horizontalLayout_2 = QtGui.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.samplesSpinBox = QtGui.QSpinBox(Form)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.samplesSpinBox.sizePolicy().hasHeightForWidth())
+        self.samplesSpinBox.setSizePolicy(sizePolicy)
+        self.samplesSpinBox.setButtonSymbols(QtGui.QAbstractSpinBox.NoButtons)
+        self.samplesSpinBox.setMinimum(1)
+        self.samplesSpinBox.setMaximum(33)
+        self.samplesSpinBox.setSingleStep(2)
+        self.samplesSpinBox.setObjectName("samplesSpinBox")
+        self.horizontalLayout_2.addWidget(self.samplesSpinBox)
+        spacerItem2 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem2)
+        self.subFrameOptionsLayout.setLayout(1, QtGui.QFormLayout.FieldRole, self.horizontalLayout_2)
         self.samplesLabel = QtGui.QLabel(Form)
         self.samplesLabel.setObjectName("samplesLabel")
-        self.subFrameOptionsLayout.setWidget(0, QtGui.QFormLayout.LabelRole, self.samplesLabel)
-        self.samplesSpinBox = QtGui.QSpinBox(Form)
-        self.samplesSpinBox.setObjectName("samplesSpinBox")
-        self.subFrameOptionsLayout.setWidget(0, QtGui.QFormLayout.FieldRole, self.samplesSpinBox)
+        self.subFrameOptionsLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.samplesLabel)
+        self.horizontalLayout_3 = QtGui.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.doubleSpinBox_2 = QtGui.QDoubleSpinBox(Form)
+        self.doubleSpinBox_2.setButtonSymbols(QtGui.QAbstractSpinBox.NoButtons)
+        self.doubleSpinBox_2.setDecimals(3)
+        self.doubleSpinBox_2.setMaximum(1.0)
+        self.doubleSpinBox_2.setProperty("value", 0.5)
+        self.doubleSpinBox_2.setObjectName("doubleSpinBox_2")
+        self.horizontalLayout_3.addWidget(self.doubleSpinBox_2)
+        spacerItem3 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_3.addItem(spacerItem3)
+        self.subFrameOptionsLayout.setLayout(4, QtGui.QFormLayout.FieldRole, self.horizontalLayout_3)
+        self.durationLabel = QtGui.QLabel(Form)
+        self.durationLabel.setObjectName("durationLabel")
+        self.subFrameOptionsLayout.setWidget(4, QtGui.QFormLayout.LabelRole, self.durationLabel)
         self.verticalLayout.addLayout(self.subFrameOptionsLayout)
 
         self.retranslateUi(Form)
@@ -43,5 +90,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.subFrameLabel.setText(QtGui.QApplication.translate("Form", "Sub-Frame", None, QtGui.QApplication.UnicodeUTF8))
+        self.angleLabel.setText(QtGui.QApplication.translate("Form", "Angle", None, QtGui.QApplication.UnicodeUTF8))
         self.samplesLabel.setText(QtGui.QApplication.translate("Form", "Samples", None, QtGui.QApplication.UnicodeUTF8))
+        self.durationLabel.setText(QtGui.QApplication.translate("Form", "Duration", None, QtGui.QApplication.UnicodeUTF8))
 

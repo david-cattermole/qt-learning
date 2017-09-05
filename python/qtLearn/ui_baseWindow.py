@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/davidc/dev/qtTests/ui/baseWindow.ui'
+# Form implementation generated from reading ui file '/home/davidc/dev/qt-learning/ui/baseWindow.ui'
 #
-# Created: Tue Jul 18 08:04:42 2017
+# Created: Tue Jul 18 23:12:00 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,16 +12,36 @@ from PySide import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(422, 98)
+        MainWindow.resize(422, 202)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.centralwidget)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.options = QtGui.QWidget(self.centralwidget)
+        self.scrollArea = QtGui.QScrollArea(self.centralwidget)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setObjectName("scrollArea")
+        self.options = QtGui.QWidget()
+        self.options.setGeometry(QtCore.QRect(0, 0, 406, 108))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.options.sizePolicy().hasHeightForWidth())
+        self.options.setSizePolicy(sizePolicy)
         self.options.setObjectName("options")
-        self.verticalLayout.addWidget(self.options)
+        self.verticalLayout_3 = QtGui.QVBoxLayout(self.options)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.options_ = QtGui.QFrame(self.options)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.options_.sizePolicy().hasHeightForWidth())
+        self.options_.setSizePolicy(sizePolicy)
+        self.options_.setObjectName("options_")
+        self.verticalLayout_3.addWidget(self.options_)
+        self.scrollArea.setWidget(self.options)
+        self.verticalLayout.addWidget(self.scrollArea)
         self.progressBar = QtGui.QProgressBar(self.centralwidget)
         self.progressBar.setProperty("value", 24)
         self.progressBar.setObjectName("progressBar")

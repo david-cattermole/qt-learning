@@ -6,22 +6,64 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>343</width>
-    <height>233</height>
+    <width>372</width>
+    <height>363</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QWidget" name="nodesLayoutStub" native="true"/>
+    <widget class="QGroupBox" name="nodesLayoutStub">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Nodes</string>
+     </property>
+     <property name="flat">
+      <bool>false</bool>
+     </property>
+     <property name="checkable">
+      <bool>false</bool>
+     </property>
+    </widget>
    </item>
    <item>
-    <widget class="QWidget" name="timeRangeLayoutStub" native="true"/>
+    <widget class="QGroupBox" name="timeRangeLayoutStub">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Time Range</string>
+     </property>
+    </widget>
    </item>
    <item>
-    <widget class="QWidget" name="subFrameLayoutStub" native="true"/>
+    <widget class="QGroupBox" name="subFrameLayoutStub">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Sub-Frame</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
