@@ -28,49 +28,45 @@ except ImportError:
 import qtLearn.mayaGetNodesWidget
 import qtLearn.ui_reparent
 import qtLearn.ui_reparent_getNodes
+import qtLearn.ui_reparent_subFrame
+import qtLearn.ui_reparent_timeRange
 import qtLearn.mayaBaseWindow
 
 reload(qtLearn.mayaGetNodesWidget)
 reload(qtLearn.ui_reparent)
 reload(qtLearn.ui_reparent_getNodes)
+reload(qtLearn.ui_reparent_subFrame)
+reload(qtLearn.ui_reparent_timeRange)
 reload(qtLearn.mayaBaseWindow)
-
-
-# class ReparentForm(QWidget, qtTests.ui_reparent.Ui_Form):
-#     def __init__(self, parent=None, *args, **kwargs):
-#         print 'ReparentForm:', self.__class__
-#         if parent is None:
-#             parent = qtTests.mayaBaseWindow.getMayaMainWindow()
-#         super(ReparentForm, self).__init__(parent=parent, *args, **kwargs)
-#         self.setupUi(parent)
-#
-#         data = ['Existing Times', 'All Times', 'Three', 'Four', 'Five']
-#         model = QStringListModel(data)
-#         self.timeRangeComboBox.setModel(model)
-#
-#     def getStartFrame(self):
-#         return self.startFrameSpinBox.value()
-#
-#     def getEndFrame(self):
-#         return self.endFrameSpinBox.value()
 
 
 class ReparentGetNodes(QWidget, qtLearn.ui_reparent_getNodes.Ui_Form):
     def __init__(self, parent=None, *args, **kwargs):
         super(ReparentGetNodes, self).__init__(parent=parent, *args, **kwargs)
-        self.setupUi(parent)
-        self.getChildNodesStub = qtLearn.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getChildNodesStub)
-        self.getParentNodeStub = qtLearn.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getParentNodeStub)
+        self.setupUi(self)
+        self.getChildNodes = qtLearn.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getChildNodesStub)
+        self.getParentNode = qtLearn.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getParentNodeStub)
+
+
+class ReparentTimeRange(QWidget, qtLearn.ui_reparent_timeRange.Ui_Form):
+    def __init__(self, parent=None, *args, **kwargs):
+        super(ReparentTimeRange, self).__init__(parent=parent, *args, **kwargs)
+        self.setupUi(self)
+
+
+class ReparentSubFrame(QWidget, qtLearn.ui_reparent_subFrame.Ui_Form):
+    def __init__(self, parent=None, *args, **kwargs):
+        super(ReparentSubFrame, self).__init__(parent=parent, *args, **kwargs)
+        self.setupUi(self)
 
 
 class ReparentForm(QWidget, qtLearn.ui_reparent.Ui_Form):
     def __init__(self, parent=None, *args, **kwargs):
         super(ReparentForm, self).__init__(parent=parent, *args, **kwargs)
         self.setupUi(self)
-        # self.nodesLayoutStub.setParent(self)
-        self.nodesLayoutStub = ReparentGetNodes(parent=self.nodesLayoutStub)
-        # self.timeRangeLayout = None
-        # self.subFrameLayout = None
+        self.nodesLayout = ReparentGetNodes(parent=self.nodesLayoutStub)
+        self.timeRangeLayout = ReparentTimeRange(parent=self.timeRangeLayoutStub)
+        self.subFrameLayout = ReparentSubFrame(parent=self.subFrameLayoutStub)
 
         # data = ['Existing Times', 'All Times', 'Three', 'Four', 'Five']
         # model = QStringListModel(data)
