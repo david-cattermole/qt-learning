@@ -1,5 +1,5 @@
 """
-Launch a default standalone window.
+Launch the Reparent window.
 """
 
 import os
@@ -11,6 +11,6 @@ package_path = os.path.abspath(os.path.join(path, 'python'))
 sys.path.insert(0, package_path)
 
 if __name__ == '__main__':
-    import qtLearn.baseStandaloneWindow
-    qtLearn.baseStandaloneWindow.main()
+    import qtLearn.assetBrowserWindow
+    qtLearn.assetBrowserWindow.main()
 
