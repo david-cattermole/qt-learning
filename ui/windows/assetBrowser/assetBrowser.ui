@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>838</width>
+    <height>589</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="searchBarLayout"/>
+   </item>
+   <item>
+    <widget class="QFrame" name="searchCustomFrame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <layout class="QVBoxLayout" name="searchCustomLayout"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="assetListViewLayout"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="assetDetailsLayout">
+     <item>
+      <layout class="QVBoxLayout" name="assetActionsLayout"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="assetInfoViewLayout"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="assetCartLayout"/>
+     </item>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="tabShape">
+        <enum>QTabWidget::Rounded</enum>
+       </property>
+       <property name="currentIndex">
+        <number>4</number>
+       </property>
+       <widget class="QWidget" name="shotViewTab">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <attribute name="title">
+         <string>Linked Shots</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <layout class="QVBoxLayout" name="shotViewLayout"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="assetIncomingTab">
+        <attribute name="title">
+         <string>Incoming Assets</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QVBoxLayout" name="assetIncomingViewLayout"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="assetOutgoingTab">
+        <attribute name="title">
+         <string>Outgoing Assets</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <item>
+          <layout class="QVBoxLayout" name="assetOutgoingViewLayout"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tagViewTab">
+        <attribute name="title">
+         <string>Tags</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <layout class="QVBoxLayout" name="tagViewLayout"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="keyvalueTab">
+        <attribute name="title">
+         <string>Key Values</string>
+        </attribute>
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <layout class="QVBoxLayout" name="keyvalueViewLayout"/>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QListWidget" name="tagsListWidget">
+     <item>
+      <property name="text">
+       <string>tag1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>tag2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>tag2</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>tag3</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>tag4</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>tag5</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

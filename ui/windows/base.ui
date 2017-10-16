@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>Window</class>
+ <widget class="QMainWindow" name="Window">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>422</width>
-    <height>98</height>
+    <height>315</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,9 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QWidget" name="options" native="true"/>
+       <widget class="QWidget" name="options" native="true">
+        <layout class="QVBoxLayout" name="optionsLayout"/>
+       </widget>
       </item>
       <item>
        <widget class="QProgressBar" name="progressBar">
@@ -46,7 +48,7 @@
         <item>
          <widget class="QPushButton" name="resetBtn">
           <property name="text">
-           <string>Reset Settings</string>
+           <string>Reset</string>
           </property>
          </widget>
         </item>
@@ -80,13 +82,14 @@
     </rect>
    </property>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <resources/>
  <connections>
   <connection>
    <sender>closeBtn</sender>
    <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
+   <receiver>Window</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

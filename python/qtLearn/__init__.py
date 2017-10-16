@@ -1,3 +1,3 @@
 """
-Module for checking assets for validity before saving data on disk.
+Qt learning - tools for learning the Qt framework.
 """

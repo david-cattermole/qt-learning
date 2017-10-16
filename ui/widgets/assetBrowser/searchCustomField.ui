@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>890</width>
+    <height>161</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QComboBox" name="comboBox">
+         <item>
+          <property name="text">
+           <string>None</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Subname</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Instance</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Variant</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Resolution</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Tag</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Path</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Comment</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Created By User</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Created Date Time</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_6">
+         <item>
+          <property name="text">
+           <string>is equal to</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>is not equal to</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>is in</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>is not in</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>is greater than</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>is less than</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>before</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>after</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QComboBox" name="comboBox_2"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_7"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_2"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QComboBox" name="comboBox_3"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_8"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_3"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QComboBox" name="comboBox_4"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_9"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_4"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <widget class="QComboBox" name="comboBox_5"/>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_10"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_5"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
