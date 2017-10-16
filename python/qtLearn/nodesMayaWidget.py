@@ -1,33 +1,21 @@
 """
 
 Usage:
->>> import qtLearn.mayaGetNodesWidget
->>> reload(qtLearn.mayaGetNodesWidget)
->>> widget = qtLearn.mayaGetNodesWidget.MayaGetNodeWidget()
+>>> import qtLearn.nodesMayaWidget
+>>> reload(qtLearn.nodesMayaWidget)
+>>> widget = qtLearn.nodesMayaWidget.NodesMayaWidget()
 """
 
-import maya.cmds
+import Qt
+import Qt.QtCore as QtCore
+import Qt.QtGui as QtGui
+import Qt.QtWidgets as QtWidgets
 
-try:
-    from PySide.QtCore import *
-    from PySide.QtGui import *
-    from PySide import __version__
-    from shiboken import wrapInstance
-    # from PySide2.QtCore import *
-    # from PySide2.QtGui import *
-    # from PySide2.QtWidgets import *
-    # from PySide2 import __version__
-    # from shiboken2 import wrapInstance
-except ImportError:
-    from PyQt4.QtCore import *
-    from PyQt4.QtGui import *
-
-import qtLearn.ui_mayaGetNodesWidget
-
-reload(qtLearn.ui_mayaGetNodesWidget)
+import qtLearn.widgets.ui_nodesList
+reload(qtLearn.widgets.ui_nodesList)
 
 
-class NodeListViewModel(QAbstractListModel):
+class NodeListViewModel(QtCore.QAbstractListModel):
     def __init__(self, nodeUUIDs=None, *args, **kwargs):
         super(NodeListViewModel, self).__init__(*args, **kwargs)
         if nodeUUIDs is None:
@@ -61,6 +49,7 @@ class NodeListViewModel(QAbstractListModel):
             nodes = self.getNodeUUIDs()
             node = nodes[row]
             # node = self.__nodeUUIDs[row]
+            import maya.cmds
             result = maya.cmds.ls(node, long=True) or []
             result = str(result[0])
             print 'result', row, result
@@ -75,16 +64,17 @@ class NodeListViewModel(QAbstractListModel):
         pass
 
 
-class MayaGetNodesWidget(QWidget, qtLearn.ui_mayaGetNodesWidget.Ui_Widget):
-    def __init__(self, parent=None, *args, **kwargs):
-        super(self.__class__, self).__init__(parent=parent, *args, **kwargs)
-        self.setupUi(parent)
-        self.listViewModel = NodeListViewModel()
-        self.listView.setModel(self.listViewModel)
+class NodesMayaWidget(QtWidgets.QWidget, qtLearn.widgets.ui_nodesList.Ui_Widget):
+    def __init__(self, *args, **kwargs):
+        super(NodesMayaWidget, self).__init__(*args, **kwargs)
+        self.setupUi(self)
+        # self.listViewModel = NodeListViewModel()
+        # self.listView.setModel(self.listViewModel)
         self.getSelectionButton.clicked.connect(self.getNodes)
         self.clearButton.clicked.connect(self.clearView)
 
     def getNodes(self):
+        import maya.cmds
         print 'getNodes'
         nodes = maya.cmds.ls(sl=True, uuid=True) or []
         sep = ', '
@@ -94,7 +84,7 @@ class MayaGetNodesWidget(QWidget, qtLearn.ui_mayaGetNodesWidget.Ui_Widget):
             value = maya.cmds.ls(node, long=True) or []
             text += str(value[0]) + sep
         text = text.rpartition(sep)[0] + ']'
-        self.listViewModel.setNodeUUIDs(nodes)
+        # self.listViewModel.setNodeUUIDs(nodes)
         print 'getNodes nodes:', self.listViewModel.getNodeUUIDs()
         # self.listViewModel.emit()
         # startIndex = QModelIndex()
@@ -105,7 +95,7 @@ class MayaGetNodesWidget(QWidget, qtLearn.ui_mayaGetNodesWidget.Ui_Widget):
     def clearView(self):
         print 'clearView'
         nodes = []
-        self.listViewModel.setNodeUUIDs(nodes)
+        # self.listViewModel.setNodeUUIDs(nodes)
         # self.listViewModel.modelReset()
         return
 

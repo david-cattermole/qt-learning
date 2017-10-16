@@ -1,0 +1,71 @@
+"""
+The base window for usage in (standalone) Python.
+
+Run the default BaseStandaloneWindow:
+>>> import qtLearn.baseStandaloneWindow
+>>> reload(qtLearn.baseStandaloneWindow)
+>>> qtLearn.baseStandaloneWindow.main()
+"""
+
+import sys
+
+import Qt
+import Qt.QtCore as QtCore
+import Qt.QtGui as QtGui
+import Qt.QtWidgets as QtWidgets
+
+import qtLearn.windows.ui_base
+reload(qtLearn.windows.ui_base)
+
+
+class BaseStandaloneWindow(QtGui.QMainWindow,
+                           qtLearn.windows.ui_base.Ui_Window):
+    def __init__(self, parent, name=None):
+        super(BaseStandaloneWindow, self).__init__()
+
+        # Destroy this widget when closed. Otherwise it will stay around.
+        self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
+
+        # Call the UI file contents.
+        self.setupUi(self)
+        if name:
+            self.setObjectName(name)
+
+    def baseHideStandardButtons(self):
+        self.createBtn.hide()
+        self.applyBtn.hide()
+        self.resetBtn.hide()
+        self.helpBtn.hide()
+        self.closeBtn.hide()
+        return
+
+    def baseHideMenuBar(self):
+        self.menubar.hide()
+        return
+
+    def baseHideProgressBar(self):
+        self.progressBar.hide()
+        return
+
+    def baseHideStatusBar(self):
+        self.statusBar.hide()
+        return
+
+    def addSubForm(self, SubForm):
+        if SubForm is None:
+            return None
+        self.subForm = SubForm()
+        self.optionsLayout.addWidget(self.subForm)
+        return True
+
+
+def main():
+    name = 'StandaloneBaseWindow'
+    app = QtGui.QApplication(sys.argv)
+    ui = BaseStandaloneWindow(name=name)
+    ui.show()
+    return sys.exit(app.exec_())
+
+
+if __name__ == '__main__':
+    main()
