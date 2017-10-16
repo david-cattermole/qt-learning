@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTreeWidget" name="shotsTreeWidget">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <column>
+      <property name="text">
+       <string>Sequences / Shots</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>sh</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>sh0010</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>sh0020</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>fin</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>fin010</string>
+       </property>
+      </item>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="addShotsButton">
+     <property name="text">
+      <string>Add Shots...</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="clearAllButton">
+     <property name="text">
+      <string>Clear All...</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
