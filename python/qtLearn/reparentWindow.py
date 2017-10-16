@@ -6,67 +6,81 @@ Usage:
 >>> qtLearn.reparentWindow.main()
 """
 
-import os
+import sys
 import time
-from maya import OpenMayaUI as omui
-from maya.app.general.mayaMixin import MayaQWidgetBaseMixin
 
-try:
-    from PySide.QtCore import *
-    from PySide.QtGui import *
-    from PySide import __version__
-    from shiboken import wrapInstance
-    # from PySide2.QtCore import *
-    # from PySide2.QtGui import *
-    # from PySide2.QtWidgets import *
-    # from PySide2 import __version__
-    # from shiboken2 import wrapInstance
-except ImportError:
-    from PyQt4.QtCore import *
-    from PyQt4.QtGui import *
+import Qt.QtGui as QtGui
 
-import qtLearn.mayaGetNodesWidget
-import qtLearn.ui_reparent
-import qtLearn.ui_reparent_getNodes
-import qtLearn.ui_reparent_subFrame
-import qtLearn.ui_reparent_timeRange
-import qtLearn.mayaBaseWindow
+import qtLearn.uiUtils
 
-reload(qtLearn.mayaGetNodesWidget)
-reload(qtLearn.ui_reparent)
-reload(qtLearn.ui_reparent_getNodes)
-reload(qtLearn.ui_reparent_subFrame)
-reload(qtLearn.ui_reparent_timeRange)
-reload(qtLearn.mayaBaseWindow)
+# try:
+#     from PySide.QtCore import *
+#     from PySide.QtGui import *
+#     from PySide import __version__
+#     from shiboken import wrapInstance
+#     # from PySide2.QtCore import *
+#     # from PySide2.QtGui import *
+#     # from PySide2.QtWidgets import *
+#     # from PySide2 import __version__
+#     # from shiboken2 import wrapInstance
+# except ImportError:
+#     from PyQt4.QtCore import *
+#     from PyQt4.QtGui import *
+reload(qtLearn.uiUtils)
+
+import qtLearn.nodesMayaWidget
+import qtLearn.windows.reparent.ui_reparent
+import qtLearn.widgets.reparent.ui_getNodes
+import qtLearn.widgets.reparent.ui_subFrame
+import qtLearn.widgets.reparent.ui_timeRange
+
+reload(qtLearn.nodesMayaWidget)
+reload(qtLearn.windows.reparent.ui_reparent)
+reload(qtLearn.widgets.reparent.ui_getNodes)
+reload(qtLearn.widgets.reparent.ui_subFrame)
+reload(qtLearn.widgets.reparent.ui_timeRange)
 
 
-class ReparentGetNodes(QWidget, qtLearn.ui_reparent_getNodes.Ui_Form):
+class ReparentGetNodes(QtGui.QWidget, qtLearn.widgets.reparent.ui_getNodes.Ui_Widget):
     def __init__(self, parent=None, *args, **kwargs):
-        super(ReparentGetNodes, self).__init__(parent=parent, *args, **kwargs)
-        self.setupUi(self)
-        self.getChildNodes = qtLearn.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getChildNodesStub)
-        self.getParentNode = qtLearn.mayaGetNodesWidget.MayaGetNodesWidget(parent=self.getParentNodeStub)
-
-
-class ReparentTimeRange(QWidget, qtLearn.ui_reparent_timeRange.Ui_Form):
-    def __init__(self, parent=None, *args, **kwargs):
-        super(ReparentTimeRange, self).__init__(parent=parent, *args, **kwargs)
+        super(ReparentGetNodes, self).__init__(parent, *args, **kwargs)
         self.setupUi(self)
 
+        self.childNodes = qtLearn.nodesMayaWidget.NodesMayaWidget()
+        self.parentNode = qtLearn.nodesMayaWidget.NodesMayaWidget()
 
-class ReparentSubFrame(QWidget, qtLearn.ui_reparent_subFrame.Ui_Form):
+        self.childNodesLayout.addWidget(self.childNodes)
+        self.parentNodeLayout.addWidget(self.parentNode)
+
+
+class ReparentTimeRange(QtGui.QWidget, qtLearn.widgets.reparent.ui_timeRange.Ui_Widget):
     def __init__(self, parent=None, *args, **kwargs):
-        super(ReparentSubFrame, self).__init__(parent=parent, *args, **kwargs)
+        super(ReparentTimeRange, self).__init__(parent, *args, **kwargs)
         self.setupUi(self)
 
 
-class ReparentForm(QWidget, qtLearn.ui_reparent.Ui_Form):
+class ReparentSubFrame(QtGui.QWidget, qtLearn.widgets.reparent.ui_subFrame.Ui_Widget):
     def __init__(self, parent=None, *args, **kwargs):
-        super(ReparentForm, self).__init__(parent=parent, *args, **kwargs)
+        super(ReparentSubFrame, self).__init__(parent, *args, **kwargs)
         self.setupUi(self)
-        self.nodesLayout = ReparentGetNodes(parent=self.nodesLayoutStub)
-        self.timeRangeLayout = ReparentTimeRange(parent=self.timeRangeLayoutStub)
-        self.subFrameLayout = ReparentSubFrame(parent=self.subFrameLayoutStub)
+
+
+class ReparentLayout(QtGui.QWidget, qtLearn.windows.reparent.ui_reparent.Ui_Widget):
+    def __init__(self, parent=None, *args, **kwargs):
+        super(ReparentLayout, self).__init__(*args, **kwargs)  # parent,
+        self.setupUi(self)
+
+        self.nodesForm = ReparentGetNodes()
+        self.timeRangeForm = ReparentTimeRange()
+        self.subFrameForm = ReparentSubFrame()
+
+        self.nodesLayout.addWidget(self.nodesForm)
+        self.timeRangeLayout.addWidget(self.timeRangeForm)
+        self.subFrameLayout.addWidget(self.subFrameForm)
+
+        # self.nodesLayout = ReparentGetNodes(parent=self.nodesLayoutStub)
+        # self.timeRangeLayout = ReparentTimeRange(parent=self.timeRangeLayoutStub)
+        # self.subFrameLayout = ReparentSubFrame(parent=self.subFrameLayoutStub)
 
         # data = ['Existing Times', 'All Times', 'Three', 'Four', 'Five']
         # model = QStringListModel(data)
@@ -83,14 +97,18 @@ class ReparentForm(QWidget, qtLearn.ui_reparent.Ui_Form):
         return
 
 
-class ReparentWindow(qtLearn.mayaBaseWindow.MayaBaseWindow):
-    def __init__(self, parent=None, *args, **kwargs):
-        super(ReparentWindow, self).__init__(parent=parent,
-                                             subLayout=ReparentForm,
-                                             *args, **kwargs)
+baseModule, BaseWindow = qtLearn.uiUtils.getBaseWindow()
+
+
+class ReparentWindow(BaseWindow):
+    def __init__(self, parent=None, name=None):
+        super(ReparentWindow, self).__init__(parent, name=name)
+        self.setupUi(self)
+        self.addSubForm(ReparentLayout)
+
         self.setWindowTitle('Re-Parent')
 
-        self.createBtn.hide()
+        # NOTE: All buttons are hidden by default.
         self.applyBtn.show()
         self.resetBtn.show()
         self.helpBtn.show()
@@ -103,35 +121,47 @@ class ReparentWindow(qtLearn.mayaBaseWindow.MayaBaseWindow):
 
     def apply(self):
         self.progressBar.show()
-        start = self.subLayout.getStartFrame()
+        start = self.subForm.getStartFrame()
         print 'apply', start
         for i in range(100):
             self.progressBar.setValue(i)
             time.sleep(0.01)
         self.progressBar.hide()
+        return
 
     def reset(self):
         print 'reset'
+        return
 
     def help(self):
         print 'help'
+        return
+
+
+ui = None
 
 
 def main(show=True, widthHeight=(400, 540)):
+    global ui
+    print 'ui:', ui
+
     name = 'ReparentWindow'
-    window = qtLearn.mayaBaseWindow.findWidget(name, QWidget)
-    if window:
-        window.close()
-    ui = ReparentWindow(name=name)
+    app, parent = qtLearn.uiUtils.getParent()
+
+    if ui is not None:
+        ui.close()
+    ui = ReparentWindow(parent=parent, name=name)
+    if not ui:
+        return ui
     if show:
         ui.show()
+
     if widthHeight:
         pos = ui.pos()
         ui.setGeometry(pos.x(), pos.y(), widthHeight[0], widthHeight[1])
-    # if width:
-    #     # ui.setFixedWidth(width)
-    #     # ui.setMinimumWidth(width)
-    # if height:
-    #     # ui.setFixedHeight(height)
-    #     # ui.setMinimumHeight(height)
+
+    # Enter Qt application main loop
+    if app is not None:
+        sys.exit(app.exec_())
     return ui
+
