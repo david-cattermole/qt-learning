@@ -11,6 +11,6 @@ package_path = os.path.abspath(os.path.join(path, 'python'))
 sys.path.insert(0, package_path)
 
 if __name__ == '__main__':
-    import qtLearn.fileBrowserSaveWindow
-    qtLearn.fileBrowserSaveWindow.main()
+    import qtLearn.windows.fileBrowser.fileBrowserSaveWindow
+    qtLearn.windows.fileBrowser.fileBrowserSaveWindow.main()
 
