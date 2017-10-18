@@ -1,9 +1,9 @@
 """
 
 Usage:
->>> import qtLearn.nodesMayaWidget
->>> reload(qtLearn.nodesMayaWidget)
->>> widget = qtLearn.nodesMayaWidget.NodesMayaWidget()
+>>> import qtLearn.widgets.nodesMayaWidget
+>>> reload(qtLearn.widgets.nodesMayaWidget)
+>>> widget = qtLearn.widgets.nodesMayaWidget.NodesMayaWidget()
 """
 
 import Qt

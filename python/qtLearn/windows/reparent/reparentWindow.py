@@ -12,16 +12,14 @@ import time
 import Qt.QtGui as QtGui
 
 import qtLearn.uiUtils
-
-import qtLearn.nodesMayaWidget
-import qtLearn.windows.reparent.ui_reparent
+import qtLearn.widgets.nodesMayaWidget
 import qtLearn.windows.reparent.forms.ui_getNodes
 import qtLearn.windows.reparent.forms.ui_subFrame
 import qtLearn.windows.reparent.forms.ui_timeRange
-
+import qtLearn.windows.reparent.ui_reparent
 
 reload(qtLearn.uiUtils)
-reload(qtLearn.nodesMayaWidget)
+reload(qtLearn.widgets.nodesMayaWidget)
 reload(qtLearn.windows.reparent.ui_reparent)
 reload(qtLearn.windows.reparent.forms.ui_getNodes)
 reload(qtLearn.windows.reparent.forms.ui_subFrame)
@@ -33,8 +31,8 @@ class ReparentGetNodes(QtGui.QWidget, qtLearn.windows.reparent.forms.ui_getNodes
         super(ReparentGetNodes, self).__init__(parent, *args, **kwargs)
         self.setupUi(self)
 
-        self.childNodes = qtLearn.nodesMayaWidget.NodesMayaWidget()
-        self.parentNode = qtLearn.nodesMayaWidget.NodesMayaWidget()
+        self.childNodes = qtLearn.widgets.nodesMayaWidget.NodesMayaWidget()
+        self.parentNode = qtLearn.widgets.nodesMayaWidget.NodesMayaWidget()
 
         self.childNodesLayout.addWidget(self.childNodes)
         self.parentNodeLayout.addWidget(self.parentNode)

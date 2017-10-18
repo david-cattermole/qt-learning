@@ -10,8 +10,8 @@ import sys
 
 import Qt.QtGui as QtGui
 
-import qtLearn.nodesMayaWidget
 import qtLearn.uiUtils
+import qtLearn.widgets.nodesMayaWidget
 import qtLearn.windows.fileBrowser.fileBrowserCommon as common
 import qtLearn.windows.fileBrowser.forms.ui_saveOptions
 import qtLearn.windows.fileBrowser.ui_fileBrowserSave

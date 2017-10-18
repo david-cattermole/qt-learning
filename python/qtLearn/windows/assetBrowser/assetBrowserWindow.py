@@ -11,6 +11,8 @@ from functools import partial
 
 import Qt.QtGui as QtGui
 
+import qtLearn.uiUtils
+import qtLearn.widgets.nodesMayaWidget
 import qtLearn.windows.assetBrowser.forms.ui_assetActions
 import qtLearn.windows.assetBrowser.forms.ui_assetCart
 import qtLearn.windows.assetBrowser.forms.ui_assetIncomingView
@@ -21,15 +23,12 @@ import qtLearn.windows.assetBrowser.forms.ui_keyvalueView
 import qtLearn.windows.assetBrowser.forms.ui_searchBar
 import qtLearn.windows.assetBrowser.forms.ui_searchCustomField
 import qtLearn.windows.assetBrowser.forms.ui_searchTagFinder
-import qtLearn.windows.assetBrowser.forms.ui_tagView
-
-import qtLearn.nodesMayaWidget
-import qtLearn.uiUtils
 import qtLearn.windows.assetBrowser.forms.ui_shotView
+import qtLearn.windows.assetBrowser.forms.ui_tagView
 import qtLearn.windows.assetBrowser.ui_assetBrowser
 
 reload(qtLearn.uiUtils)
-reload(qtLearn.nodesMayaWidget)
+reload(qtLearn.widgets.nodesMayaWidget)
 reload(qtLearn.windows.assetBrowser.ui_assetBrowser)
 reload(qtLearn.windows.assetBrowser.forms.ui_assetListView)
 reload(qtLearn.windows.assetBrowser.forms.ui_searchBar)
