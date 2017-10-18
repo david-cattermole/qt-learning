@@ -1,9 +1,9 @@
 """
 
 Usage:
->>> import qtLearn.reparentWindow
->>> reload(qtLearn.reparentWindow)
->>> qtLearn.reparentWindow.main()
+>>> import qtLearn.windows.reparent.reparentWindow
+>>> reload(qtLearn.windows.reparent.reparentWindow)
+>>> qtLearn.windows.reparent.reparentWindow.main()
 """
 
 import sys
@@ -13,35 +13,22 @@ import Qt.QtGui as QtGui
 
 import qtLearn.uiUtils
 
-# try:
-#     from PySide.QtCore import *
-#     from PySide.QtGui import *
-#     from PySide import __version__
-#     from shiboken import wrapInstance
-#     # from PySide2.QtCore import *
-#     # from PySide2.QtGui import *
-#     # from PySide2.QtWidgets import *
-#     # from PySide2 import __version__
-#     # from shiboken2 import wrapInstance
-# except ImportError:
-#     from PyQt4.QtCore import *
-#     from PyQt4.QtGui import *
-reload(qtLearn.uiUtils)
-
 import qtLearn.nodesMayaWidget
 import qtLearn.windows.reparent.ui_reparent
-import qtLearn.widgets.reparent.ui_getNodes
-import qtLearn.widgets.reparent.ui_subFrame
-import qtLearn.widgets.reparent.ui_timeRange
+import qtLearn.windows.reparent.forms.ui_getNodes
+import qtLearn.windows.reparent.forms.ui_subFrame
+import qtLearn.windows.reparent.forms.ui_timeRange
 
+
+reload(qtLearn.uiUtils)
 reload(qtLearn.nodesMayaWidget)
 reload(qtLearn.windows.reparent.ui_reparent)
-reload(qtLearn.widgets.reparent.ui_getNodes)
-reload(qtLearn.widgets.reparent.ui_subFrame)
-reload(qtLearn.widgets.reparent.ui_timeRange)
+reload(qtLearn.windows.reparent.forms.ui_getNodes)
+reload(qtLearn.windows.reparent.forms.ui_subFrame)
+reload(qtLearn.windows.reparent.forms.ui_timeRange)
 
 
-class ReparentGetNodes(QtGui.QWidget, qtLearn.widgets.reparent.ui_getNodes.Ui_Widget):
+class ReparentGetNodes(QtGui.QWidget, qtLearn.windows.reparent.forms.ui_getNodes.Ui_Form):
     def __init__(self, parent=None, *args, **kwargs):
         super(ReparentGetNodes, self).__init__(parent, *args, **kwargs)
         self.setupUi(self)
@@ -53,19 +40,19 @@ class ReparentGetNodes(QtGui.QWidget, qtLearn.widgets.reparent.ui_getNodes.Ui_Wi
         self.parentNodeLayout.addWidget(self.parentNode)
 
 
-class ReparentTimeRange(QtGui.QWidget, qtLearn.widgets.reparent.ui_timeRange.Ui_Widget):
+class ReparentTimeRange(QtGui.QWidget, qtLearn.windows.reparent.forms.ui_timeRange.Ui_Form):
     def __init__(self, parent=None, *args, **kwargs):
         super(ReparentTimeRange, self).__init__(parent, *args, **kwargs)
         self.setupUi(self)
 
 
-class ReparentSubFrame(QtGui.QWidget, qtLearn.widgets.reparent.ui_subFrame.Ui_Widget):
+class ReparentSubFrame(QtGui.QWidget, qtLearn.windows.reparent.forms.ui_subFrame.Ui_Form):
     def __init__(self, parent=None, *args, **kwargs):
         super(ReparentSubFrame, self).__init__(parent, *args, **kwargs)
         self.setupUi(self)
 
 
-class ReparentLayout(QtGui.QWidget, qtLearn.windows.reparent.ui_reparent.Ui_Widget):
+class ReparentLayout(QtGui.QWidget, qtLearn.windows.reparent.ui_reparent.Ui_Form):
     def __init__(self, parent=None, *args, **kwargs):
         super(ReparentLayout, self).__init__(*args, **kwargs)  # parent,
         self.setupUi(self)
@@ -108,7 +95,8 @@ class ReparentWindow(BaseWindow):
 
         self.setWindowTitle('Re-Parent')
 
-        # NOTE: All buttons are hidden by default.
+        # Standard Buttons
+        self.baseHideStandardButtons()
         self.applyBtn.show()
         self.resetBtn.show()
         self.helpBtn.show()
@@ -118,6 +106,11 @@ class ReparentWindow(BaseWindow):
         self.applyBtn.clicked.connect(self.apply)
         self.resetBtn.clicked.connect(self.reset)
         self.helpBtn.clicked.connect(self.help)
+
+        # Hide irrelevant stuff
+        self.baseHideMenuBar()
+        self.baseHideStatusBar()
+        self.baseHideProgressBar()
 
     def apply(self):
         self.progressBar.show()

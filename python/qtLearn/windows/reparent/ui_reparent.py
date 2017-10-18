@@ -2,27 +2,27 @@
 
 # Form implementation generated from reading ui file '/home/davidc/dev/qt-learning/ui/windows/reparent/reparent.ui'
 #
-# Created: Mon Oct 16 23:43:55 2017
+# Created: Wed Oct 18 20:52:41 2017
 #      by: PyQt4 UI code generator 4.6.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
 
-class Ui_Widget(object):
-    def setupUi(self, Widget):
-        Widget.setObjectName("Widget")
-        Widget.resize(436, 430)
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(436, 430)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(Widget.sizePolicy().hasHeightForWidth())
-        Widget.setSizePolicy(sizePolicy)
-        self.verticalLayout = QtGui.QVBoxLayout(Widget)
+        sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
+        Form.setSizePolicy(sizePolicy)
+        self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setSizeConstraint(QtGui.QLayout.SetDefaultConstraint)
         self.verticalLayout.setContentsMargins(4, 4, -1, -1)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.nodesGroupBox = QtGui.QGroupBox(Widget)
+        self.nodesGroupBox = QtGui.QGroupBox(Form)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -35,7 +35,7 @@ class Ui_Widget(object):
         self.nodesLayout.setObjectName("nodesLayout")
         self.verticalLayout_2.addLayout(self.nodesLayout)
         self.verticalLayout.addWidget(self.nodesGroupBox)
-        self.timeRangeGroupBox = QtGui.QGroupBox(Widget)
+        self.timeRangeGroupBox = QtGui.QGroupBox(Form)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -48,7 +48,7 @@ class Ui_Widget(object):
         self.timeRangeLayout.setObjectName("timeRangeLayout")
         self.verticalLayout_4.addLayout(self.timeRangeLayout)
         self.verticalLayout.addWidget(self.timeRangeGroupBox)
-        self.subFrameGroupBox = QtGui.QGroupBox(Widget)
+        self.subFrameGroupBox = QtGui.QGroupBox(Form)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -62,12 +62,12 @@ class Ui_Widget(object):
         self.verticalLayout_3.addLayout(self.subFrameLayout)
         self.verticalLayout.addWidget(self.subFrameGroupBox)
 
-        self.retranslateUi(Widget)
-        QtCore.QMetaObject.connectSlotsByName(Widget)
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, Widget):
-        Widget.setWindowTitle(QtGui.QApplication.translate("Widget", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.nodesGroupBox.setTitle(QtGui.QApplication.translate("Widget", "Nodes", None, QtGui.QApplication.UnicodeUTF8))
-        self.timeRangeGroupBox.setTitle(QtGui.QApplication.translate("Widget", "Time Range", None, QtGui.QApplication.UnicodeUTF8))
-        self.subFrameGroupBox.setTitle(QtGui.QApplication.translate("Widget", "Sub-Frame", None, QtGui.QApplication.UnicodeUTF8))
+    def retranslateUi(self, Form):
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.nodesGroupBox.setTitle(QtGui.QApplication.translate("Form", "Nodes", None, QtGui.QApplication.UnicodeUTF8))
+        self.timeRangeGroupBox.setTitle(QtGui.QApplication.translate("Form", "Time Range", None, QtGui.QApplication.UnicodeUTF8))
+        self.subFrameGroupBox.setTitle(QtGui.QApplication.translate("Form", "Sub-Frame", None, QtGui.QApplication.UnicodeUTF8))
 

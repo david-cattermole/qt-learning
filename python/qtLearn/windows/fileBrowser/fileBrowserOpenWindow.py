@@ -1,28 +1,27 @@
 """
 
 Usage:
->>> import qtLearn.fileBrowserOpenWindow
->>> reload(qtLearn.fileBrowserOpenWindow)
->>> qtLearn.fileBrowserOpenWindow.main()
+>>> import qtLearn.windows.fileBrowser.fileBrowserOpenWindow
+>>> reload(qtLearn.windows.fileBrowser.fileBrowserOpenWindow)
+>>> qtLearn.windows.fileBrowser.fileBrowserOpenWindow.main()
 """
 
 import sys
-from functools import partial
 
 import Qt.QtGui as QtGui
 
-import qtLearn.uiUtils
 import qtLearn.nodesMayaWidget
-import qtLearn.fileBrowserCommon as common
+import qtLearn.uiUtils
+import qtLearn.windows.fileBrowser.fileBrowserCommon as common
+import qtLearn.windows.fileBrowser.forms.ui_versionSelector
 import qtLearn.windows.fileBrowser.ui_fileBrowserOpen
-import qtLearn.widgets.fileBrowser.ui_versionSelector
 
 reload(qtLearn.uiUtils)
 reload(qtLearn.windows.fileBrowser.ui_fileBrowserOpen)
-reload(qtLearn.widgets.fileBrowser.ui_versionSelector)
+reload(qtLearn.windows.fileBrowser.forms.ui_versionSelector)
 
 
-class VersionSelector(QtGui.QWidget, qtLearn.widgets.fileBrowser.ui_versionSelector.Ui_Form):
+class VersionSelector(QtGui.QWidget, qtLearn.windows.fileBrowser.forms.ui_versionSelector.Ui_Form):
     def __init__(self):
         super(VersionSelector, self).__init__()
         self.setupUi(self)

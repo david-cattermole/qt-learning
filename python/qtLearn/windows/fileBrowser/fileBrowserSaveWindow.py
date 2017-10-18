@@ -1,28 +1,27 @@
 """
 
 Usage:
->>> import qtLearn.fileBrowserSaveWindow
->>> reload(qtLearn.fileBrowserSaveWindow)
->>> qtLearn.fileBrowserSaveWindow.main()
+>>> import qtLearn.windows.fileBrowser.fileBrowserSaveWindow
+>>> reload(qtLearn.windows.fileBrowser.fileBrowserSaveWindow)
+>>> qtLearn.windows.fileBrowser.fileBrowserSaveWindow.main()
 """
 
 import sys
-from functools import partial
 
 import Qt.QtGui as QtGui
 
-import qtLearn.uiUtils
 import qtLearn.nodesMayaWidget
-import qtLearn.fileBrowserCommon as common
+import qtLearn.uiUtils
+import qtLearn.windows.fileBrowser.fileBrowserCommon as common
+import qtLearn.windows.fileBrowser.forms.ui_saveOptions
 import qtLearn.windows.fileBrowser.ui_fileBrowserSave
-import qtLearn.widgets.fileBrowser.ui_saveOptions
 
 reload(qtLearn.uiUtils)
 reload(qtLearn.windows.fileBrowser.ui_fileBrowserSave)
-reload(qtLearn.widgets.fileBrowser.ui_saveOptions)
+reload(qtLearn.windows.fileBrowser.forms.ui_saveOptions)
 
 
-class SaveOptions(QtGui.QWidget, qtLearn.widgets.fileBrowser.ui_saveOptions.Ui_Form):
+class SaveOptions(QtGui.QWidget, qtLearn.windows.fileBrowser.forms.ui_saveOptions.Ui_Form):
     def __init__(self):
         super(SaveOptions, self).__init__()
         self.setupUi(self)

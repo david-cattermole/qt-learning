@@ -73,13 +73,6 @@ class BaseMayaWindow(MayaQWidgetBaseMixin,
         # Destroy this widget when closed. Otherwise it will stay around.
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose, True)
 
-        # # Determine root widget to scan
-        # mayaWin = getMayaMainWindow()
-        # if rootWidget != None:
-        #     self.rootWidget = rootWidget
-        # else:
-        #     self.rootWidget = mayaWin
-
         # Call the UI file contents.
         self.setupUi(self)
         if name:
@@ -105,7 +98,6 @@ class BaseMayaWindow(MayaQWidgetBaseMixin,
         self.statusBar.hide()
         return
 
-
     def addSubForm(self, SubForm):
         if SubForm is None:
             return None
@@ -118,6 +110,7 @@ window = None
 
 
 def delete():
+    # TODO: Is this deprecated???
     global window
     if window is None:
         return
@@ -133,6 +126,7 @@ def delete():
 
 
 def create(show=True):
+    # TODO: Is this deprecated???
     global window
     delete()
 

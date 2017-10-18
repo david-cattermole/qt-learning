@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/home/davidc/dev/qt-learning/ui/windows/base.ui'
 #
-# Created: Mon Oct 16 23:43:55 2017
+# Created: Wed Oct 18 20:52:41 2017
 #      by: PyQt4 UI code generator 4.6.2
 #
 # WARNING! All changes made in this file will be lost!
