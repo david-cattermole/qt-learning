@@ -7,7 +7,21 @@ This project can be considered a constant work in progress, it is used for exper
 
 Windows are able to be launched in various contexts; standalone and Autodesk Maya contexts. This means you can write the UI once and embed it into various software applications (Autodesk Maya, for example).
 
+## Asset Browser
+
+![Asset Browser Window](https://github.com/david-cattermole/qt-learning/tree/master/screenshots/assetBrowser.jpg)
+
+## File Browser (Open)
+
+![Open File Window](https://github.com/david-cattermole/qt-learning/tree/master/screenshots/fileBrwoserOpen.jpg)
+
+## File Browser (Save)
+
+![Save File Window](https://github.com/david-cattermole/qt-learning/tree/master/screenshots/fileBrwoserSave.jpg) 
+
 ## Reparent
+
+![Reparent Window](https://github.com/david-cattermole/qt-learning/tree/master/screenshots/reparent.jpg)
 
 This window is for 're-parenting' nodes in the Maya DAG hierarchy. 
 
@@ -17,23 +31,7 @@ What does the window do?
 
 # Widgets
 
-## Get Nodes
-
-_to be written_
-
-What does the widget do?
-
-What are the input values?
-
-## Sub-Frame
-
-_to be written_
-
-What does the widget do?
-
-What are the input values?
-
-## Time Range
+## Node List
 
 _to be written_
 
