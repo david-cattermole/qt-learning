@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Widget</class>
- <widget class="QWidget" name="Widget">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,35 +15,30 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QListWidget" name="tagsListWidget">
-     <item>
+    <widget class="QTableWidget" name="keyvalueTableWidget">
+     <row>
       <property name="text">
-       <string>tag1</string>
+       <string>1</string>
+      </property>
+     </row>
+     <column>
+      <property name="text">
+       <string>Key</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Value</string>
+      </property>
+     </column>
+     <item row="0" column="0">
+      <property name="text">
+       <string>ultimate_answer</string>
       </property>
      </item>
-     <item>
+     <item row="0" column="1">
       <property name="text">
-       <string>tag2</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>tag2</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>tag3</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>tag4</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>tag5</string>
+       <string>42</string>
       </property>
      </item>
     </widget>
