@@ -56,12 +56,19 @@ if __name__ == '__main__':
     out_windows_dir = './python/qtLearn/windows'
     compile_directory(in_windows_dir, out_windows_dir)
 
-    # Compile each Window folder
+    # Compile each Window folder (and each Form)
     for name in os.listdir(in_windows_dir):
         in_dir = os.path.join(in_windows_dir, name)
         if not os.path.isdir(in_dir):
             continue
         out_dir = os.path.join(out_windows_dir, name)
+        compile_directory(in_dir, out_dir)
+
+        # Compile Forms sub-folder.
+        in_dir = os.path.join(in_windows_dir, name, 'forms')
+        if not os.path.isdir(in_dir):
+            continue
+        out_dir = os.path.join(out_windows_dir, name, 'forms')
         compile_directory(in_dir, out_dir)
 
     # Compile base Widgets
