@@ -41,7 +41,7 @@ To open all the UIs in this project for testing, run the following command:
 ## Convention
 
 - PEP8 Python convention for code.
-- All UIs are first creataed in Qt Designer.
+- All UIs are first created in Qt Designer.
 - UIs are always saved into ./ui directory.  
 
 ## Design
