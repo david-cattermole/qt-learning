@@ -3,8 +3,7 @@ User Interfaces written with the Qt framework using various techniques as a jour
 
 This project can be considered a constant work in progress, it is used for experimentation and testing with no functional goal in sight; only the goal of learning.
 
-Take a look at the various windows (and screenshots) [here](https://github.com/david-cattermole/qt-learning/blob/master/docs/windows.md)
-.
+Take a look at the various [window screenshots](https://github.com/david-cattermole/qt-learning/blob/master/docs/windows.md).
 
 # Installation
 
