@@ -9,19 +9,19 @@ Windows are able to be launched in various contexts; standalone and Autodesk May
 
 ## Asset Browser
 
-![Asset Browser Window](https://github.com/david-cattermole/qt-learning/tree/master/screenshots/assetBrowser.jpg)
+![Asset Browser Window](https://raw.githubusercontent.com/david-cattermole/qt-learning/master/screenshots/assetBrowser.jpg)
 
 ## File Browser (Open)
 
-![Open File Window](https://github.com/david-cattermole/qt-learning/tree/master/screenshots/fileBrwoserOpen.jpg)
+![Open File Window](https://raw.githubusercontent.com/david-cattermole/qt-learning/master/screenshots/fileBrowserOpen.jpg)
 
 ## File Browser (Save)
 
-![Save File Window](https://github.com/david-cattermole/qt-learning/tree/master/screenshots/fileBrwoserSave.jpg) 
+![Save File Window](https://raw.githubusercontent.com/david-cattermole/qt-learning/master/screenshots/fileBrowserSave.jpg) 
 
 ## Reparent
 
-![Reparent Window](https://github.com/david-cattermole/qt-learning/tree/master/screenshots/reparent.jpg)
+![Reparent Window](https://raw.githubusercontent.com/david-cattermole/qt-learning/master/screenshots/reparent.jpg)
 
 This window is for 're-parenting' nodes in the Maya DAG hierarchy. 
 
