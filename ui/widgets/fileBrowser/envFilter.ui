@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>777</width>
+    <height>33</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QComboBox" name="projectComboBox">
+     <item>
+      <property name="text">
+       <string>project</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>current project</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="sequenceComboBox">
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+      </font>
+     </property>
+     <item>
+      <property name="text">
+       <string>seq</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="shotComboBox">
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+      </font>
+     </property>
+     <item>
+      <property name="text">
+       <string>shot</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="departmentComboBox">
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+      </font>
+     </property>
+     <item>
+      <property name="text">
+       <string>dept</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>all depts</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>layout</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>light</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>model</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>rig</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>rnd</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="userComboBox">
+     <property name="font">
+      <font>
+       <family>Monospace</family>
+      </font>
+     </property>
+     <item>
+      <property name="text">
+       <string>user</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>current user</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>davidc</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>bob</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>john</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
