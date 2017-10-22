@@ -40,7 +40,7 @@ def compile_file(in_path, out_path):
 def compile_directory(in_path_dir, out_path_dir):
     in_path_dir = os.path.abspath(in_path_dir)
     out_path_dir = os.path.abspath(out_path_dir)
-    in_paths = os.listdir(in_path_dir)
+    in_paths = sorted(os.listdir(in_path_dir))
     for in_name in in_paths:
         in_fullpath = os.path.join(in_path_dir, in_name)
         if not os.path.isfile(in_fullpath):
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     compile_directory(in_windows_dir, out_windows_dir)
 
     # Compile each Window folder (and each Form)
-    for name in os.listdir(in_windows_dir):
+    for name in sorted(os.listdir(in_windows_dir)):
         in_dir = os.path.join(in_windows_dir, name)
         if not os.path.isdir(in_dir):
             continue
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     compile_directory(in_widgets_dir, out_widgets_dir)
 
     # Compile each Widget folder
-    for name in os.listdir(in_widgets_dir):
+    for name in sorted(os.listdir(in_widgets_dir)):
         in_dir = os.path.join(in_widgets_dir, name)
         if not os.path.isdir(in_dir):
             continue
