@@ -10,42 +10,34 @@ import sys
 
 import Qt.QtGui as QtGui
 
-import qtLearn.uiUtils
-import qtLearn.widgets.nodesMayaWidget
-import qtLearn.windows.fileBrowser.fileBrowserCommon as common
-import qtLearn.windows.fileBrowser.forms.ui_saveOptions
-import qtLearn.windows.fileBrowser.ui_fileBrowserSave
+import qtLearn.uiUtils as uiUtils
+import qtLearn.windows.fileBrowser.forms.envFilter as envFilter
+import qtLearn.windows.fileBrowser.forms.fileSelector as fileSelector
+import qtLearn.windows.fileBrowser.forms.pathEdit as pathEdit
+import qtLearn.windows.fileBrowser.forms.saveOptions as saveOptions
+import qtLearn.windows.fileBrowser.ui_fileBrowserSave as ui_fileBrowserSave
 
-reload(qtLearn.uiUtils)
-reload(qtLearn.windows.fileBrowser.ui_fileBrowserSave)
-reload(qtLearn.windows.fileBrowser.forms.ui_saveOptions)
-
-
-class SaveOptions(QtGui.QWidget, qtLearn.windows.fileBrowser.forms.ui_saveOptions.Ui_Form):
-    def __init__(self):
-        super(SaveOptions, self).__init__()
-        self.setupUi(self)
+reload(uiUtils)
+reload(ui_fileBrowserSave)
 
 
-class FileBrowserSaveLayout(QtGui.QWidget, qtLearn.windows.fileBrowser.ui_fileBrowserSave.Ui_Form):
+class FileBrowserSaveLayout(QtGui.QWidget, ui_fileBrowserSave.Ui_Form):
     def __init__(self):
         super(FileBrowserSaveLayout, self).__init__()
         self.setupUi(self)
 
-        self.envFilterForm = common.EnvFilter()
+        self.envFilterForm = envFilter.EnvFilter()
+        self.fileSelectorForm = fileSelector.FileSelector()
+        self.saveOptionsForm = saveOptions.SaveOptions()
+        self.pathEditForm = pathEdit.PathEdit()
+
         self.envFilterLayout.addWidget(self.envFilterForm)
-
-        self.fileSelectorForm = common.FileSelector()
         self.fileSelectorLayout.addWidget(self.fileSelectorForm)
-
-        self.saveOptionsForm = SaveOptions()
         self.saveOptionsLayout.addWidget(self.saveOptionsForm)
-
-        self.pathEditForm = common.PathEdit()
         self.pathEditLayout.addWidget(self.pathEditForm)
 
 
-baseModule, BaseWindow = qtLearn.uiUtils.getBaseWindow()
+baseModule, BaseWindow = uiUtils.getBaseWindow()
 
 
 class FileBrowserSaveWindow(BaseWindow):
@@ -73,7 +65,7 @@ def main(show=True, widthHeight=(800, 500)):
     print 'ui:', ui
 
     name = 'FileBrowserSaveWindow'
-    app, parent = qtLearn.uiUtils.getParent()
+    app, parent = uiUtils.getParent()
 
     if ui is not None:
         ui.close()

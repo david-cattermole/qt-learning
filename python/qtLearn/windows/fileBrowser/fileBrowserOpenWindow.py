@@ -10,49 +10,41 @@ import sys
 
 import Qt.QtGui as QtGui
 
-import qtLearn.uiUtils
-import qtLearn.widgets.nodesMayaWidget
-import qtLearn.windows.fileBrowser.fileBrowserCommon as common
-import qtLearn.windows.fileBrowser.forms.ui_versionSelector
-import qtLearn.windows.fileBrowser.ui_fileBrowserOpen
+import qtLearn.uiUtils as uiUtils
+import qtLearn.windows.fileBrowser.forms.envFilter as envFilter
+import qtLearn.windows.fileBrowser.forms.fileSelector as fileSelector
+import qtLearn.windows.fileBrowser.forms.pathEdit as pathEdit
+import qtLearn.windows.fileBrowser.forms.versionSelector as versionSelector
+import qtLearn.windows.fileBrowser.ui_fileBrowserOpen as ui_fileBrowserOpen
 
-reload(qtLearn.uiUtils)
-reload(qtLearn.windows.fileBrowser.ui_fileBrowserOpen)
-reload(qtLearn.windows.fileBrowser.forms.ui_versionSelector)
+# reload(uiUtils)
+# reload(ui_fileBrowserOpen)
 
 
-class VersionSelector(QtGui.QWidget, qtLearn.windows.fileBrowser.forms.ui_versionSelector.Ui_Form):
+class MainLayout(QtGui.QWidget, ui_fileBrowserOpen.Ui_Form):
     def __init__(self):
-        super(VersionSelector, self).__init__()
+        super(MainLayout, self).__init__()
         self.setupUi(self)
 
+        self.envFilterForm = envFilter.EnvFilter()
+        self.fileSelectorForm = fileSelector.FileSelector()
+        self.versionSelectorForm = versionSelector.VersionSelector()
+        self.pathEditForm = pathEdit.PathEdit()
 
-class FileBrowserOpenLayout(QtGui.QWidget, qtLearn.windows.fileBrowser.ui_fileBrowserOpen.Ui_Form):
-    def __init__(self):
-        super(FileBrowserOpenLayout, self).__init__()
-        self.setupUi(self)
-
-        self.envFilterForm = common.EnvFilter()
         self.envFilterLayout.addWidget(self.envFilterForm)
-
-        self.fileSelectorForm = common.FileSelector()
         self.fileSelectorLayout.addWidget(self.fileSelectorForm)
-
-        self.versionSelectorForm = VersionSelector()
         self.versionSelectorLayout.addWidget(self.versionSelectorForm)
-
-        self.pathEditForm = common.PathEdit()
         self.pathEditLayout.addWidget(self.pathEditForm)
 
 
-baseModule, BaseWindow = qtLearn.uiUtils.getBaseWindow()
+baseModule, BaseWindow = uiUtils.getBaseWindow()
 
 
 class FileBrowserOpenWindow(BaseWindow):
     def __init__(self, parent=None, name=None, title=None):
         super(FileBrowserOpenWindow, self).__init__(parent, name=name)
         self.setupUi(self)
-        self.addSubForm(FileBrowserOpenLayout)
+        self.addSubForm(MainLayout)
 
         if title is None:
             title = 'Open File...'
@@ -73,7 +65,7 @@ def main(show=True, widthHeight=(800, 500)):
     print 'ui:', ui
 
     name = 'FileBrowserOpenWindow'
-    app, parent = qtLearn.uiUtils.getParent()
+    app, parent = uiUtils.getParent()
 
     if ui is not None:
         ui.close()
