@@ -8,7 +8,7 @@ import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
 import qtLearn.widgets.ui_lineEditAttr as ui_lineEditAttr
-reload(ui_lineEditAttr)
+# reload(ui_lineEditAttr)
 
 
 class LineEditAttr(QtWidgets.QWidget, ui_lineEditAttr.Ui_Widget):

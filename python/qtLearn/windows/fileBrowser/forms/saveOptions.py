@@ -2,14 +2,14 @@
 
 """
 
-import Qt.QtGui as QtGui
+import Qt.QtWidgets as QtWidgets
 
 import qtLearn.widgets.attributeHelper as attributeHelper
 import qtLearn.windows.fileBrowser.forms.ui_saveOptions as ui_saveOptions
-reload(ui_saveOptions)
+# reload(ui_saveOptions)
 
 
-class SaveOptions(QtGui.QWidget, ui_saveOptions.Ui_Form):
+class SaveOptions(QtWidgets.QWidget, ui_saveOptions.Ui_Form):
     def __init__(self):
         super(SaveOptions, self).__init__()
         self.setupUi(self)

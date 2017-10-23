@@ -2,122 +2,121 @@
 
 Usage:
 >>> import qtLearn.windows.assetBrowser.assetBrowserWindow
->>> reload(qtLearn.windows.assetBrowser.assetBrowserWindow)
 >>> qtLearn.windows.assetBrowser.assetBrowserWindow.main()
 """
 
 import sys
 from functools import partial
 
-import Qt.QtGui as QtGui
+import Qt.QtWidgets as QtWidgets
 
-import qtLearn.uiUtils
-import qtLearn.widgets.nodesMayaWidget
-import qtLearn.windows.assetBrowser.forms.ui_assetActions
-import qtLearn.windows.assetBrowser.forms.ui_assetCart
-import qtLearn.windows.assetBrowser.forms.ui_assetIncomingView
-import qtLearn.windows.assetBrowser.forms.ui_assetInfoView
-import qtLearn.windows.assetBrowser.forms.ui_assetListView
-import qtLearn.windows.assetBrowser.forms.ui_assetOutgoingView
-import qtLearn.windows.assetBrowser.forms.ui_keyvalueView
-import qtLearn.windows.assetBrowser.forms.ui_searchBar
-import qtLearn.windows.assetBrowser.forms.ui_searchCustomField
-import qtLearn.windows.assetBrowser.forms.ui_searchTagFinder
-import qtLearn.windows.assetBrowser.forms.ui_shotView
-import qtLearn.windows.assetBrowser.forms.ui_tagView
-import qtLearn.windows.assetBrowser.ui_assetBrowser
+import qtLearn.uiUtils as uiUtils
+import qtLearn.widgets.nodesMayaWidget as nodesMayaWidget
+import qtLearn.windows.assetBrowser.forms.ui_assetActions as ui_assetActions
+import qtLearn.windows.assetBrowser.forms.ui_assetCart as ui_assetCart
+import qtLearn.windows.assetBrowser.forms.ui_assetIncomingView as ui_assetIncomingView
+import qtLearn.windows.assetBrowser.forms.ui_assetInfoView as ui_assetInfoView
+import qtLearn.windows.assetBrowser.forms.ui_assetListView as ui_assetListView
+import qtLearn.windows.assetBrowser.forms.ui_assetOutgoingView as ui_assetOutgoingView
+import qtLearn.windows.assetBrowser.forms.ui_keyvalueView as ui_keyvalueView
+import qtLearn.windows.assetBrowser.forms.ui_searchBar as ui_searchBar
+import qtLearn.windows.assetBrowser.forms.ui_searchCustomField as ui_searchCustomField
+import qtLearn.windows.assetBrowser.forms.ui_searchTagFinder as ui_searchTagFinder
+import qtLearn.windows.assetBrowser.forms.ui_shotView as ui_shotView
+import qtLearn.windows.assetBrowser.forms.ui_tagView as ui_tagView
+import qtLearn.windows.assetBrowser.ui_assetBrowser as ui_assetBrowser
 
-reload(qtLearn.uiUtils)
-reload(qtLearn.widgets.nodesMayaWidget)
-reload(qtLearn.windows.assetBrowser.ui_assetBrowser)
-reload(qtLearn.windows.assetBrowser.forms.ui_assetListView)
-reload(qtLearn.windows.assetBrowser.forms.ui_searchBar)
-reload(qtLearn.windows.assetBrowser.forms.ui_searchTagFinder)
-reload(qtLearn.windows.assetBrowser.forms.ui_searchCustomField)
+# reload(uiUtils)
+# reload(nodesMayaWidget)
+# reload(ui_assetBrowser)
+# reload(ui_assetListView)
+# reload(ui_searchBar)
+# reload(ui_searchTagFinder)
+# reload(ui_searchCustomField)
 
-reload(qtLearn.windows.assetBrowser.forms.ui_assetActions)
-reload(qtLearn.windows.assetBrowser.forms.ui_assetCart)
-reload(qtLearn.windows.assetBrowser.forms.ui_assetInfoView)
-reload(qtLearn.windows.assetBrowser.forms.ui_shotView)
-reload(qtLearn.windows.assetBrowser.forms.ui_assetIncomingView)
-reload(qtLearn.windows.assetBrowser.forms.ui_assetOutgoingView)
-reload(qtLearn.windows.assetBrowser.forms.ui_keyvalueView)
-reload(qtLearn.windows.assetBrowser.forms.ui_tagView)
+# reload(ui_assetActions)
+# reload(ui_assetCart)
+# reload(ui_assetInfoView)
+# reload(ui_shotView)
+# reload(ui_assetIncomingView)
+# reload(ui_assetOutgoingView)
+# reload(ui_keyvalueView)
+# reload(ui_tagView)
 
 
-class AssetListView(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_assetListView.Ui_Form):
+class AssetListView(QtWidgets.QWidget, ui_assetListView.Ui_Form):
     def __init__(self):
         super(AssetListView, self).__init__()
         self.setupUi(self)
 
 
-class SearchBar(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_searchBar.Ui_Form):
+class SearchBar(QtWidgets.QWidget, ui_searchBar.Ui_Form):
     def __init__(self):
         super(SearchBar, self).__init__()
         self.setupUi(self)
 
 
-class SearchTagFinder(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_searchTagFinder.Ui_Form):
+class SearchTagFinder(QtWidgets.QWidget, ui_searchTagFinder.Ui_Form):
     def __init__(self):
         super(SearchTagFinder, self).__init__()
         self.setupUi(self)
 
 
-class SearchCustomField(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_searchCustomField.Ui_Form):
+class SearchCustomField(QtWidgets.QWidget, ui_searchCustomField.Ui_Form):
     def __init__(self):
         super(SearchCustomField, self).__init__()
         self.setupUi(self)
 
 
-class AssetActions(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_assetActions.Ui_Form):
+class AssetActions(QtWidgets.QWidget, ui_assetActions.Ui_Form):
     def __init__(self):
         super(AssetActions, self).__init__()
         self.setupUi(self)
 
 
-class AssetCart(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_assetCart.Ui_Form):
+class AssetCart(QtWidgets.QWidget, ui_assetCart.Ui_Form):
     def __init__(self):
         super(AssetCart, self).__init__()
         self.setupUi(self)
 
 
-class AssetInfoView(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_assetInfoView.Ui_Form):
+class AssetInfoView(QtWidgets.QWidget, ui_assetInfoView.Ui_Form):
     def __init__(self):
         super(AssetInfoView, self).__init__()
         self.setupUi(self)
 
 
-class ShotView(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_shotView.Ui_Form):
+class ShotView(QtWidgets.QWidget, ui_shotView.Ui_Form):
     def __init__(self):
         super(ShotView, self).__init__()
         self.setupUi(self)
 
 
-class AssetIncomingView(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_assetIncomingView.Ui_Form):
+class AssetIncomingView(QtWidgets.QWidget, ui_assetIncomingView.Ui_Form):
     def __init__(self):
         super(AssetIncomingView, self).__init__()
         self.setupUi(self)
 
 
-class AssetOutgoingView(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_assetOutgoingView.Ui_Form):
+class AssetOutgoingView(QtWidgets.QWidget, ui_assetOutgoingView.Ui_Form):
     def __init__(self):
         super(AssetOutgoingView, self).__init__()
         self.setupUi(self)
 
 
-class TagView(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_tagView.Ui_Form):
+class TagView(QtWidgets.QWidget, ui_tagView.Ui_Form):
     def __init__(self):
         super(TagView, self).__init__()
         self.setupUi(self)
 
 
-class KeyvalueView(QtGui.QWidget, qtLearn.windows.assetBrowser.forms.ui_keyvalueView.Ui_Form):
+class KeyvalueView(QtWidgets.QWidget, ui_keyvalueView.Ui_Form):
     def __init__(self):
         super(KeyvalueView, self).__init__()
         self.setupUi(self)
 
 
-class AssetBrowserLayout(QtGui.QWidget, qtLearn.windows.assetBrowser.ui_assetBrowser.Ui_Form):
+class AssetBrowserLayout(QtWidgets.QWidget, ui_assetBrowser.Ui_Form):
     def __init__(self):
         super(AssetBrowserLayout, self).__init__()
         self.setupUi(self)
@@ -162,7 +161,7 @@ class AssetBrowserLayout(QtGui.QWidget, qtLearn.windows.assetBrowser.ui_assetBro
         self.keyvalueViewLayout.addWidget(self.keyvalueViewForm)
 
 
-baseModule, BaseWindow = qtLearn.uiUtils.getBaseWindow()
+baseModule, BaseWindow = uiUtils.getBaseWindow()
 
 
 class AssetBrowserWindow(BaseWindow):
@@ -183,16 +182,16 @@ class AssetBrowserWindow(BaseWindow):
 
     def addMenuBarContents(self, menubar):
         # File Menu
-        file_menu = QtGui.QMenu('File', menubar)
+        file_menu = QtWidgets.QMenu('File', menubar)
 
         # New Search
-        newSearchAction = QtGui.QAction('New Search', file_menu)
+        newSearchAction = QtWidgets.QAction('New Search', file_menu)
         newSearchAction.setShortcut('Ctrl+N')
         newSearchAction.setStatusTip('Start a new Asset search')
         newSearchAction.triggered.connect(partial(self.newSearchCallback))
 
         # Save Search
-        saveSearchAction = QtGui.QAction('Save Search', file_menu)
+        saveSearchAction = QtWidgets.QAction('Save Search', file_menu)
         saveSearchAction.setShortcut('Ctrl+S')
         saveSearchAction.setStatusTip('Save an Asset search')
         saveSearchAction.triggered.connect(partial(self.saveSearchCallback))
@@ -202,10 +201,10 @@ class AssetBrowserWindow(BaseWindow):
         menubar.addMenu(file_menu)
 
     def newSearchCallback(self):
-        print 'new search callback'
+        print('new search callback')
 
     def saveSearchCallback(self):
-        print 'save search callback'
+        print('save search callback')
 
 
 ui = None
@@ -213,10 +212,10 @@ ui = None
 
 def main(show=True, widthHeight=(1100, 1000)):
     global ui
-    print 'ui:', ui
+    print('ui:', ui)
 
     name = 'AssetBrowserWindow'
-    app, parent = qtLearn.uiUtils.getParent()
+    app, parent = uiUtils.getParent()
 
     if ui is not None:
         ui.close()

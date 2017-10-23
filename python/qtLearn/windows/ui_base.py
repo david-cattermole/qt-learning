@@ -1,70 +1,79 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/davidc/dev/qt-learning/ui/windows/base.ui'
+# Form implementation generated from reading ui file 'P:\qt-learning\ui\windows\base.ui'
 #
-# Created: Wed Oct 18 20:52:41 2017
-#      by: PyQt4 UI code generator 4.6.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Window(object):
     def setupUi(self, Window):
         Window.setObjectName("Window")
         Window.resize(422, 315)
-        self.centralwidget = QtGui.QWidget(Window)
+        Window.setDocumentMode(False)
+        self.centralwidget = QtWidgets.QWidget(Window)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout_2 = QtGui.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_2.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_2.setSpacing(3)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.verticalLayout = QtGui.QVBoxLayout()
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout.setSpacing(3)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.options = QtGui.QWidget(self.centralwidget)
+        self.options = QtWidgets.QWidget(self.centralwidget)
         self.options.setObjectName("options")
-        self.optionsLayout = QtGui.QVBoxLayout(self.options)
+        self.optionsLayout = QtWidgets.QVBoxLayout(self.options)
+        self.optionsLayout.setContentsMargins(5, 5, 5, 5)
+        self.optionsLayout.setSpacing(3)
         self.optionsLayout.setObjectName("optionsLayout")
         self.verticalLayout.addWidget(self.options)
-        self.progressBar = QtGui.QProgressBar(self.centralwidget)
+        self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
         self.progressBar.setProperty("value", 24)
         self.progressBar.setObjectName("progressBar")
         self.verticalLayout.addWidget(self.progressBar)
-        self.horizontalLayout = QtGui.QHBoxLayout()
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout.setSpacing(3)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.createBtn = QtGui.QPushButton(self.centralwidget)
+        self.createBtn = QtWidgets.QPushButton(self.centralwidget)
         self.createBtn.setObjectName("createBtn")
         self.horizontalLayout.addWidget(self.createBtn)
-        self.applyBtn = QtGui.QPushButton(self.centralwidget)
+        self.applyBtn = QtWidgets.QPushButton(self.centralwidget)
         self.applyBtn.setObjectName("applyBtn")
         self.horizontalLayout.addWidget(self.applyBtn)
-        self.resetBtn = QtGui.QPushButton(self.centralwidget)
+        self.resetBtn = QtWidgets.QPushButton(self.centralwidget)
         self.resetBtn.setObjectName("resetBtn")
         self.horizontalLayout.addWidget(self.resetBtn)
-        self.helpBtn = QtGui.QPushButton(self.centralwidget)
+        self.helpBtn = QtWidgets.QPushButton(self.centralwidget)
         self.helpBtn.setObjectName("helpBtn")
         self.horizontalLayout.addWidget(self.helpBtn)
-        self.closeBtn = QtGui.QPushButton(self.centralwidget)
+        self.closeBtn = QtWidgets.QPushButton(self.centralwidget)
         self.closeBtn.setObjectName("closeBtn")
         self.horizontalLayout.addWidget(self.closeBtn)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.verticalLayout_2.addLayout(self.verticalLayout)
         Window.setCentralWidget(self.centralwidget)
-        self.menubar = QtGui.QMenuBar(Window)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 422, 21))
+        self.menubar = QtWidgets.QMenuBar(Window)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 422, 18))
         self.menubar.setObjectName("menubar")
         Window.setMenuBar(self.menubar)
-        self.statusBar = QtGui.QStatusBar(Window)
+        self.statusBar = QtWidgets.QStatusBar(Window)
         self.statusBar.setObjectName("statusBar")
         Window.setStatusBar(self.statusBar)
 
         self.retranslateUi(Window)
-        QtCore.QObject.connect(self.closeBtn, QtCore.SIGNAL("clicked()"), Window.close)
+        self.closeBtn.clicked.connect(Window.close)
         QtCore.QMetaObject.connectSlotsByName(Window)
 
     def retranslateUi(self, Window):
-        Window.setWindowTitle(QtGui.QApplication.translate("Window", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
-        self.createBtn.setText(QtGui.QApplication.translate("Window", "Create", None, QtGui.QApplication.UnicodeUTF8))
-        self.applyBtn.setText(QtGui.QApplication.translate("Window", "Apply", None, QtGui.QApplication.UnicodeUTF8))
-        self.resetBtn.setText(QtGui.QApplication.translate("Window", "Reset", None, QtGui.QApplication.UnicodeUTF8))
-        self.helpBtn.setText(QtGui.QApplication.translate("Window", "Help", None, QtGui.QApplication.UnicodeUTF8))
-        self.closeBtn.setText(QtGui.QApplication.translate("Window", "Close", None, QtGui.QApplication.UnicodeUTF8))
+        _translate = QtCore.QCoreApplication.translate
+        Window.setWindowTitle(_translate("Window", "MainWindow"))
+        self.createBtn.setText(_translate("Window", "Create"))
+        self.applyBtn.setText(_translate("Window", "Apply"))
+        self.resetBtn.setText(_translate("Window", "Reset"))
+        self.helpBtn.setText(_translate("Window", "Help"))
+        self.closeBtn.setText(_translate("Window", "Close"))
 

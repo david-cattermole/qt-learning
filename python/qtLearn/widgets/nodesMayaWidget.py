@@ -2,17 +2,15 @@
 
 Usage:
 >>> import qtLearn.widgets.nodesMayaWidget
->>> reload(qtLearn.widgets.nodesMayaWidget)
 >>> widget = qtLearn.widgets.nodesMayaWidget.NodesMayaWidget()
 """
 
 import Qt
 import Qt.QtCore as QtCore
-import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
-import qtLearn.widgets.ui_nodesList
-reload(qtLearn.widgets.ui_nodesList)
+import qtLearn.widgets.ui_nodesList as ui_nodesList
+# reload(ui_nodesList)
 
 
 class NodeListViewModel(QtCore.QAbstractListModel):
@@ -25,11 +23,11 @@ class NodeListViewModel(QtCore.QAbstractListModel):
 
     def getNodeUUIDs(self):
         nodes = self.__nodeUUIDs
-        print 'getNodeUUIDs:', nodes
+        print('getNodeUUIDs:', nodes)
         return nodes
 
     def setNodeUUIDs(self, value):
-        print 'setNodeUUIDs:', value
+        print('setNodeUUIDs:', value)
         self.__nodeUUIDs = value
         # self.modelReset()
 
@@ -37,7 +35,7 @@ class NodeListViewModel(QtCore.QAbstractListModel):
         # return len(self.__nodeUUIDs)
         nodes = self.getNodeUUIDs()
         # return len(nodes)
-        print 'rowCount', len(nodes), nodes
+        print('rowCount', len(nodes), nodes)
         return len(nodes)
 
     def data(self, index, role):
@@ -52,7 +50,7 @@ class NodeListViewModel(QtCore.QAbstractListModel):
             import maya.cmds
             result = maya.cmds.ls(node, long=True) or []
             result = str(result[0])
-            print 'result', row, result
+            print('result', row, result)
             return result
 
     def headerData(self, section, orientation, role):
@@ -64,7 +62,7 @@ class NodeListViewModel(QtCore.QAbstractListModel):
         pass
 
 
-class NodesMayaWidget(QtWidgets.QWidget, qtLearn.widgets.ui_nodesList.Ui_Widget):
+class NodesMayaWidget(QtWidgets.QWidget, ui_nodesList.Ui_Widget):
     def __init__(self, *args, **kwargs):
         super(NodesMayaWidget, self).__init__(*args, **kwargs)
         self.setupUi(self)
@@ -75,17 +73,17 @@ class NodesMayaWidget(QtWidgets.QWidget, qtLearn.widgets.ui_nodesList.Ui_Widget)
 
     def getNodes(self):
         import maya.cmds
-        print 'getNodes'
+        print('getNodes')
         nodes = maya.cmds.ls(sl=True, uuid=True) or []
         sep = ', '
         text = '['
         for node in nodes:
-            print 'getNodes node:', node
+            print('getNodes node:', node)
             value = maya.cmds.ls(node, long=True) or []
             text += str(value[0]) + sep
         text = text.rpartition(sep)[0] + ']'
         # self.listViewModel.setNodeUUIDs(nodes)
-        print 'getNodes nodes:', self.listViewModel.getNodeUUIDs()
+        print('getNodes nodes:', self.listViewModel.getNodeUUIDs())
         # self.listViewModel.emit()
         # startIndex = QModelIndex()
         # self.listViewModel.dataChanged.emit()
@@ -93,7 +91,7 @@ class NodesMayaWidget(QtWidgets.QWidget, qtLearn.widgets.ui_nodesList.Ui_Widget)
         return text
 
     def clearView(self):
-        print 'clearView'
+        print('clearView')
         nodes = []
         # self.listViewModel.setNodeUUIDs(nodes)
         # self.listViewModel.modelReset()
@@ -102,5 +100,5 @@ class NodesMayaWidget(QtWidgets.QWidget, qtLearn.widgets.ui_nodesList.Ui_Widget)
     def getNodeStrings(self):
         # value = self.listViewModel.getNodeUUIDs()
         value = self.getNodes()
-        print 'get string:', value
+        print('get string:', value)
         return value

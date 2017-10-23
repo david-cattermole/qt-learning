@@ -10,28 +10,32 @@ $ cd <project root>
 $ mayapy compileUI.py
 
 """
+
 import sys
 import os
 try:
     from pysideuic import compileUi
 except ImportError:
-    from PyQt4.uic import compileUi
+    try:
+        from PyQt4.uic import compileUi
+    except ImportError:
+        from PyQt5.uic import compileUi
 
 
 def compile_file(in_path, out_path):
     if not os.path.isfile(in_path):
-        print 'Warning: Skipping', in_path
+        print('Warning: Skipping', in_path)
         return
     in_dir, in_name = os.path.split(in_path)
     out_dir, out_name = os.path.split(out_path)
 
-    print 'Compiling:', in_name, '->', out_name
+    print('Compiling:', in_name, '->', out_name)
     try:
         f = open(out_path, 'w')
         compileUi(in_path, f, False, 4, False)
         f.close()
-    except Exception, e:
-        print 'Warning: File did not compile, %r' % in_path
+    except Exception as e:
+        print('Warning: File did not compile, %r' % in_path)
         # print e
         raise
     return

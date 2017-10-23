@@ -6,21 +6,47 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>817</width>
-    <height>335</height>
+    <width>518</width>
+    <height>334</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
    <item>
-    <layout class="QHBoxLayout" name="envFilterLayout"/>
+    <layout class="QHBoxLayout" name="envFilterLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="selectorLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="fileSelectorLayout"/>
+      <layout class="QVBoxLayout" name="fileSelectorLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+      </layout>
      </item>
      <item>
       <widget class="QFrame" name="saveOptionsFrame">
@@ -31,8 +57,21 @@
         <enum>QFrame::Sunken</enum>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
         <item>
-         <layout class="QVBoxLayout" name="saveOptionsLayout"/>
+         <layout class="QVBoxLayout" name="saveOptionsLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -40,7 +79,14 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="pathEditLayout"/>
+    <layout class="QVBoxLayout" name="pathEditLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+    </layout>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

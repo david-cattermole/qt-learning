@@ -16,20 +16,6 @@ import qtLearn.widgets.float3Attr as float3Attr
 
 import qtLearn.widgets.lineEditAttr as lineEditAttr
 
-# reload(comboBoxAttr)
-# reload(comboBox2Attr)
-# reload(comboBox3Attr)
-#
-# reload(integerAttr)
-# reload(integer2Attr)
-# reload(integer3Attr)
-#
-# reload(floatAttr)
-# reload(float2Attr)
-# reload(float3Attr)
-#
-# reload(lineEditAttr)
-
 
 class AttributeHelper(object):
 

@@ -2,13 +2,12 @@
 
 Usage:
 >>> import qtLearn.windows.fileBrowser.fileBrowserOpenWindow
->>> reload(qtLearn.windows.fileBrowser.fileBrowserOpenWindow)
 >>> qtLearn.windows.fileBrowser.fileBrowserOpenWindow.main()
 """
 
 import sys
 
-import Qt.QtGui as QtGui
+import Qt.QtWidgets as QtWidgets
 
 import qtLearn.uiUtils as uiUtils
 import qtLearn.windows.fileBrowser.forms.envFilter as envFilter
@@ -17,11 +16,8 @@ import qtLearn.windows.fileBrowser.forms.pathEdit as pathEdit
 import qtLearn.windows.fileBrowser.forms.versionSelector as versionSelector
 import qtLearn.windows.fileBrowser.ui_fileBrowserOpen as ui_fileBrowserOpen
 
-# reload(uiUtils)
-# reload(ui_fileBrowserOpen)
 
-
-class MainLayout(QtGui.QWidget, ui_fileBrowserOpen.Ui_Form):
+class MainLayout(QtWidgets.QWidget, ui_fileBrowserOpen.Ui_Form):
     def __init__(self):
         super(MainLayout, self).__init__()
         self.setupUi(self)
@@ -35,6 +31,17 @@ class MainLayout(QtGui.QWidget, ui_fileBrowserOpen.Ui_Form):
         self.fileSelectorLayout.addWidget(self.fileSelectorForm)
         self.versionSelectorLayout.addWidget(self.versionSelectorForm)
         self.pathEditLayout.addWidget(self.pathEditForm)
+
+        self.buttonBox.rejected.connect(self.rejected)
+        self.buttonBox.accepted.connect(self.accepted)
+
+    def rejected(self):
+        print('rejected')
+        return  # self.delete()
+
+    def accepted(self):
+        print('accepted')
+        return
 
 
 baseModule, BaseWindow = uiUtils.getBaseWindow()
@@ -60,9 +67,9 @@ class FileBrowserOpenWindow(BaseWindow):
 ui = None
 
 
-def main(show=True, widthHeight=(800, 500)):
+def main(show=True, widthHeight=(750, 400)):
     global ui
-    print 'ui:', ui
+    print('ui:', ui)
 
     name = 'FileBrowserOpenWindow'
     app, parent = uiUtils.getParent()

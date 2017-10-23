@@ -8,7 +8,7 @@ import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
 import qtLearn.widgets.ui_integerAttr as ui_integerAttr
-reload(ui_integerAttr)
+# reload(ui_integerAttr)
 
 
 class IntegerAttr(QtWidgets.QWidget, ui_integerAttr.Ui_Widget):

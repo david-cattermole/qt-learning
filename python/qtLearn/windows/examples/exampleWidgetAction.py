@@ -3,25 +3,25 @@ https://stackoverflow.com/questions/9076332/qt-pyqt-how-do-i-create-a-drop-down-
 """
 import sys
 from Qt import QtCore
-from Qt import QtGui
+from Qt import QtWidgets
 
 
-class Window(QtGui.QWidget):
+class Window(QtWidgets.QWidget):
     def __init__(self):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
-        layout = QtGui.QHBoxLayout(self)
+        layout = QtWidgets.QHBoxLayout(self)
 
-        self.button = QtGui.QToolButton(self)
-        self.button.setPopupMode(QtGui.QToolButton.InstantPopup)
-        self.button.setMenu(QtGui.QMenu(self.button))
+        self.button = QtWidgets.QToolButton(self)
+        self.button.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        self.button.setMenu(QtWidgets.QMenu(self.button))
 
-        self.textBox = QtGui.QTextBrowser(self)
-        action1 = QtGui.QWidgetAction(self.button)
+        self.textBox = QtWidgets.QTextBrowser(self)
+        action1 = QtWidgets.QWidgetAction(self.button)
         action1.setDefaultWidget(self.textBox)
 
-        self.textLine = QtGui.QLineEdit(self)
-        action2 = QtGui.QWidgetAction(self.button)
+        self.textLine = QtWidgets.QLineEdit(self)
+        action2 = QtWidgets.QWidgetAction(self.button)
         action2.setDefaultWidget(self.textLine)
 
         self.button.menu().addAction(action1)
@@ -30,7 +30,7 @@ class Window(QtGui.QWidget):
 
 
 def main(argv):
-    app = QtGui.QApplication(argv)
+    app = QtWidgets.QApplication(argv)
     window = Window()
     window.resize(100, 60)
     window.show()

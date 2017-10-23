@@ -4,16 +4,15 @@
 
 import sys
 
-# import Qt # __version__, __binding__, __qt_version__, __binding_version__
-# import Qt.QtCore as QtCore
-# import Qt.QtGui as QtGui
+import Qt # __version__, __binding__, __qt_version__, __binding_version__
+import Qt.QtCore as QtCore
 import Qt.QtWidgets as QtWidgets
 
 
 def getHostApplication():
     result = None
     appName = QtWidgets.QApplication.applicationName()
-    if appName is None:
+    if appName is None or len(appName) == 0:
         result = 'standalone'
     elif 'maya' in str(appName).lower():
         result = 'maya'
@@ -22,7 +21,7 @@ def getHostApplication():
     elif 'houdini' in str(appName).lower():
         result = 'houdini'
     else:
-        print 'Warning: Unknown application name, %r' % appName
+        print('Warning: Unknown application name, %r' % appName)
         result = appName
     return result
 
@@ -37,7 +36,7 @@ def getMayaMainWindow():
 
 def getParent():
     host = getHostApplication()
-    print 'getParent host:', host
+    print('getParent host:', host)
 
     # try running outside of maya
     app = None
@@ -56,14 +55,15 @@ def getBaseWindow():
     BaseWindow = None
     baseModule = None
     host = getHostApplication()
+    print(host)
     if host == 'standalone':
         import qtLearn.baseStandaloneWindow as baseModule
-        reload(baseModule)
+        # reload(baseModule)
         BaseWindow = baseModule.BaseStandaloneWindow
     elif host == 'maya':
         import qtLearn.baseMayaWindow as baseModule
-        reload(baseModule)
+        # reload(baseModule)
         BaseWindow = baseModule.BaseMayaWindow
     else:
-        print 'Warning: Unknown application host, %r' % host
+        print('Warning: Unknown application host, %r' % host)
     return baseModule, BaseWindow

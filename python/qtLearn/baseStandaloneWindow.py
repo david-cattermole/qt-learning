@@ -3,7 +3,6 @@ The base window for usage in (standalone) Python.
 
 Run the default BaseStandaloneWindow:
 >>> import qtLearn.baseStandaloneWindow
->>> reload(qtLearn.baseStandaloneWindow)
 >>> qtLearn.baseStandaloneWindow.main()
 """
 
@@ -11,15 +10,13 @@ import sys
 
 import Qt
 import Qt.QtCore as QtCore
-import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
-import qtLearn.windows.ui_base
-reload(qtLearn.windows.ui_base)
+import qtLearn.windows.ui_base as ui_base
 
 
-class BaseStandaloneWindow(QtGui.QMainWindow,
-                           qtLearn.windows.ui_base.Ui_Window):
+class BaseStandaloneWindow(QtWidgets.QMainWindow,
+                           ui_base.Ui_Window):
     def __init__(self, parent, name=None):
         super(BaseStandaloneWindow, self).__init__()
 
@@ -61,7 +58,7 @@ class BaseStandaloneWindow(QtGui.QMainWindow,
 
 def main():
     name = 'StandaloneBaseWindow'
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     ui = BaseStandaloneWindow(name=name)
     ui.show()
     return sys.exit(app.exec_())

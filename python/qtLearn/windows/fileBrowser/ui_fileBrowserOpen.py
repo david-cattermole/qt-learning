@@ -1,38 +1,49 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/davidc/dev/qt-learning/ui/windows/fileBrowser/fileBrowserOpen.ui'
+# Form implementation generated from reading ui file 'P:\qt-learning\ui\windows\fileBrowser\fileBrowserOpen.ui'
 #
-# Created: Wed Oct 18 20:52:41 2017
-#      by: PyQt4 UI code generator 4.6.2
+# Created by: PyQt5 UI code generator 5.9
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.setEnabled(True)
-        Form.resize(817, 327)
-        self.verticalLayout_2 = QtGui.QVBoxLayout(Form)
+        Form.resize(521, 330)
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(Form)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.envFilterLayout = QtGui.QHBoxLayout()
+        self.envFilterLayout = QtWidgets.QHBoxLayout()
+        self.envFilterLayout.setContentsMargins(0, 0, 0, 0)
+        self.envFilterLayout.setSpacing(0)
         self.envFilterLayout.setObjectName("envFilterLayout")
         self.verticalLayout_2.addLayout(self.envFilterLayout)
-        self.selectorLayout = QtGui.QHBoxLayout()
+        self.selectorLayout = QtWidgets.QHBoxLayout()
+        self.selectorLayout.setContentsMargins(0, 0, 0, 0)
+        self.selectorLayout.setSpacing(0)
         self.selectorLayout.setObjectName("selectorLayout")
-        self.fileSelectorLayout = QtGui.QVBoxLayout()
+        self.fileSelectorLayout = QtWidgets.QVBoxLayout()
+        self.fileSelectorLayout.setContentsMargins(0, 0, 0, 0)
+        self.fileSelectorLayout.setSpacing(0)
         self.fileSelectorLayout.setObjectName("fileSelectorLayout")
         self.selectorLayout.addLayout(self.fileSelectorLayout)
-        self.versionSelectorLayout = QtGui.QVBoxLayout()
+        self.versionSelectorLayout = QtWidgets.QVBoxLayout()
+        self.versionSelectorLayout.setContentsMargins(0, 0, 0, 0)
+        self.versionSelectorLayout.setSpacing(0)
         self.versionSelectorLayout.setObjectName("versionSelectorLayout")
         self.selectorLayout.addLayout(self.versionSelectorLayout)
         self.verticalLayout_2.addLayout(self.selectorLayout)
-        self.pathEditLayout = QtGui.QVBoxLayout()
+        self.pathEditLayout = QtWidgets.QVBoxLayout()
+        self.pathEditLayout.setContentsMargins(0, 0, 0, 0)
+        self.pathEditLayout.setSpacing(0)
         self.pathEditLayout.setObjectName("pathEditLayout")
         self.verticalLayout_2.addLayout(self.pathEditLayout)
-        self.buttonBox = QtGui.QDialogButtonBox(Form)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Open)
+        self.buttonBox = QtWidgets.QDialogButtonBox(Form)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Open)
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout_2.addWidget(self.buttonBox)
 
@@ -40,5 +51,6 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
 

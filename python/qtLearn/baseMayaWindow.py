@@ -37,7 +37,6 @@ from maya.app.general.mayaMixin import MayaQWidgetBaseMixin
 
 import Qt
 import Qt.QtCore as QtCore
-import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
 # TODO: Can we get this from Qt.py?
@@ -46,13 +45,13 @@ try:
 except ImportError:
     from shiboken import wrapInstance
 
-import qtLearn.windows.ui_base
-reload(qtLearn.windows.ui_base)
+import qtLearn.windows.ui_base as ui_base
+# reload(ui_base)
 
 
 def getMayaMainWindow():
     mainWindowPtr = omui.MQtUtil.mainWindow()
-    mainWindow = wrapInstance(long(mainWindowPtr), QtGui.QWidget)
+    mainWindow = wrapInstance(long(mainWindowPtr), QtWidgets.QWidget)
     return mainWindow
 
 
@@ -65,8 +64,8 @@ def findWidget(name, clsTyp):
 
 
 class BaseMayaWindow(MayaQWidgetBaseMixin,
-                     QtGui.QMainWindow,
-                     qtLearn.windows.ui_base.Ui_Window):
+                     QtWidgets.QMainWindow,
+                     ui_base.Ui_Window):
     def __init__(self, parent, name=None):
         super(BaseMayaWindow, self).__init__()
 
@@ -116,7 +115,7 @@ def delete():
         return
 
     name = 'BaseMayaWindow'
-    window = findWidget(name, QtGui.QWidget)
+    window = findWidget(name, QtWidgets.QWidget)
     if window:
         # window.close()  # or .deleteLater() ?
         window.deleteLater()

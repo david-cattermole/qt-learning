@@ -6,142 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>491</width>
+    <width>338</width>
     <height>215</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>3</number>
+   </property>
    <item>
-    <widget class="QTreeWidget" name="treeWidget">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-      </font>
-     </property>
-     <column>
-      <property name="text">
-       <string>version</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>user</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>description</string>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string>v001</string>
-      </property>
-      <property name="text">
-       <string>john</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <item>
-       <property name="text">
-        <string>001</string>
-       </property>
-       <property name="text">
-        <string>bob</string>
-       </property>
-       <property name="text">
-        <string>description</string>
-       </property>
-      </item>
-     </item>
-     <item>
-      <property name="text">
-       <string>v002</string>
-      </property>
-      <property name="text">
-       <string>davidc</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <item>
-       <property name="text">
-        <string>001</string>
-       </property>
-       <property name="text">
-        <string>davidc</string>
-       </property>
-       <property name="text">
-        <string>description</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>002</string>
-       </property>
-       <property name="text">
-        <string>davidc</string>
-       </property>
-       <property name="text">
-        <string>description</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>003</string>
-       </property>
-       <property name="text">
-        <string>davidc</string>
-       </property>
-       <property name="text">
-        <string>description</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>004</string>
-       </property>
-       <property name="text">
-        <string>john</string>
-       </property>
-       <property name="text">
-        <string>description</string>
-       </property>
-      </item>
-     </item>
-     <item>
-      <property name="text">
-       <string>v003</string>
-      </property>
-      <property name="text">
-       <string>bob</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <item>
-       <property name="text">
-        <string>001</string>
-       </property>
-       <property name="text">
-        <string>bob</string>
-       </property>
-       <property name="text">
-        <string>description</string>
-       </property>
-      </item>
-     </item>
-    </widget>
+    <widget class="QTreeView" name="treeView"/>
    </item>
   </layout>
  </widget>

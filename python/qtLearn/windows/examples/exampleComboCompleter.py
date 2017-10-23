@@ -3,20 +3,20 @@ https://stackoverflow.com/questions/4827207/how-do-i-filter-the-pyqt-qcombobox-i
 """
 import sys
 from Qt import QtCore
-from Qt import QtGui
+from Qt import QtWidgets
 
 
-class ExtendedCombo(QtGui.QComboBox):
+class ExtendedCombo(QtWidgets.QComboBox):
     def __init__(self, parent=None):
         super(ExtendedCombo, self).__init__(parent)
 
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setEditable(True)
-        self.completer = QtGui.QCompleter(self)
+        self.completer = QtWidgets.QCompleter(self)
 
         # always show all completions
-        self.completer.setCompletionMode(QtGui.QCompleter.UnfilteredPopupCompletion)
-        self.pFilterModel = QtGui.QSortFilterProxyModel(self)
+        self.completer.setCompletionMode(QtWidgets.QCompleter.UnfilteredPopupCompletion)
+        self.pFilterModel = QtWidgets.QSortFilterProxyModel(self)
         self.pFilterModel.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
 
         self.completer.setPopup(self.view())
@@ -49,13 +49,13 @@ class ExtendedCombo(QtGui.QComboBox):
 
 
 def main(argv):
-    app = QtGui.QApplication(argv)
+    app = QtWidgets.QApplication(argv)
 
-    model = QtGui.QStandardItemModel()
+    model = QtWidgets.QStandardItemModel()
 
     words = ['hola', 'adios', 'hello', 'good bye']
     for i, word in enumerate(words):
-        item = QtGui.QStandardItem(word)
+        item = QtWidgets.QStandardItem(word)
         model.setItem(i, 0, item)
 
     combo = ExtendedCombo()

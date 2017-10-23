@@ -13,13 +13,35 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>3</number>
+    </property>
+    <property name="margin">
+     <number>5</number>
+    </property>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>3</number>
+      </property>
+      <property name="margin">
+       <number>5</number>
+      </property>
       <item>
        <widget class="QWidget" name="options" native="true">
-        <layout class="QVBoxLayout" name="optionsLayout"/>
+        <layout class="QVBoxLayout" name="optionsLayout">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="margin">
+          <number>5</number>
+         </property>
+        </layout>
        </widget>
       </item>
       <item>
@@ -31,6 +53,12 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <property name="margin">
+         <number>5</number>
+        </property>
         <item>
          <widget class="QPushButton" name="createBtn">
           <property name="text">
@@ -78,7 +106,7 @@
      <x>0</x>
      <y>0</y>
      <width>422</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
   </widget>

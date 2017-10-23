@@ -8,7 +8,7 @@ import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
 import qtLearn.widgets.ui_comboBox2Attr as ui_comboBox2Attr
-reload(ui_comboBox2Attr)
+# reload(ui_comboBox2Attr)
 
 
 class ComboBox2Attr(QtWidgets.QWidget, ui_comboBox2Attr.Ui_Widget):

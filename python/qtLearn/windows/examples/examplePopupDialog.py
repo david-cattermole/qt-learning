@@ -1,24 +1,25 @@
 """
 https://stackoverflow.com/questions/12041980/properly-positioning-popup-widgets-in-pyqt
 """
-from Qt import QtGui
-from Qt import QtCore
 import sys
 
+import Qt.QtWidgets as QtWidgets
+import Qt.QtCore as QtCore
 
-class Popup(QtGui.QWidget):
+
+class Popup(QtWidgets.QWidget):
     def __init__(self, parent=None, widget=None):
-        QtGui.QWidget.__init__(self, parent)
-        layout = QtGui.QGridLayout(self)
-        button = QtGui.QPushButton("Very Interesting Text Popup. Here's an arrow   ^")
+        QtWidgets.QWidget.__init__(self, parent)
+        layout = QtWidgets.QGridLayout(self)
+        button = QtWidgets.QPushButton("Very Interesting Text Popup. Here's an arrow   ^")
         layout.addWidget(button)
         self.move(widget.rect().bottomLeft())
 
 
-class Window(QtGui.QWidget):
+class Window(QtWidgets.QWidget):
     def __init__(self):
-        QtGui.QWidget.__init__(self)
-        self.button = QtGui.QPushButton('Hit this button to show a popup', self)
+        QtWidgets.QWidget.__init__(self)
+        self.button = QtWidgets.QPushButton('Hit this button to show a popup', self)
         self.button.clicked.connect(self.handleOpenDialog)
         self.button.move(250, 50)
         self.resize(600, 200)
@@ -46,18 +47,18 @@ class PopupDialogMixin(object):
         self.move(global_point - QtCore.QPoint(self.width(), 0))
 
 
-class Popup2(QtGui.QWidget, PopupDialogMixin):
+class Popup2(QtWidgets.QWidget, PopupDialogMixin):
     def __init__(self, parent=None, widget=None):
         super(Popup2, self).__init__(parent)
-        layout = QtGui.QGridLayout(self)
-        button = QtGui.QPushButton("Very Interesting Text Popup. Here's an arrow   ^")
+        layout = QtWidgets.QGridLayout(self)
+        button = QtWidgets.QPushButton("Very Interesting Text Popup. Here's an arrow   ^")
         layout.addWidget(button)
 
 
-class Window2(QtGui.QWidget):
+class Window2(QtWidgets.QWidget):
     def __init__(self):
-        QtGui.QWidget.__init__(self)
-        self.button = QtGui.QPushButton('Hit this button to show a popup', self)
+        QtWidgets.QWidget.__init__(self)
+        self.button = QtWidgets.QPushButton('Hit this button to show a popup', self)
         self.button.clicked.connect(self.handleOpenDialog)
         self.button.move(250, 50)
         self.resize(600, 200)
@@ -69,7 +70,7 @@ class Window2(QtGui.QWidget):
 
 
 def main(argv):
-    app = QtGui.QApplication(argv)
+    app = QtWidgets.QApplication(argv)
     win = Window2()
     win.show()
     sys.exit(app.exec_())

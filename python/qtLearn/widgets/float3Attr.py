@@ -8,7 +8,7 @@ import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
 import qtLearn.widgets.ui_float3Attr as ui_float3Attr
-reload(ui_float3Attr)
+# reload(ui_float3Attr)
 
 
 class Float3Attr(QtWidgets.QWidget, ui_float3Attr.Ui_Widget):

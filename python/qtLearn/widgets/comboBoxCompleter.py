@@ -6,11 +6,11 @@ Based from:
 https://stackoverflow.com/questions/4827207/how-do-i-filter-the-pyqt-qcombobox-items-based-on-the-text-input
 
 Usage:
->>> import Qt.QtGui as QtGui
->>> model = QtGui.QStandardItemModel()
+>>> import Qt.QtWidgets as QtWidgets
+>>> model = QtWidgets.QStandardItemModel()
 >>> words = ['cat', 'dog', 'fox', 'wolf', 'tiger', 'lion']
 >>> for i, word in enumerate(words):
->>>     item = QtGui.QStandardItem(word)
+>>>     item = QtWidgets.QStandardItem(word)
 >>>     model.setItem(i, 0, item)
 >>> combo = ComboBoxCompleter()
 >>> combo.setModel(model)
@@ -19,20 +19,20 @@ Usage:
 
 import sys
 from Qt import QtCore
-from Qt import QtGui
+from Qt import QtWidgets
 
 
-class ComboBoxCompleter(QtGui.QComboBox):
+class ComboBoxCompleter(QtWidgets.QComboBox):
     def __init__(self, parent=None):
         super(ComboBoxCompleter, self).__init__(parent)
 
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setEditable(True)
-        self.completer = QtGui.QCompleter(self)
+        self.completer = QtWidgets.QCompleter(self)
 
         # always show all completions
-        self.completer.setCompletionMode(QtGui.QCompleter.UnfilteredPopupCompletion)
-        self.pFilterModel = QtGui.QSortFilterProxyModel(self)
+        self.completer.setCompletionMode(QtWidgets.QCompleter.UnfilteredPopupCompletion)
+        self.pFilterModel = QtWidgets.QSortFilterProxyModel(self)
         self.pFilterModel.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
 
         self.completer.setPopup(self.view())

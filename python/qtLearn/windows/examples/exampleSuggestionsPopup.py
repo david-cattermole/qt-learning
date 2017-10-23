@@ -6,30 +6,29 @@ https://stackoverflow.com/questions/21964061/qt-qlineedit-error-popup-balloon-me
 """
 
 import sys
-from Qt import QtCore
-from Qt import QtGui
+
+import Qt.QtCore as QtCore
+import Qt.QtWidgets as QtWidgets
 
 
-class SuggestionListWidget(QtGui.QWidget):
+class SuggestionListWidget(QtWidgets.QWidget):
     def __init__(self, parent):
         super(SuggestionListWidget, self).__init__(parent)
         self.setContentsMargins(0, 0, 0, 0)
         self.setAttribute(QtCore.Qt.WA_ShowWithoutActivating)
         self.setWindowFlags(QtCore.Qt.Tool | QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
-        # self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.Popup)
-        # self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.ToolTip | QtCore.Qt.Popup)
 
-        self.layout = QtGui.QVBoxLayout(self)
+        self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.setContentsMargins(0, 0, 0, 0)
 
-        self.listWidget = QtGui.QListWidget()
-        self.button = QtGui.QPushButton("Button")
+        self.listWidget = QtWidgets.QListWidget()
+        self.button = QtWidgets.QPushButton("Button")
 
         self.layout.addWidget(self.listWidget)
         self.layout.addWidget(self.button)
 
     # def moveEvent(self, event):
-    #     print 'moveEvent:', event, event.pos(), event.oldPos()
+    #     print('moveEvent:', event, event.pos(), event.oldPos())
     #     super(SuggestionListWidget, self).moveEvent(event)
 
 
@@ -41,7 +40,7 @@ class WidgetErrorChecking(SuggestionListWidget):
 
         self.hide()
 
-        if isinstance(widget, QtGui.QLineEdit):
+        if isinstance(widget, QtWidgets.QLineEdit):
             widget.textEdited.connect(self.showSuggestions)
 
     def showSuggestions(self):
@@ -86,10 +85,10 @@ class WidgetErrorChecking(SuggestionListWidget):
     #                                 self.widget.rect().bottomLeft()))
 
 
-class LineEditSuggestion(QtGui.QLineEdit):
+class LineEditSuggestion(QtWidgets.QLineEdit):
     def __init__(self, parent):
         super(LineEditSuggestion, self).__init__(parent)
-        # self.listWidget = QtGui.QListWidget()
+        # self.listWidget = QtWidgets.QListWidget()
         self.listWidget = SuggestionListWidget(parent)
         self.listWidget.hide()
 
@@ -98,21 +97,21 @@ class LineEditSuggestion(QtGui.QLineEdit):
         self.returnPressed.connect(self.hideSuggestions)
 
     def focusInEvent(self, event):
-        print 'focusInEvent:', event
+        print('focusInEvent:', event)
         if event.reason() == QtCore.Qt.MouseFocusReason:
-            # print 'The mouse triggered the event'
+            # print('The mouse triggered the event')
             self.showSuggestions()
         super(LineEditSuggestion, self).focusInEvent(event)
 
     def focusOutEvent(self, event):
-        print 'focusOutEvent:', event
+        print('focusOutEvent:', event)
         if event.reason() == QtCore.Qt.MouseFocusReason:
-            # print 'The mouse triggered the event'
+            # print('The mouse triggered the event')
             self.hideSuggestions()
         super(LineEditSuggestion, self).focusInEvent(event)
 
     def showSuggestions(self):
-        print 'showSuggestions'
+        print('showSuggestions')
         self.listWidget.adjustSize()
         p = self.mapFromGlobal(-self.rect().bottomLeft())
         self.listWidget.move(-p)
@@ -121,18 +120,18 @@ class LineEditSuggestion(QtGui.QLineEdit):
         return
 
     def hideSuggestions(self):
-        print 'hideSuggestions'
+        print('hideSuggestions')
         if self.listWidget is not None:
             self.listWidget.hide()
         return
 
 
-class Window(QtGui.QWidget):
+class Window(QtWidgets.QWidget):
     def __init__(self):
-        QtGui.QWidget.__init__(self)
-        self.layout = QtGui.QHBoxLayout(self)
+        QtWidgets.QWidget.__init__(self)
+        self.layout = QtWidgets.QHBoxLayout(self)
 
-        self.button = QtGui.QPushButton(self)
+        self.button = QtWidgets.QPushButton(self)
         self.layout.addWidget(self.button)
 
         self.lineEdit = LineEditSuggestion(self)
@@ -144,12 +143,12 @@ class Window(QtGui.QWidget):
 
     # def popup(self, index_before, index_after):
     #     # cursorPositionChanged(int, int)
-    #     print 'i1:', index_before, 'i2:', index_after
-    #     # self.listWidget = QtGui.QListWidget(self)
+    #     print('i1:', index_before, 'i2:', index_after)
+    #     # self.listWidget = QtWidgets.QListWidget(self)
 
 
 def main(argv):
-    app = QtGui.QApplication(argv)
+    app = QtWidgets.QApplication(argv)
 
     ui = Window()
     ui.show()
