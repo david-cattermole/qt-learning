@@ -10,9 +10,10 @@ import qtLearn.windows.fileBrowser.forms.ui_saveOptions as ui_saveOptions
 
 
 class SaveOptions(QtWidgets.QWidget, ui_saveOptions.Ui_Form):
-    def __init__(self):
+    def __init__(self, parent):
         super(SaveOptions, self).__init__()
         self.setupUi(self)
+        self.parent = parent
 
         attrHelper = attributeHelper.AttributeHelper()
         attrHelper.setLayout(self.optionAttrWidgets)

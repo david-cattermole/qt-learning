@@ -51,7 +51,7 @@ class BaseStandaloneWindow(QtWidgets.QMainWindow,
     def addSubForm(self, SubForm):
         if SubForm is None:
             return None
-        self.subForm = SubForm()
+        self.subForm = SubForm(self)
         self.optionsLayout.addWidget(self.subForm)
         return True
 

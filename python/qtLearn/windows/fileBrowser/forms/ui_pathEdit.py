@@ -33,55 +33,20 @@ class Ui_Form(object):
         self.editCheckBox.setText("")
         self.editCheckBox.setObjectName("editCheckBox")
         self.horizontalLayout.addWidget(self.editCheckBox)
-        self.textEdit = QtWidgets.QTextEdit(Form)
-        self.textEdit.setEnabled(False)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.textEdit.sizePolicy().hasHeightForWidth())
-        self.textEdit.setSizePolicy(sizePolicy)
-        self.textEdit.setMinimumSize(QtCore.QSize(0, 25))
-        self.textEdit.setMaximumSize(QtCore.QSize(16777215, 25))
-        font = QtGui.QFont()
-        font.setFamily("Monospace")
-        self.textEdit.setFont(font)
-        self.textEdit.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.textEdit.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.textEdit.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.textEdit.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.textEdit.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.textEdit.setLineWrapMode(QtWidgets.QTextEdit.NoWrap)
-        self.textEdit.setReadOnly(False)
-        self.textEdit.setObjectName("textEdit")
-        self.horizontalLayout.addWidget(self.textEdit)
+        self.lineEdit = QtWidgets.QLineEdit(Form)
+        self.lineEdit.setEnabled(False)
+        self.lineEdit.setObjectName("lineEdit")
+        self.horizontalLayout.addWidget(self.lineEdit)
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.retranslateUi(Form)
-        self.editCheckBox.toggled['bool'].connect(self.textEdit.setEnabled)
+        self.editCheckBox.toggled['bool'].connect(self.lineEdit.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label.setText(_translate("Form", "Path"))
-        self.textEdit.setToolTip(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Monospace\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">/data/project/seq/shot/working/dept/shot_name_ver_user_desc.ext</p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">project = mazda</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">seq = sh</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">shot = sh0010</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">dept = layout</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">name = camera</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ver = v001.001</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">user = davidc</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">desc = thisIsTheDescription</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ext = mb</p></body></html>"))
-        self.textEdit.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Monospace\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p align=\"right\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">/data/</span><span style=\" font-size:10pt; color:#aa0000;\">mazda</span><span style=\" font-size:10pt;\">/</span><span style=\" font-size:10pt; color:#aa3800;\">sh</span><span style=\" font-size:10pt;\">/</span><span style=\" font-size:10pt; color:#aa7100;\">sh0010</span><span style=\" font-size:10pt;\">/working/</span><span style=\" font-size:10pt; color:#aaaa00;\">layout</span><span style=\" font-size:10pt;\">/</span><span style=\" font-size:10pt; color:#aa7100;\">sh0010</span><span style=\" font-size:10pt; color:#ffffff;\">_</span><span style=\" font-size:10pt; color:#71aa00;\">camera</span><span style=\" font-size:10pt; color:#ffffff;\">_</span><span style=\" font-size:10pt; color:#00aa00;\">v001.</span><span style=\" font-size:10pt; color:#00aa38;\">001</span><span style=\" font-size:10pt;\">_</span><span style=\" font-size:10pt; color:#00aa71;\">davidc</span><span style=\" font-size:10pt;\">_</span><span style=\" font-size:10pt; color:#00aaaa;\">thisIsTheDescription</span><span style=\" font-size:10pt;\">.</span><span style=\" font-size:10pt; color:#0071aa;\">mb</span></p></body></html>"))
+        self.lineEdit.setToolTip(_translate("Form", "<html><head/><body><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">/data/project/seq/shot/working/dept/shot_name_ver_user_desc.ext</span></p><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">project = mazda</span></p><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">seq = sh</span></p><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">shot = sh0010</span></p><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">dept = layout</span></p><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">name = camera</span></p><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">ver = v001.001</span></p><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">user = davidc</span></p><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">desc = thisIsTheDescription</span></p><p><span style=\" font-family:\'Monospace\'; font-size:10pt;\">ext = mb</span></p></body></html>"))
+        self.lineEdit.setText(_translate("Form", "/data/mazda/sh/sh0010/working/layout/sh0010_camera_v001.001_davidc_thisIsTheDescription.mb"))
 

@@ -6,83 +6,46 @@ import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
-import \
-    qtLearn.windows.fileBrowser.forms.ui_versionSelector as ui_versionSelector
+import qtLearn.uiUtils as uiUtils
 import qtLearn.windows.fileBrowser.nodes as nodes
-
-
-# reload(ui_versionSelector)
-
-
-# class Node(object):
-#     def __init__(self, name, parent=None):
-#         self._name = name
-#         self._children = []
-#         self._parent = parent
-#         self.typeInfo = 'node'
-#         if parent is not None:
-#             parent.addChild(self)
-#
-#     def addChild(self, child):
-#         self._children.append(child)
-#
-#     def insertChild(self, position, child):
-#         if position < 0 or position > len(self._children):
-#             return False
-#         self._children.insert(position, child)
-#         child._parent = self
-#         return True
-#
-#     def removeChild(self, position):
-#         if position < 0 or position > len(self._children):
-#             return False
-#         child = self._children.pop(position)
-#         child._parent = None
-#         return True
-#
-#     def name(self):
-#         return self._name
-#
-#     def setName(self, name):
-#         self._name = name
-#
-#     def child(self, row):
-#         return self._children[row]
-#
-#     def childCount(self):
-#         return len(self._children)
-#
-#     def parent(self):
-#         return self._parent
-#
-#     def row(self):
-#         if self._parent is not None:
-#             return self._parent._children.index(self)
+import qtLearn.windows.fileBrowser.forms.ui_versionSelector as ui_versionSelector
 
 
 class MajorVersionNode(nodes.Node):
-    def __init__(self, version, parent=None):
+    def __init__(self, version, data=None, parent=None):
         super(MajorVersionNode, self).__init__(version,
                                                parent=parent,
                                                selectable=False,
-                                               editable=False)
+                                               editable=False,
+                                               data=data)
         self._version = version
         self.typeInfo = 'majorversion'
+
+    def icon(self):
+        if self._icon is None:
+            self._icon = QtGui.QIcon(QtGui.QPixmap(':/MajorVersion.png'))
+        return self._icon
 
     def version(self):
         return self._version
 
 
 class MinorVersionNode(nodes.Node):
-    def __init__(self, version, user, desc, parent=None):
+    def __init__(self, version, user, desc, data=None, parent=None):
         super(MinorVersionNode, self).__init__(version,
                                                parent=parent,
                                                selectable=True,
-                                               editable=False)
+                                               editable=False,
+                                               data=data)
         self._version = version
         self._user = user
         self._desc = desc
         self.typeInfo = 'minorversion'
+
+    def icon(self):
+        if self._icon is None:
+            self._icon = QtGui.QIcon(QtGui.QPixmap(':/MinorVersion.png'))
+        return self._icon
 
     def version(self):
         return self._version
@@ -102,7 +65,7 @@ class MinorVersionNode(nodes.Node):
         return ver
 
 
-def getVersions():
+def getVersions(path):
     versions = [
         ('v001.001', 'john', 'description'),
         ('v002.001', 'davidc', 'description'),
@@ -111,11 +74,14 @@ def getVersions():
         ('v002.004', 'john', 'description'),
         ('v003.001', 'bob', 'description'),
     ]
+    return versions
 
+
+def convertVersionsToNodes(version_list):
     major_versions = {}
     minor_versions = {}
     rootNode = nodes.Node('root')
-    for version in versions:
+    for version in version_list:
         ver = version[0]
         major_ver = str(ver).split('.')[0]
         minor_ver = str(ver).split('.')[1]
@@ -126,41 +92,29 @@ def getVersions():
         if major_ver in major_versions:
             majorNode = major_versions[major_ver]
         else:
-            majorNode = MajorVersionNode(major_ver, parent=rootNode)
+            majorNode = MajorVersionNode(major_ver, parent=rootNode, data=major_ver)
 
         # Create Minor Version
         if ver in minor_versions:
             minorNode = minor_versions[major_ver]
         else:
             minorNode = MinorVersionNode(minor_ver, user, desc,
-                                         parent=majorNode)
+                                         parent=majorNode, data=ver)
 
         major_versions[major_ver] = majorNode
         minor_versions[ver] = minorNode
     return rootNode
 
 
-class VersionModel(QtCore.QAbstractItemModel):
-    def __init__(self, root_node):
-        super(VersionModel, self).__init__()
-        self._root_node = root_node
+class VersionModel(nodes.Model):
+    def __init__(self, root, font=None):
+        super(VersionModel, self).__init__(root, font=font)
+        self._root_node = root
         self._column_names = {
             0: 'Version',
             1: 'User',
             2: 'Description',
         }
-        self._type_icons = {
-            'minorversion': QtGui.QIcon(QtGui.QPixmap(':/MinorVersion.png')),
-            'majorversion': QtGui.QIcon(QtGui.QPixmap(':/MajorVersion.png')),
-            'node': QtGui.QIcon(QtGui.QPixmap(':/Node.png')),
-        }
-
-    def rowCount(self, parent):
-        if not parent.isValid():
-            parentNode = self._root_node
-        else:
-            parentNode = parent.internalPointer()
-        return parentNode.childCount()
 
     def columnCount(self, parent):
         return 3
@@ -181,7 +135,7 @@ class VersionModel(QtCore.QAbstractItemModel):
                 name = node.version()
                 user = node.user()
                 desc = node.description()
-            elif isinstance(node, Node):
+            elif isinstance(node, nodes.Node):
                 name = node.name()
 
             if column == 0:
@@ -190,64 +144,44 @@ class VersionModel(QtCore.QAbstractItemModel):
                 return user
             elif column == 2:
                 return desc
-            else:
-                return ''
 
         if role == QtCore.Qt.DecorationRole:
             if index.column() == 0:
-                return self._type_icons.get(node.typeInfo)
+                return node.icon()
         return None
-
-    def parent(self, index):
-        node = index.internalPointer()
-        parentNode = node.parent()
-        if parentNode == self._root_node:
-            return QtCore.QModelIndex()
-        return self.createIndex(parentNode.row(), 0, parentNode)
-
-    def index(self, row, column, parent):
-        parentNode = self.getNode(parent)
-        childItem = parentNode.child(row)
-        if childItem:
-            return self.createIndex(row, column, childItem)
-        else:
-            return QtCore.QModelIndex()
-
-    def getNode(self, index):
-        if index.isValid():
-            node = index.internalPointer()
-            if node:
-                return node
-        return self._root_node
-
-    def headerData(self, section, orientation, role):
-        if role == QtCore.Qt.DisplayRole:
-            return self._column_names.get(section, 'Column')
-        return None
-
-    def flags(self, index):
-        v = QtCore.Qt.ItemIsEnabled
-        node = index.internalPointer()
-        if node.selectable():
-            v = v | QtCore.Qt.ItemIsSelectable
-        if node.editable():
-            v = v | QtCore.Qt.ItemIsEditable
-        return v
-
-        # def flags(self, index):
-        #     node = index.internalPointer()
-        #     if isinstance(node, MinorVersionNode):
-        #         return QtCore.Qt.ItemIsEnabled | \
-        #                QtCore.Qt.ItemIsSelectable | \
-        #                QtCore.Qt.ItemIsEditable
-        #     return QtCore.Qt.ItemIsEnabled
 
 
 class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
-    def __init__(self):
+    versionSelected = QtCore.Signal(str, str)
+
+    def __init__(self, parent):
         super(VersionSelector, self).__init__()
         self.setupUi(self)
+        self.parent = parent
+        self.font = uiUtils.getFont('monospace')
 
-        versions = getVersions()
-        model = VersionModel(versions)
-        self.treeView.setModel(model)
+        path = ''
+        versions = getVersions(path)
+        versionNodes = convertVersionsToNodes(versions)
+
+        self.versionModel = VersionModel(versionNodes, font=self.font)
+        self.versionFilterModel = QtCore.QSortFilterProxyModel()
+        self.versionFilterModel.setSourceModel(self.versionModel)
+        self.versionFilterModel.setDynamicSortFilter(True)
+        self.versionFilterModel.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
+        self.treeView.setModel(self.versionFilterModel)
+        self.treeView.setSortingEnabled(True)
+        self.treeView.sortByColumn(0, QtCore.Qt.DescendingOrder)
+        self.selectionModel = self.treeView.selectionModel()
+        self.selectionModel.selectionChanged.connect(self.selectionChangedFunc)
+
+    def selectionChangedFunc(self, selected, deselected=None):
+        for index in selected.indexes():
+            if index.isValid():
+                node = self.versionFilterModel.mapToSource(index).internalPointer()
+                if node is not None:
+                    dataSplit = node.data().split('.')
+                    minor = dataSplit[1]
+                    major = dataSplit[0]
+                    self.versionSelected.emit('minor', minor)
+                    self.versionSelected.emit('major', major)

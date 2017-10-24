@@ -18,14 +18,15 @@ import qtLearn.windows.fileBrowser.ui_fileBrowserSave as ui_fileBrowserSave
 
 
 class FileBrowserSaveLayout(QtWidgets.QWidget, ui_fileBrowserSave.Ui_Form):
-    def __init__(self):
+    def __init__(self, parent):
         super(FileBrowserSaveLayout, self).__init__()
         self.setupUi(self)
+        self.parent = parent
 
-        self.envFilterForm = envFilter.EnvFilter()
-        self.fileSelectorForm = fileSelector.FileSelector()
-        self.saveOptionsForm = saveOptions.SaveOptions()
-        self.pathEditForm = pathEdit.PathEdit()
+        self.envFilterForm = envFilter.EnvFilter(self)
+        self.fileSelectorForm = fileSelector.FileSelector(self)
+        self.saveOptionsForm = saveOptions.SaveOptions(self)
+        self.pathEditForm = pathEdit.PathEdit(self)
 
         self.envFilterLayout.addWidget(self.envFilterForm)
         self.fileSelectorLayout.addWidget(self.fileSelectorForm)

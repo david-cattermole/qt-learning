@@ -6,6 +6,7 @@ import sys
 
 import Qt # __version__, __binding__, __qt_version__, __binding_version__
 import Qt.QtCore as QtCore
+import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
 
@@ -67,3 +68,10 @@ def getBaseWindow():
     else:
         print('Warning: Unknown application host, %r' % host)
     return baseModule, BaseWindow
+
+
+def getFont(name=None):
+    font = QtGui.QFont()
+    if name == 'monospace':
+        font.setStyleHint(QtGui.QFont.Monospace)
+    return font

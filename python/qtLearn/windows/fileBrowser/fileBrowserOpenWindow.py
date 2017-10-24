@@ -7,6 +7,7 @@ Usage:
 
 import sys
 
+import Qt.QtCore as QtCore
 import Qt.QtWidgets as QtWidgets
 
 import qtLearn.uiUtils as uiUtils
@@ -18,19 +19,23 @@ import qtLearn.windows.fileBrowser.ui_fileBrowserOpen as ui_fileBrowserOpen
 
 
 class MainLayout(QtWidgets.QWidget, ui_fileBrowserOpen.Ui_Form):
-    def __init__(self):
+    def __init__(self, parent):
         super(MainLayout, self).__init__()
         self.setupUi(self)
+        self.parent = parent
 
-        self.envFilterForm = envFilter.EnvFilter()
-        self.fileSelectorForm = fileSelector.FileSelector()
-        self.versionSelectorForm = versionSelector.VersionSelector()
-        self.pathEditForm = pathEdit.PathEdit()
+        self.envFilterForm = envFilter.EnvFilter(self)
+        self.fileSelectorForm = fileSelector.FileSelector(self)
+        self.versionSelectorForm = versionSelector.VersionSelector(self)
+        self.pathEditForm = pathEdit.PathEdit(self)
 
         self.envFilterLayout.addWidget(self.envFilterForm)
         self.fileSelectorLayout.addWidget(self.fileSelectorForm)
         self.versionSelectorLayout.addWidget(self.versionSelectorForm)
         self.pathEditLayout.addWidget(self.pathEditForm)
+
+        self.fileSelectorForm.fileSelected.connect(self.pathEditForm.updateTag)
+        self.versionSelectorForm.versionSelected.connect(self.pathEditForm.updateTag)
 
         self.buttonBox.rejected.connect(self.rejected)
         self.buttonBox.accepted.connect(self.accepted)

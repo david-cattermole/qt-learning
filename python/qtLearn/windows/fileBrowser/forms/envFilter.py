@@ -47,9 +47,10 @@ def getUsers():
 
 
 class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
-    def __init__(self):
+    def __init__(self, parent):
         super(EnvFilter, self).__init__()
         self.setupUi(self)
+        self.parent = parent
 
         # Project ComboBox
         projData = getProjects()
