@@ -80,6 +80,17 @@ class FileNameNode(nodes.Node):
 def getFileNodes(path):
     # Example data
     rootNode = nodes.Node('root', data=path)
+    
+    # Matchmove
+    matchmoveDept = DeptNode('matchmove', parent=rootNode)
+    camTask = TaskNode('camera', parent=matchmoveDept)
+    mmTask = TaskNode('matchmove', parent=matchmoveDept)
+    camBg1Name = FileNameNode('bg01', parent=camTask, data='matchmove/camera/bg01')
+    camBg2Name = FileNameNode('bg02', parent=camTask, data='matchmove/camera/bg02')
+    camBg3Name = FileNameNode('bg03', parent=camTask, data='matchmove/camera/bg03')
+    camBg4Name = FileNameNode('bg04', parent=camTask, data='matchmove/camera/bg04')
+    camBg5Name = FileNameNode('bg05', parent=camTask, data='matchmove/camera/bg05')
+    matchmoveName = FileNameNode('john', parent=mmTask, data='matchmove/matchmove/john')
 
     # Layout
     layoutDept = DeptNode('layout', parent=rootNode)
@@ -97,8 +108,16 @@ def getFileNodes(path):
     lightDept = DeptNode('light', parent=rootNode)
     lightTask = TaskNode('light', parent=lightDept)
     lightName = FileNameNode('light', parent=lightTask, data='light/light/light')
-    return rootNode
 
+    # Effects
+    fxDept = DeptNode('fx', parent=rootNode)
+    destTask = TaskNode('destruction', parent=fxDept)
+    waterTask = TaskNode('water', parent=fxDept)
+    fireTask = TaskNode('fire', parent=fxDept)
+    fxName = FileNameNode('fx', parent=destTask, data='fx/destruction/fx')
+    fxName = FileNameNode('fx', parent=waterTask, data='fx/water/fx')
+    fxName = FileNameNode('fx', parent=fireTask, data='fx/fire/fx')
+    return rootNode
 
 
 class FileModel(nodes.ItemModel):
@@ -113,8 +132,32 @@ class FileModel(nodes.ItemModel):
         return 1
 
 
+class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
+    def __init__(self):
+        super(SortFilterProxyModel, self).__init__()
+
+    def filterAcceptsRow(self, sourceRow, sourceParent):
+        result = False
+        pattern = self.filterRegExp().pattern()
+        if len(pattern) == 0:
+            return True
+
+        srcModel = self.sourceModel()
+        column = self.filterKeyColumn()
+        if column < 0:
+            column = 0
+        index = srcModel.index(sourceRow, column, sourceParent)
+        node = index.internalPointer()
+        path = node.allTags()
+
+        if pattern in path:
+            result = True
+        return result
+
+
 class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
     setTag = QtCore.Signal(str, str)
+    changedFile = QtCore.Signal(str)
 
     def __init__(self, parent):
         super(FileSelector, self).__init__()
@@ -127,21 +170,27 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
 
         # Setup data, filter/sorting model.
         self.fileModel = FileModel(self.rootNode, font=self.font)
-        self.fileFilterModel = QtCore.QSortFilterProxyModel()
+        self.fileFilterModel = SortFilterProxyModel()
         self.fileFilterModel.setSourceModel(self.fileModel)
         self.fileFilterModel.setDynamicSortFilter(True)
         self.fileFilterModel.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
-        self.searchLineEdit.textChanged.connect(self.fileFilterModel.setFilterRegExp)
+        self.fileFilterModel.setFilterKeyColumn(1)
+        self.searchLineEdit.textChanged.connect(self.searchTextChanged)
         self.treeView.setModel(self.fileFilterModel)
         self.treeView.setSortingEnabled(True)
         self.treeView.sortByColumn(0, QtCore.Qt.AscendingOrder)
+        self.treeView.setHeaderHidden(True)
         self.treeView.expandAll()
 
         self.selectionModel = self.treeView.selectionModel()
         self.selectionModel.currentChanged.connect(self.currentChangedFunc)
 
+    def searchTextChanged(self, text):
+        self.fileFilterModel.setFilterRegExp(text)
+        if len(text) == 0:
+            self.treeView.expandAll()
+
     def setPath(self, path):
-        # print('VersionSelector setPath:', path)
         self._path = path
         rootNode = getFileNodes(self._path)
         self.versionModel.setRootNode(rootNode)
@@ -165,21 +214,4 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
             self.setTag.emit('department', dept)
             self.setTag.emit('task', task)
             self.setTag.emit('name', name)
-
-    # def selectionChangedFunc(self, selected, deselected=None):
-    #     for index in selected.indexes():
-    #         if not index.isValid():
-    #             continue
-    #         index_map = self.fileFilterModel.mapToSource(index)
-    #         node = index_map.internalPointer()
-    #         if node is None:
-    #             continue
-    #         dataSplit = node.data().split('/')
-    #         # print('fileSelector selectionChangedFunc:', dataSplit)
-    #         if len(dataSplit) == 3:
-    #             dept = dataSplit[0]
-    #             task = dataSplit[1]
-    #             name = dataSplit[2]
-    #             self.setTag.emit('department', dept)
-    #             self.setTag.emit('task', task)
-    #             self.setTag.emit('name', name)
+            self.changedFile.emit(data)

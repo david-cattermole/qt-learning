@@ -2,7 +2,6 @@
 
 """
 
-import sys
 import random
 
 import Qt.QtCore as QtCore
@@ -66,17 +65,17 @@ class MinorVersionNode(VersionNode):
 
 
 def getVersions(path):
-    # versions_1 = [
-    #     ('v001.001', 'john', 'description'),
-    #     ('v002.001', 'davidc', 'description'),
-    #     ('v002.002', 'davidc', 'description'),
-    #     ('v002.003', 'davidc', 'description'),
-    #     ('v002.004', 'john', 'description'),
-    #     ('v003.001', 'bob', 'description'),
-    # ]
-    # versions_2 = [
-    #     ('v001.001', 'davidc', 'description'),
-    # ]
+    versions_1 = [
+        ('v001.001', 'john', 'description'),
+        ('v002.001', 'davidc', 'description'),
+        ('v002.002', 'davidc', 'description'),
+        ('v002.003', 'davidc', 'description'),
+        ('v002.004', 'john', 'description'),
+        ('v003.001', 'bob', 'description'),
+    ]
+    versions_2 = [
+        ('v001.001', 'davidc', 'description'),
+    ]
     versions_3 = [
         ('v001.001', 'davidc', 'description'),
         ('v002.001', 'davidc', 'description'),
@@ -91,22 +90,22 @@ def getVersions(path):
         ('v011.001', 'davidc', 'description'),
         ('v012.001', 'davidc', 'description'),
     ]
-    # versions_4 = [
-    #     ('v001.001', 'bob', 'description'),
-    #     ('v001.002', 'bob', 'description'),
-    #     ('v001.003', 'bob', 'description'),
-    #     ('v001.004', 'bob', 'description'),
-    #     ('v001.005', 'bob', 'description'),
-    #     ('v001.006', 'bob', 'description'),
-    #     ('v001.007', 'bob', 'description'),
-    #     ('v001.008', 'bob', 'description'),
-    #     ('v001.009', 'bob', 'description'),
-    #     ('v001.010', 'bob', 'description'),
-    #     ('v002.001', 'bob', 'description'),
-    # ]
-    # versions = [versions_1, versions_2, versions_3, versions_4]
-    # version = random.choice(versions)
-    return versions_3
+    versions_4 = [
+        ('v001.001', 'bob', 'description'),
+        ('v001.002', 'bob', 'description'),
+        ('v001.003', 'bob', 'description'),
+        ('v001.004', 'bob', 'description'),
+        ('v001.005', 'bob', 'description'),
+        ('v001.006', 'bob', 'description'),
+        ('v001.007', 'bob', 'description'),
+        ('v001.008', 'bob', 'description'),
+        ('v001.009', 'bob', 'description'),
+        ('v001.010', 'bob', 'description'),
+        ('v002.001', 'bob', 'description'),
+    ]
+    versions = [versions_1, versions_2, versions_3, versions_4]
+    version = random.choice(versions)
+    return version
 
 
 def getVersionNodes(path):
@@ -161,15 +160,12 @@ class VersionModel(nodes.ItemModel):
         if not index.isValid():
             return None
         node = index.internalPointer()
-        name = ''
-        user = ''
-        desc = ''
-
         if role == QtCore.Qt.DisplayRole or role == QtCore.Qt.EditRole:
             column = index.column()
             name = node.name()
+            user = ''
+            desc = ''
             if isinstance(node, MinorVersionNode):
-                name = node.name()
                 user = node.user()
                 desc = node.description()
 
@@ -213,7 +209,6 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
         self.selectionModel.currentChanged.connect(self.currentChangedFunc)
 
     def setPath(self, path):
-        # print('VersionSelector setPath:', path)
         self._path = path
         rootNode = getVersionNodes(self._path)
         self.versionModel.setRootNode(rootNode)

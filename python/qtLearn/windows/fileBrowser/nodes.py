@@ -2,8 +2,6 @@
 Defines a basic node class able to be used for tree data models.
 """
 
-import sys
-
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
@@ -12,21 +10,28 @@ import Qt.QtWidgets as QtWidgets
 class Node(object):
     def __init__(self, name,
                  data=None,
+                 toolTip=None,
+                 statusTip=None,
                  parent=None,
                  enabled=True,
                  editable=False,
                  selectable=True,
                  checkable=False,
                  neverHasChildren=False):
-        self._name = name
         self._children = []
         self._parent = parent
+
+        self._name = name
+        self._toolTip = toolTip
+        self._statusTip = statusTip
+        self._data = data
+
         self._enabled = enabled
         self._checkable = checkable
         self._editable = editable
         self._selectable = selectable
         self._neverHasChildren = neverHasChildren
-        self._data = data
+
         self._icon = QtGui.QIcon(QtGui.QPixmap(':/Node.png'))
         self.typeInfo = 'node'
         if parent is not None:
@@ -37,6 +42,18 @@ class Node(object):
 
     def setName(self, name):
         self._name = name
+        
+    def toolTip(self):
+        return self._toolTip
+
+    def setToolTip(self, toolTip):
+        self._toolTip = toolTip
+
+    def statusTip(self):
+        return self._statusTip
+
+    def setStatusTip(self, statusTip):
+        self._statusTip = statusTip
 
     def data(self):
         return self._data
@@ -45,14 +62,14 @@ class Node(object):
         self._data = value
 
     def enabled(self):
-        """Can the data be edited?"""
+        """Can the data be enabled?"""
         return self._enabled
 
     def setEnabled(self, value):
         self._enabled = value
 
     def checkable(self):
-        """Can the data be edited?"""
+        """Can the data be checked?"""
         return self._checkable
 
     def setCheckable(self, value):
@@ -73,7 +90,7 @@ class Node(object):
         self._selectable = value
 
     def neverHasChildren(self):
-        """Can the data be edited?"""
+        """Optimisation, only turn this to True if this is surely the last child"""
         return self._neverHasChildren
 
     def setNeverHasChildren(self, value):
@@ -105,6 +122,32 @@ class Node(object):
     def childCount(self):
         return len(self._children)
 
+    def childTags(self):
+        # TODO: Clean up this function and make a more efficient way of
+        # generating these tags.
+        result = ''
+        for i in range(self.childCount()):
+            node = self.child(i)
+            if node.childCount() == 0:
+                result += '|' + node.name()
+            else:
+                result += '|' + node.childTags()
+        return result
+
+    def allTags(self):
+        # TODO: Clean up this function and make a more efficient way of
+        # generating these tags.
+        result = self.name()
+        result += self.childTags()
+
+        node = self.parent()
+        while node:
+            node = node.parent()
+            # Allows us to skip the root node.
+            if node is not None:
+                result += '|' + node.name()
+        return result
+
     def parent(self):
         return self._parent
 
@@ -117,7 +160,7 @@ class Node(object):
 class ItemModel(QtCore.QAbstractItemModel):
     def __init__(self, rootNode, font=None):
         super(ItemModel, self).__init__()
-        self._rootNode = None  # Node('root')
+        self._rootNode = None
         self._column_names = {
             0: 'Column',
         }
@@ -129,9 +172,6 @@ class ItemModel(QtCore.QAbstractItemModel):
         return self._rootNode
 
     def setRootNode(self, rootNode):
-        # print('setRootNode:', rootNode.name(), repr(rootNode.data()))
-        # sys.stdout.flush()
-
         super(ItemModel, self).beginResetModel()
         self._rootNode = rootNode
         super(ItemModel, self).endResetModel()
@@ -161,6 +201,12 @@ class ItemModel(QtCore.QAbstractItemModel):
         if role == QtCore.Qt.DecorationRole:
             if index.column() == 0:
                 return node.icon()
+
+        if role == QtCore.Qt.ToolTipRole:
+            return node.toolTip()
+
+        if role == QtCore.Qt.StatusTipRole:
+            return node.statusTip()
 
         if role == QtCore.Qt.FontRole:
             if self._font is not None:
@@ -206,28 +252,7 @@ class ItemModel(QtCore.QAbstractItemModel):
         if parentNode is None:
             return QtCore.QModelIndex()
         row = parentNode.row()
-        # print('node:', node.name(), node.data())
-        # print('parentNode:', parentNode.name())
-        # sys.stdout.flush()
         return self.createIndex(row, 0, parentNode)
-
-    # def parent(self, index):
-    #     if not index.isValid():
-    #         return QtCore.QModelIndex()
-    #     node = self.getNode(index)  # index.internalPointer()
-    #     parentNode = node.parent()
-    #     if parentNode is None:
-    #         return QtCore.QModelIndex()
-    #     else:
-    #         row = parentNode.row()
-    #         if row is None:
-    #             return QtCore.QModelIndex()
-    #
-    #         print('node:', node.name(), node.data())
-    #         print('parentNode:', parentNode.name())
-    #         sys.stdout.flush()
-    #
-    #         return self.createIndex(row, 0, parentNode)
 
     def index(self, row, column, parent):
         parentNode = self.getNode(parent)
@@ -235,12 +260,6 @@ class ItemModel(QtCore.QAbstractItemModel):
         if childItem:
             return self.createIndex(row, column, childItem)
         return QtCore.QModelIndex()
-
-    # def index(self, row, column, parent):
-    #     if not parent.isValid():
-    #         return self.createIndex(row, column, self._rootNode)
-    #     parentNode = parent.internalPointer()
-    #     return self.createIndex(row, column, parentNode.child(row))
 
     def getNode(self, index):
         node = None
@@ -269,8 +288,4 @@ class ItemModel(QtCore.QAbstractItemModel):
             success = parentNode.removeChild(position)
         self.endRemoveRows()
         return success
-
-    def reset(self):
-        # self._rootNode = self._rootNode
-        super(ItemModel, self).reset(self)
 

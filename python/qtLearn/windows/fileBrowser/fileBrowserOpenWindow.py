@@ -44,11 +44,11 @@ class MainLayout(QtWidgets.QWidget, ui_fileBrowserOpen.Ui_Form):
         self.buttonBox.accepted.connect(self.accepted)
 
     def rejected(self):
-        print('rejected')
-        return  # self.delete()
+        return self.parent.close()
 
     def accepted(self):
         print('accepted')
+        # TODO: What do we do to return the file path?
         return
 
 

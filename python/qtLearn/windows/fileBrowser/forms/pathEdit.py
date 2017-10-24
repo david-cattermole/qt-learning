@@ -1,8 +1,6 @@
 """
 
 """
-import sys
-import re
 
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
@@ -74,14 +72,10 @@ class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
         return self._pathFormat
 
     def setPathFormat(self, value):
-        # print('setPathRule:', value)
         self._pathFormat = value
 
     @QtCore.Slot(str, str)
     def setTag(self, tagName, tagValue):
-        # print('PathEdit setTag:', tagName, tagValue)
-        sys.stdout.flush()
-
         if tagName is None or len(tagName) == 0:
             return
         if not tagValue:
@@ -91,15 +85,10 @@ class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
         return
 
     def updatePathText(self):
-        # print('PathEdit updatePathText:', repr(self._tagData))
-        sys.stdout.flush()
-
         path = computePath(self.pathFormat(), self._tagData)
         tooltip = computeToolTip(path, self.pathFormat(), self._tagData)
 
-        self.blockSignals(True)
         self.lineEdit.setText(path)
         self.lineEdit.setToolTip(tooltip)
-        self.blockSignals(False)
 
         self.pathUpdated.emit(path)
