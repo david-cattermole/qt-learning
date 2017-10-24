@@ -24,18 +24,21 @@ class MainLayout(QtWidgets.QWidget, ui_fileBrowserOpen.Ui_Form):
         self.setupUi(self)
         self.parent = parent
 
-        self.envFilterForm = envFilter.EnvFilter(self)
-        self.fileSelectorForm = fileSelector.FileSelector(self)
-        self.versionSelectorForm = versionSelector.VersionSelector(self)
-        self.pathEditForm = pathEdit.PathEdit(self)
+        self.envFilter = envFilter.EnvFilter(self)
+        self.fileSelector = fileSelector.FileSelector(self)
+        self.versionSelector = versionSelector.VersionSelector(self)
+        self.pathEdit = pathEdit.PathEdit(self)
 
-        self.envFilterLayout.addWidget(self.envFilterForm)
-        self.fileSelectorLayout.addWidget(self.fileSelectorForm)
-        self.versionSelectorLayout.addWidget(self.versionSelectorForm)
-        self.pathEditLayout.addWidget(self.pathEditForm)
+        self.envFilterLayout.addWidget(self.envFilter)
+        self.fileSelectorLayout.addWidget(self.fileSelector)
+        self.versionSelectorLayout.addWidget(self.versionSelector)
+        self.pathEditLayout.addWidget(self.pathEdit)
 
-        self.fileSelectorForm.fileSelected.connect(self.pathEditForm.updateTag)
-        self.versionSelectorForm.versionSelected.connect(self.pathEditForm.updateTag)
+        self.fileSelector.setTag.connect(self.pathEdit.setTag)
+        self.versionSelector.setTag.connect(self.pathEdit.setTag)
+        self.pathEdit.pathUpdated.connect(self.versionSelector.setPath)
+
+        self.envFilter.setTag.connect(self.pathEdit.setTag)
 
         self.buttonBox.rejected.connect(self.rejected)
         self.buttonBox.accepted.connect(self.accepted)
@@ -72,7 +75,7 @@ class FileBrowserOpenWindow(BaseWindow):
 ui = None
 
 
-def main(show=True, widthHeight=(750, 400)):
+def main(show=True, widthHeight=(750, 600)):
     global ui
     print('ui:', ui)
 

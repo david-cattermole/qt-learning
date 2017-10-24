@@ -1,6 +1,8 @@
 """
 
 """
+import sys
+import re
 
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
@@ -10,7 +12,53 @@ import qtLearn.uiUtils as uiUtils
 import qtLearn.windows.fileBrowser.forms.ui_pathEdit as ui_pathEdit
 
 
+def computePath(pathFormat, tagData):
+    assert isinstance(pathFormat, str)
+    assert isinstance(tagData, dict)
+    result = pathFormat
+    for key, value in tagData.items():
+        if key in result:
+            k = '{' + key + '}'
+            result = result.replace(k, value)
+    return result
+
+
+def computeToolTip(path, pathFormat, tagData):
+    keyvalue_pairs = '\n'
+
+    path_keys = []
+    prev_len = 0
+    tmp_path = pathFormat
+    while len(tmp_path) != prev_len:
+        prev_len = len(tmp_path)
+        i = tmp_path.find('{')
+        if i != -1:
+            j = tmp_path.find('}')
+            if j != -1:
+                key = tmp_path[i:j+1]
+                key = key.replace('{', '').replace('}', '')
+                path_keys.append(key)
+                tmp_path = tmp_path[j+1:]
+
+    ordered_keys = []
+    for k in path_keys:
+        if k in tagData.keys():
+            ordered_keys.append(k)
+
+    for key in ordered_keys:
+        value = '?'
+        if key in tagData:
+            value = tagData[key]
+        keyvalue_pairs += '{k} = {v}\n'.format(k=key, v=value)
+
+    tooltip = path + '\n'
+    tooltip += keyvalue_pairs
+    return tooltip.strip()
+
+
 class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
+    pathUpdated = QtCore.Signal(str)
+
     def __init__(self, parent):
         super(PathEdit, self).__init__()
         self.setupUi(self)
@@ -22,13 +70,18 @@ class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
 
         self.lineEdit.setFont(self.font)
 
+    def pathFormat(self):
+        return self._pathFormat
+
     def setPathFormat(self, value):
         # print('setPathRule:', value)
         self._pathFormat = value
 
     @QtCore.Slot(str, str)
-    def updateTag(self, tagName, tagValue):
-        # print('updateFileName:', tagName, tagValue)
+    def setTag(self, tagName, tagValue):
+        # print('PathEdit setTag:', tagName, tagValue)
+        sys.stdout.flush()
+
         if tagName is None or len(tagName) == 0:
             return
         if not tagValue:
@@ -38,13 +91,15 @@ class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
         return
 
     def updatePathText(self):
-        # print('updatePathText:', self.textEdit.toPlainText(), self._tagData)
-        path = self._pathFormat
-        tooltip = self._pathFormat
-        for key, value in self._tagData.items():
-            if key in path:
-                k = '{' + key + '}'
-                path = path.replace(k, value)
-        tooltip = path
+        # print('PathEdit updatePathText:', repr(self._tagData))
+        sys.stdout.flush()
+
+        path = computePath(self.pathFormat(), self._tagData)
+        tooltip = computeToolTip(path, self.pathFormat(), self._tagData)
+
+        self.blockSignals(True)
         self.lineEdit.setText(path)
         self.lineEdit.setToolTip(tooltip)
+        self.blockSignals(False)
+
+        self.pathUpdated.emit(path)

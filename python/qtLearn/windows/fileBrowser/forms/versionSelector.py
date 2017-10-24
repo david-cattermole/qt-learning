@@ -2,6 +2,9 @@
 
 """
 
+import sys
+import random
+
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
@@ -11,44 +14,49 @@ import qtLearn.windows.fileBrowser.nodes as nodes
 import qtLearn.windows.fileBrowser.forms.ui_versionSelector as ui_versionSelector
 
 
-class MajorVersionNode(nodes.Node):
-    def __init__(self, version, data=None, parent=None):
-        super(MajorVersionNode, self).__init__(version,
+class VersionNode(nodes.Node):
+    def __init__(self, name,
+                 parent=None,
+                 data=None,
+                 enabled=True,
+                 editable=False,
+                 selectable=True,
+                 checkable=False,
+                 neverHasChildren=False):
+        super(VersionNode, self).__init__(name,
+                                          data=data,
+                                          parent=parent,
+                                          enabled=enabled,
+                                          selectable=selectable,
+                                          editable=editable,
+                                          checkable=checkable,
+                                          neverHasChildren=neverHasChildren)
+        self._icon = QtGui.QIcon(QtGui.QPixmap(':/Version.png'))
+        self.typeInfo = 'version'
+
+
+class MajorVersionNode(VersionNode):
+    def __init__(self, name, data=None, parent=None):
+        super(MajorVersionNode, self).__init__(name,
+                                               data=data,
                                                parent=parent,
                                                selectable=False,
-                                               editable=False,
-                                               data=data)
-        self._version = version
+                                               editable=False)
+        self._icon = QtGui.QIcon(QtGui.QPixmap(':/MajorVersion.png'))
         self.typeInfo = 'majorversion'
 
-    def icon(self):
-        if self._icon is None:
-            self._icon = QtGui.QIcon(QtGui.QPixmap(':/MajorVersion.png'))
-        return self._icon
 
-    def version(self):
-        return self._version
-
-
-class MinorVersionNode(nodes.Node):
-    def __init__(self, version, user, desc, data=None, parent=None):
-        super(MinorVersionNode, self).__init__(version,
+class MinorVersionNode(VersionNode):
+    def __init__(self, name, user, desc, data=None, parent=None):
+        super(MinorVersionNode, self).__init__(name,
+                                               data=data,
                                                parent=parent,
                                                selectable=True,
-                                               editable=False,
-                                               data=data)
-        self._version = version
+                                               editable=False)
         self._user = user
         self._desc = desc
+        self._icon = QtGui.QIcon(QtGui.QPixmap(':/MinorVersion.png'))
         self.typeInfo = 'minorversion'
-
-    def icon(self):
-        if self._icon is None:
-            self._icon = QtGui.QIcon(QtGui.QPixmap(':/MinorVersion.png'))
-        return self._icon
-
-    def version(self):
-        return self._version
 
     def user(self):
         return self._user
@@ -56,35 +64,62 @@ class MinorVersionNode(nodes.Node):
     def description(self):
         return self._desc
 
-    def full_version(self):
-        major_node = self.parent.parent()
-        minor_node = self
-        ver = '{0}.{1}'
-        ver = ver.format(major_node.version(),
-                         minor_node.version())
-        return ver
-
 
 def getVersions(path):
-    versions = [
-        ('v001.001', 'john', 'description'),
+    # versions_1 = [
+    #     ('v001.001', 'john', 'description'),
+    #     ('v002.001', 'davidc', 'description'),
+    #     ('v002.002', 'davidc', 'description'),
+    #     ('v002.003', 'davidc', 'description'),
+    #     ('v002.004', 'john', 'description'),
+    #     ('v003.001', 'bob', 'description'),
+    # ]
+    # versions_2 = [
+    #     ('v001.001', 'davidc', 'description'),
+    # ]
+    versions_3 = [
+        ('v001.001', 'davidc', 'description'),
         ('v002.001', 'davidc', 'description'),
-        ('v002.002', 'davidc', 'description'),
-        ('v002.003', 'davidc', 'description'),
-        ('v002.004', 'john', 'description'),
-        ('v003.001', 'bob', 'description'),
+        ('v003.001', 'davidc', 'description'),
+        ('v004.001', 'davidc', 'description'),
+        ('v005.001', 'davidc', 'description'),
+        ('v006.001', 'davidc', 'description'),
+        ('v007.001', 'davidc', 'description'),
+        ('v008.001', 'davidc', 'description'),
+        ('v009.001', 'davidc', 'description'),
+        ('v010.001', 'davidc', 'description'),
+        ('v011.001', 'davidc', 'description'),
+        ('v012.001', 'davidc', 'description'),
     ]
-    return versions
+    # versions_4 = [
+    #     ('v001.001', 'bob', 'description'),
+    #     ('v001.002', 'bob', 'description'),
+    #     ('v001.003', 'bob', 'description'),
+    #     ('v001.004', 'bob', 'description'),
+    #     ('v001.005', 'bob', 'description'),
+    #     ('v001.006', 'bob', 'description'),
+    #     ('v001.007', 'bob', 'description'),
+    #     ('v001.008', 'bob', 'description'),
+    #     ('v001.009', 'bob', 'description'),
+    #     ('v001.010', 'bob', 'description'),
+    #     ('v002.001', 'bob', 'description'),
+    # ]
+    # versions = [versions_1, versions_2, versions_3, versions_4]
+    # version = random.choice(versions)
+    return versions_3
 
 
-def convertVersionsToNodes(version_list):
+def getVersionNodes(path):
+    versions = getVersions(path)
+
     major_versions = {}
     minor_versions = {}
-    rootNode = nodes.Node('root')
-    for version in version_list:
+    rootNode = nodes.Node('ROOT')
+    for version in versions:
         ver = version[0]
-        major_ver = str(ver).split('.')[0]
-        minor_ver = str(ver).split('.')[1]
+        split = str(ver).split('.')
+        major_ver = split[0]
+        minor_ver = split[1]
         user = version[1]
         desc = version[2]
 
@@ -92,21 +127,24 @@ def convertVersionsToNodes(version_list):
         if major_ver in major_versions:
             majorNode = major_versions[major_ver]
         else:
-            majorNode = MajorVersionNode(major_ver, parent=rootNode, data=major_ver)
+            majorNode = MajorVersionNode(major_ver,
+                                         parent=rootNode,
+                                         data=major_ver)
 
         # Create Minor Version
         if ver in minor_versions:
             minorNode = minor_versions[major_ver]
         else:
             minorNode = MinorVersionNode(minor_ver, user, desc,
-                                         parent=majorNode, data=ver)
+                                         parent=majorNode,
+                                         data=ver)
 
         major_versions[major_ver] = majorNode
         minor_versions[ver] = minorNode
     return rootNode
 
 
-class VersionModel(nodes.Model):
+class VersionModel(nodes.ItemModel):
     def __init__(self, root, font=None):
         super(VersionModel, self).__init__(root, font=font)
         self._root_node = root
@@ -129,14 +167,11 @@ class VersionModel(nodes.Model):
 
         if role == QtCore.Qt.DisplayRole or role == QtCore.Qt.EditRole:
             column = index.column()
-            if isinstance(node, MajorVersionNode):
-                name = node.version()
-            elif isinstance(node, MinorVersionNode):
-                name = node.version()
+            name = node.name()
+            if isinstance(node, MinorVersionNode):
+                name = node.name()
                 user = node.user()
                 desc = node.description()
-            elif isinstance(node, nodes.Node):
-                name = node.name()
 
             if column == 0:
                 return name
@@ -152,7 +187,7 @@ class VersionModel(nodes.Model):
 
 
 class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
-    versionSelected = QtCore.Signal(str, str)
+    setTag = QtCore.Signal(str, str)
 
     def __init__(self, parent):
         super(VersionSelector, self).__init__()
@@ -160,11 +195,11 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
         self.parent = parent
         self.font = uiUtils.getFont('monospace')
 
-        path = ''
-        versions = getVersions(path)
-        versionNodes = convertVersionsToNodes(versions)
+        self._path = ''
+        rootNode = nodes.Node('root', data=self._path)
 
-        self.versionModel = VersionModel(versionNodes, font=self.font)
+        # Setup data, filter/sorting model.
+        self.versionModel = VersionModel(rootNode, font=self.font)
         self.versionFilterModel = QtCore.QSortFilterProxyModel()
         self.versionFilterModel.setSourceModel(self.versionModel)
         self.versionFilterModel.setDynamicSortFilter(True)
@@ -172,16 +207,32 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
         self.treeView.setModel(self.versionFilterModel)
         self.treeView.setSortingEnabled(True)
         self.treeView.sortByColumn(0, QtCore.Qt.DescendingOrder)
-        self.selectionModel = self.treeView.selectionModel()
-        self.selectionModel.selectionChanged.connect(self.selectionChangedFunc)
+        self.treeView.expandAll()
 
-    def selectionChangedFunc(self, selected, deselected=None):
-        for index in selected.indexes():
-            if index.isValid():
-                node = self.versionFilterModel.mapToSource(index).internalPointer()
-                if node is not None:
-                    dataSplit = node.data().split('.')
-                    minor = dataSplit[1]
-                    major = dataSplit[0]
-                    self.versionSelected.emit('minor', minor)
-                    self.versionSelected.emit('major', major)
+        self.selectionModel = self.treeView.selectionModel()
+        self.selectionModel.currentChanged.connect(self.currentChangedFunc)
+
+    def setPath(self, path):
+        # print('VersionSelector setPath:', path)
+        self._path = path
+        rootNode = getVersionNodes(self._path)
+        self.versionModel.setRootNode(rootNode)
+        self.treeView.expandAll()
+
+    def currentChangedFunc(self, index, prevIndex):
+        if not index.isValid():
+            return
+        index_map = self.versionFilterModel.mapToSource(index)
+        node = index_map.internalPointer()
+        if node is None:
+            return
+        data = node.data()
+        if data is None:
+            return
+        dataSplit = data.split('.')
+        if len(dataSplit) == 2:
+            minor = dataSplit[1]
+            major = dataSplit[0]
+            self.setTag.emit('minor', minor)
+            self.setTag.emit('major', major)
+

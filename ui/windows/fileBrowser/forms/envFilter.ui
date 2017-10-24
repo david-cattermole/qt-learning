@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>603</width>
+    <width>662</width>
     <height>30</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Env</string>
+      <string>Environment</string>
      </property>
     </widget>
    </item>

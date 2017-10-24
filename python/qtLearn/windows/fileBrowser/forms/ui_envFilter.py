@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(603, 30)
+        Form.resize(662, 30)
         self.horizontalLayout = QtWidgets.QHBoxLayout(Form)
         self.horizontalLayout.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout.setSpacing(5)
@@ -80,7 +80,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.label.setText(_translate("Form", "Env"))
+        self.label.setText(_translate("Form", "Environment"))
         self.projectComboBox.setItemText(0, _translate("Form", "project"))
         self.sequenceComboBox.setItemText(0, _translate("Form", "seq"))
         self.shotComboBox.setItemText(0, _translate("Form", "shot"))

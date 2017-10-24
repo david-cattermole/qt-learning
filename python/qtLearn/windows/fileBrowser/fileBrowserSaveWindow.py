@@ -23,15 +23,15 @@ class FileBrowserSaveLayout(QtWidgets.QWidget, ui_fileBrowserSave.Ui_Form):
         self.setupUi(self)
         self.parent = parent
 
-        self.envFilterForm = envFilter.EnvFilter(self)
-        self.fileSelectorForm = fileSelector.FileSelector(self)
-        self.saveOptionsForm = saveOptions.SaveOptions(self)
-        self.pathEditForm = pathEdit.PathEdit(self)
+        self.envFilter = envFilter.EnvFilter(self)
+        self.fileSelector = fileSelector.FileSelector(self)
+        self.saveOptions = saveOptions.SaveOptions(self)
+        self.pathEdit = pathEdit.PathEdit(self)
 
-        self.envFilterLayout.addWidget(self.envFilterForm)
-        self.fileSelectorLayout.addWidget(self.fileSelectorForm)
-        self.saveOptionsLayout.addWidget(self.saveOptionsForm)
-        self.pathEditLayout.addWidget(self.pathEditForm)
+        self.envFilterLayout.addWidget(self.envFilter)
+        self.fileSelectorLayout.addWidget(self.fileSelector)
+        self.saveOptionsLayout.addWidget(self.saveOptions)
+        self.pathEditLayout.addWidget(self.pathEdit)
 
         self.buttonBox.rejected.connect(self.rejected)
         self.buttonBox.accepted.connect(self.accepted)
@@ -68,7 +68,7 @@ class FileBrowserSaveWindow(BaseWindow):
 ui = None
 
 
-def main(show=True, widthHeight=(750, 400)):
+def main(show=True, widthHeight=(750, 600)):
     global ui
     print('ui:', ui)
 
