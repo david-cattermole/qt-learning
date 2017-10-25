@@ -13,6 +13,8 @@ TODO:
 - Hook everything up.
 """
 
+import sys
+
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
@@ -25,12 +27,12 @@ import qtLearn.windows.fileBrowser.nodes as nodes
 class FileNode(nodes.Node):
     def __init__(self, name,
                  parent=None,
-                 data = None,
-                 enabled = True,
-                 editable = False,
-                 selectable = True,
-                 checkable = False,
-                 neverHasChildren = False):
+                 data=None,
+                 enabled=True,
+                 editable=False,
+                 selectable=True,
+                 checkable=False,
+                 neverHasChildren=False):
         super(FileNode, self).__init__(name,
                                        data=data,
                                        parent=parent,
@@ -80,7 +82,7 @@ class FileNameNode(nodes.Node):
 def getFileNodes(path):
     # Example data
     rootNode = nodes.Node('root', data=path)
-    
+
     # Matchmove
     matchmoveDept = DeptNode('matchmove', parent=rootNode)
     camTask = TaskNode('camera', parent=matchmoveDept)
@@ -110,13 +112,38 @@ def getFileNodes(path):
     lightName = FileNameNode('light', parent=lightTask, data='light/light/light')
 
     # Effects
-    fxDept = DeptNode('fx', parent=rootNode)
-    destTask = TaskNode('destruction', parent=fxDept)
-    waterTask = TaskNode('water', parent=fxDept)
-    fireTask = TaskNode('fire', parent=fxDept)
+    effectsDept = DeptNode('effects', parent=rootNode)
+    destTask = TaskNode('destruction', parent=effectsDept)
+    waterTask = TaskNode('water', parent=effectsDept)
+    fireTask = TaskNode('fire', parent=effectsDept)
     fxName = FileNameNode('fx', parent=destTask, data='fx/destruction/fx')
     fxName = FileNameNode('fx', parent=waterTask, data='fx/water/fx')
     fxName = FileNameNode('fx', parent=fireTask, data='fx/fire/fx')
+
+    # Model
+    modelDept = DeptNode('model', parent=rootNode)
+    modelTask = TaskNode('model', parent=modelDept)
+    sculptTask = TaskNode('sculpt', parent=modelDept)
+    modelName = FileNameNode('model', parent=modelTask, data='model/model/model')
+    sculptName = FileNameNode('sculpt', parent=sculptTask, data='model/sculpt/sculpt')
+
+    # Rig
+    rigDept = DeptNode('rig', parent=rootNode)
+    rigTask = TaskNode('rig', parent=rigDept)
+    johnName = FileNameNode('john', parent=rigTask, data='rig/rig/john')
+    
+    # Lookdev
+    lookdevDept = DeptNode('lookdev', parent=rootNode)
+    textureTask = TaskNode('texture', parent=lookdevDept)
+    shaderTask = TaskNode('shader', parent=lookdevDept)
+    textureName = FileNameNode('texture', parent=textureTask, data='lookdev/texture/texture')
+    shaderName = FileNameNode('shader', parent=shaderTask, data='lookdev/shader/shader')
+    
+    # Pipeline
+    pipelineDept = DeptNode('pipeline', parent=rootNode)
+    pipelineTask = TaskNode('pipeline', parent=pipelineDept)
+    pipelineName = FileNameNode('pipeline', parent=pipelineTask, data='pipeline/pipeline/pipeline')
+
     return rootNode
 
 
@@ -135,23 +162,39 @@ class FileModel(nodes.ItemModel):
 class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
     def __init__(self):
         super(SortFilterProxyModel, self).__init__()
+        self._nodeTypeFilters = {}
+        self._department = ''
+
+    def department(self):
+        return self._department
+
+    def setDepartment(self, value):
+        self._department = value
+        self.invalidateFilter()
 
     def filterAcceptsRow(self, sourceRow, sourceParent):
         result = False
-        pattern = self.filterRegExp().pattern()
-        if len(pattern) == 0:
-            return True
-
         srcModel = self.sourceModel()
         column = self.filterKeyColumn()
         if column < 0:
             column = 0
         index = srcModel.index(sourceRow, column, sourceParent)
         node = index.internalPointer()
-        path = node.allTags()
-
-        if pattern in path:
-            result = True
+        typeInfo = node.typeInfo
+        if typeInfo == 'department':
+            dept = self.department()
+            if len(dept) == 0:
+                result = True
+            elif node.name() == dept:
+                result = True
+        else:
+            pattern = self.filterRegExp().pattern()
+            if len(pattern) == 0:
+                result = True
+            else:
+                path = node.allTags()
+                if pattern in path:
+                    result = True
         return result
 
 
@@ -174,8 +217,7 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
         self.fileFilterModel.setSourceModel(self.fileModel)
         self.fileFilterModel.setDynamicSortFilter(True)
         self.fileFilterModel.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
-        self.fileFilterModel.setFilterKeyColumn(1)
-        self.searchLineEdit.textChanged.connect(self.searchTextChanged)
+
         self.treeView.setModel(self.fileFilterModel)
         self.treeView.setSortingEnabled(True)
         self.treeView.sortByColumn(0, QtCore.Qt.AscendingOrder)
@@ -185,17 +227,23 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
         self.selectionModel = self.treeView.selectionModel()
         self.selectionModel.currentChanged.connect(self.currentChangedFunc)
 
+        self.searchLineEdit.textChanged.connect(self.searchTextChanged)
+
     def searchTextChanged(self, text):
         self.fileFilterModel.setFilterRegExp(text)
         if len(text) == 0:
             self.treeView.expandAll()
+
+    def departmentChanged(self, value):
+        self.fileFilterModel.setDepartment(value)
+        self.treeView.expandAll()
 
     def setPath(self, path):
         self._path = path
         rootNode = getFileNodes(self._path)
         self.versionModel.setRootNode(rootNode)
         self.treeView.expandAll()
-        
+
     def currentChangedFunc(self, index, prevIndex):
         if not index.isValid():
             return

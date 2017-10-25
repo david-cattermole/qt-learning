@@ -50,7 +50,7 @@ def getShots(project, sequence):
 def getDepartments():
     return [
         '<all departments>', 'animation', 'matchmove', 'layout',
-        'light', 'fx', 'model', 'rig', 'lookdev',
+        'light', 'effects', 'model', 'rig', 'lookdev',
         'pipeline'
     ]
 
@@ -67,33 +67,34 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
     changedProject = QtCore.Signal(str)
     changedSequence = QtCore.Signal(str, str)
     changedShot = QtCore.Signal(str)
+    changedDepartment = QtCore.Signal(str)
 
     def __init__(self, parent):
         super(EnvFilter, self).__init__()
         self.setupUi(self)
         self.parent = parent
 
-        # Project ComboBox
+        # Project
         projData = getProjects()
         self.projModel = QtCore.QStringListModel(projData)
         self.projectComboBox.setModel(self.projModel)
 
-        # Sequence ComboBox
+        # Sequence
         seqData = getSequences(None)
         self.seqModel = QtCore.QStringListModel(seqData)
         self.sequenceComboBox.setModel(self.seqModel)
 
-        # Shot ComboBox
+        # Shot
         shotData = getShots(None, None)
         self.shotModel = QtCore.QStringListModel(shotData)
         self.shotComboBox.setModel(self.shotModel)
 
-        # Department ComboBox
+        # Department
         deptData = getDepartments()
         self.deptModel = QtCore.QStringListModel(deptData)
         self.departmentComboBox.setModel(self.deptModel)
 
-        # Users ComboBox
+        # Users
         userData = getUsers()
         self.userModel = QtCore.QStringListModel(userData)
         self.userComboBox.setModel(self.userModel)
@@ -101,6 +102,7 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
         self.projectComboBox.currentIndexChanged.connect(self.projectChanged)
         self.sequenceComboBox.currentIndexChanged.connect(self.sequenceChanged)
         self.shotComboBox.currentIndexChanged.connect(self.shotChanged)
+        self.departmentComboBox.currentIndexChanged.connect(self.departmentChanged)
 
         self.changedProject.connect(self.updateSequenceData)
         self.changedSequence.connect(self.updateShotData)
@@ -120,6 +122,13 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
         text = self.shotComboBox.currentText()
         # self.changedShot.emit(text)
         self.setTag.emit('shot', text)
+
+    def departmentChanged(self):
+        dept = self.departmentComboBox.currentText()
+        dept = dept.lower()
+        if not dept.isalpha():
+            dept = None
+        self.changedDepartment.emit(dept)
 
     def updateSequenceData(self, project):
         seqs = getSequences(project)
