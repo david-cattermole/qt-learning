@@ -14,51 +14,57 @@ import qtLearn.windows.fileBrowser.forms.ui_versionSelector as ui_versionSelecto
 
 
 class VersionNode(nodes.Node):
-    def __init__(self, name,
+    def __init__(self, name, user,
                  parent=None,
                  data=None,
+                 icon=None,
                  enabled=True,
                  editable=False,
                  selectable=True,
                  checkable=False,
                  neverHasChildren=False):
+        if icon is None:
+            icon = QtGui.QIcon(QtGui.QPixmap(':/Version.png'))
         super(VersionNode, self).__init__(name,
                                           data=data,
                                           parent=parent,
+                                          icon=icon,
                                           enabled=enabled,
                                           selectable=selectable,
                                           editable=editable,
                                           checkable=checkable,
                                           neverHasChildren=neverHasChildren)
-        self._icon = QtGui.QIcon(QtGui.QPixmap(':/Version.png'))
         self.typeInfo = 'version'
+        self._user = user
+
+    def user(self):
+        return self._user
 
 
 class MajorVersionNode(VersionNode):
-    def __init__(self, name, data=None, parent=None):
-        super(MajorVersionNode, self).__init__(name,
+    def __init__(self, name, user, data=None, parent=None):
+        icon = QtGui.QIcon(QtGui.QPixmap(':/MajorVersion.png'))
+        super(MajorVersionNode, self).__init__(name, user,
                                                data=data,
                                                parent=parent,
+                                               icon=icon,
                                                selectable=False,
                                                editable=False)
-        self._icon = QtGui.QIcon(QtGui.QPixmap(':/MajorVersion.png'))
         self.typeInfo = 'majorversion'
 
 
 class MinorVersionNode(VersionNode):
     def __init__(self, name, user, desc, data=None, parent=None):
+        icon = QtGui.QIcon(QtGui.QPixmap(':/MinorVersion.png'))
         super(MinorVersionNode, self).__init__(name,
+                                               user,
                                                data=data,
                                                parent=parent,
+                                               icon=icon,
                                                selectable=True,
                                                editable=False)
-        self._user = user
         self._desc = desc
-        self._icon = QtGui.QIcon(QtGui.QPixmap(':/MinorVersion.png'))
         self.typeInfo = 'minorversion'
-
-    def user(self):
-        return self._user
 
     def description(self):
         return self._desc
@@ -126,7 +132,7 @@ def getVersionNodes(path):
         if major_ver in major_versions:
             majorNode = major_versions[major_ver]
         else:
-            majorNode = MajorVersionNode(major_ver,
+            majorNode = MajorVersionNode(major_ver, user,
                                          parent=rootNode,
                                          data=major_ver)
 
@@ -182,6 +188,34 @@ class VersionModel(nodes.ItemModel):
         return None
 
 
+class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
+    def __init__(self):
+        super(SortFilterProxyModel, self).__init__()
+        self._user = ''
+
+    def user(self):
+        return self._user
+
+    def setUser(self, value):
+        self._user = value
+        self.invalidateFilter()
+
+    def filterAcceptsRow(self, sourceRow, sourceParent):
+        result = False
+        srcModel = self.sourceModel()
+        column = self.filterKeyColumn()
+        if column < 0:
+            column = 0
+        index = srcModel.index(sourceRow, column, sourceParent)
+        node = index.internalPointer()
+        user = self.user()
+        if user is None or len(user) == 0:
+            result = True
+        elif node.user() == user:
+            result = True
+        return result
+
+
 class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
     setTag = QtCore.Signal(str, str)
 
@@ -196,10 +230,11 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
 
         # Setup data, filter/sorting model.
         self.versionModel = VersionModel(rootNode, font=self.font)
-        self.versionFilterModel = QtCore.QSortFilterProxyModel()
+        self.versionFilterModel = SortFilterProxyModel()
         self.versionFilterModel.setSourceModel(self.versionModel)
         self.versionFilterModel.setDynamicSortFilter(True)
         self.versionFilterModel.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
+
         self.treeView.setModel(self.versionFilterModel)
         self.treeView.setSortingEnabled(True)
         self.treeView.sortByColumn(0, QtCore.Qt.DescendingOrder)
@@ -207,6 +242,10 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
 
         self.selectionModel = self.treeView.selectionModel()
         self.selectionModel.currentChanged.connect(self.currentChangedFunc)
+
+    def userChanged(self, value):
+        self.versionFilterModel.setUser(value)
+        self.treeView.expandAll()
 
     def setPath(self, path):
         self._path = path

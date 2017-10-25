@@ -2,6 +2,8 @@
 
 """
 
+import getpass
+
 import Qt.QtCore as QtCore
 import Qt.QtWidgets as QtWidgets
 import qtLearn.windows.fileBrowser.forms.ui_envFilter as ui_envFilter
@@ -68,6 +70,7 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
     changedSequence = QtCore.Signal(str, str)
     changedShot = QtCore.Signal(str)
     changedDepartment = QtCore.Signal(str)
+    changedUser = QtCore.Signal(str)
 
     def __init__(self, parent):
         super(EnvFilter, self).__init__()
@@ -103,6 +106,7 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
         self.sequenceComboBox.currentIndexChanged.connect(self.sequenceChanged)
         self.shotComboBox.currentIndexChanged.connect(self.shotChanged)
         self.departmentComboBox.currentIndexChanged.connect(self.departmentChanged)
+        self.userComboBox.currentIndexChanged.connect(self.userChanged)
 
         self.changedProject.connect(self.updateSequenceData)
         self.changedSequence.connect(self.updateShotData)
@@ -129,6 +133,17 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
         if not dept.isalpha():
             dept = None
         self.changedDepartment.emit(dept)
+
+    def userChanged(self):
+        user = self.userComboBox.currentText()
+        user = user.lower()
+        if not user.isalpha():
+            if 'current' in user:
+                user = getpass.getuser()
+                user = user.lower()
+            else:
+                user = None
+        self.changedUser.emit(user)
 
     def updateSequenceData(self, project):
         seqs = getSequences(project)

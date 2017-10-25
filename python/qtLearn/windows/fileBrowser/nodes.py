@@ -13,11 +13,14 @@ class Node(object):
                  toolTip=None,
                  statusTip=None,
                  parent=None,
+                 icon=None,
                  enabled=True,
                  editable=False,
                  selectable=True,
                  checkable=False,
                  neverHasChildren=False):
+        if icon is None:
+            icon = QtGui.QIcon(QtGui.QPixmap(':/Node.png'))
         self._children = []
         self._parent = parent
 
@@ -32,7 +35,7 @@ class Node(object):
         self._selectable = selectable
         self._neverHasChildren = neverHasChildren
 
-        self._icon = QtGui.QIcon(QtGui.QPixmap(':/Node.png'))
+        self._icon = icon
         self.typeInfo = 'node'
         if parent is not None:
             parent.addChild(self)

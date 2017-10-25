@@ -13,8 +13,6 @@ TODO:
 - Hook everything up.
 """
 
-import sys
-
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
@@ -162,7 +160,6 @@ class FileModel(nodes.ItemModel):
 class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
     def __init__(self):
         super(SortFilterProxyModel, self).__init__()
-        self._nodeTypeFilters = {}
         self._department = ''
 
     def department(self):

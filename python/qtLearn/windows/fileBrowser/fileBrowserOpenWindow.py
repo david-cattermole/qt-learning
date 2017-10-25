@@ -40,6 +40,7 @@ class MainLayout(QtWidgets.QWidget, ui_fileBrowserOpen.Ui_Form):
 
         self.envFilter.setTag.connect(self.pathEdit.setTag)
         self.envFilter.changedDepartment.connect(self.fileSelector.departmentChanged)
+        self.envFilter.changedUser.connect(self.versionSelector.userChanged)
 
         self.buttonBox.rejected.connect(self.rejected)
         self.buttonBox.accepted.connect(self.accepted)
