@@ -61,12 +61,13 @@ class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
         super(PathEdit, self).__init__()
         self.setupUi(self)
         self.parent = parent
-        self.font = uiUtils.getFont('monospace')
+        self.font = uiUtils.getFont('large-monospace')
 
         self._tagData = {}
-        self._pathFormat = '/{project}/{sequence}/{shot}/{department}/{name}_{major}.{minor}.{ext}'
+        self._pathFormat = '/projects/{project}/{sequence}/{shot}/{department}/{name}_{major}.{minor}.{ext}'
 
         self.lineEdit.setFont(self.font)
+        self.lineEdit.setText(self._pathFormat)
 
     def pathFormat(self):
         return self._pathFormat

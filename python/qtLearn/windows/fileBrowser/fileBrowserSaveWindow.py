@@ -33,15 +33,21 @@ class FileBrowserSaveLayout(QtWidgets.QWidget, ui_fileBrowserSave.Ui_Form):
         self.saveOptionsLayout.addWidget(self.saveOptions)
         self.pathEditLayout.addWidget(self.pathEdit)
 
+        self.fileSelector.setTag.connect(self.pathEdit.setTag)
+        # self.pathEdit.pathUpdated.connect(self.versionSelector.setPath)
+
+        self.envFilter.setTag.connect(self.pathEdit.setTag)
+        self.envFilter.changedDepartment.connect(self.fileSelector.departmentChanged)
+
         self.buttonBox.rejected.connect(self.rejected)
         self.buttonBox.accepted.connect(self.accepted)
 
     def rejected(self):
-        print('rejected')
-        return  # self.delete()
+        return self.parent.close()
 
     def accepted(self):
         print('accepted')
+        # TODO: What do we do to return the file path?
         return
 
 

@@ -206,10 +206,10 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
         self.font = uiUtils.getFont('monospace')
 
         self._path = ''
-        self.rootNode = getFileNodes(self._path)
 
-        # Setup data, filter/sorting model.
+        self.rootNode = getFileNodes(self._path)
         self.fileModel = FileModel(self.rootNode, font=self.font)
+
         self.fileFilterModel = SortFilterProxyModel()
         self.fileFilterModel.setSourceModel(self.fileModel)
         self.fileFilterModel.setDynamicSortFilter(True)

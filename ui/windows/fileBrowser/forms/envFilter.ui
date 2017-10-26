@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>662</width>
-    <height>30</height>
+    <width>653</width>
+    <height>40</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>5</number>
    </property>
@@ -21,179 +21,196 @@
     <number>5</number>
    </property>
    <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Environment</string>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="spacing">
+      <number>5</number>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="projectComboBox">
-     <item>
-      <property name="text">
-       <string>project</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="sequenceComboBox">
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-      </font>
+     <property name="margin">
+      <number>0</number>
      </property>
      <item>
-      <property name="text">
-       <string>seq</string>
-      </property>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Environment</string>
+       </property>
+      </widget>
      </item>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="shotComboBox">
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-      </font>
-     </property>
      <item>
-      <property name="text">
-       <string>shot</string>
-      </property>
+      <widget class="QComboBox" name="projectComboBox">
+       <item>
+        <property name="text">
+         <string>project</string>
+        </property>
+       </item>
+      </widget>
      </item>
-    </widget>
+     <item>
+      <widget class="QComboBox" name="sequenceComboBox">
+       <property name="font">
+        <font>
+         <family>Monospace</family>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>seq</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="shotComboBox">
+       <property name="font">
+        <font>
+         <family>Monospace</family>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>shot</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Department</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="departmentComboBox">
+       <property name="font">
+        <font>
+         <family>Monospace</family>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>dept</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>all depts</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>layout</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>light</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>model</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>rig</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>rnd</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>User</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="userComboBox">
+       <property name="font">
+        <font>
+         <family>Monospace</family>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>user</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>current user</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>davidc</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>bob</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>john</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item>
-    <spacer name="horizontalSpacer">
+    <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Department</string>
-     </property>
     </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="departmentComboBox">
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-      </font>
-     </property>
-     <item>
-      <property name="text">
-       <string>dept</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>all depts</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>layout</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>light</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>model</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>rig</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>rnd</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item>
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>User</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="userComboBox">
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-      </font>
-     </property>
-     <item>
-      <property name="text">
-       <string>user</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>current user</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>davidc</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>bob</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>john</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item>
-    <spacer name="horizontalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>

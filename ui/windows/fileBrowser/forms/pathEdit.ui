@@ -29,41 +29,17 @@
       <number>5</number>
      </property>
      <item>
-      <widget class="QLabel" name="label">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+        </font>
        </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Path</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="editCheckBox">
        <property name="text">
         <string/>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="lineEdit">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;/data/project/seq/shot/working/dept/shot_name_ver_user_desc.ext&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;project = mazda&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;seq = sh&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;shot = sh0010&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;dept = layout&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;name = camera&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;ver = v001.001&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;user = davidc&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;desc = thisIsTheDescription&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Monospace'; font-size:10pt;&quot;&gt;ext = mb&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="text">
-        <string>/data/mazda/sh/sh0010/working/layout/sh0010_camera_v001.001_davidc_thisIsTheDescription.mb</string>
+       <property name="placeholderText">
+        <string>File Path...</string>
        </property>
       </widget>
      </item>
@@ -72,22 +48,5 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>editCheckBox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>lineEdit</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>41</x>
-     <y>22</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>88</x>
-     <y>21</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

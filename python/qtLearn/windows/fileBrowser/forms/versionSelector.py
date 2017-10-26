@@ -94,7 +94,7 @@ def getVersions(path):
         ('v009.001', 'davidc', 'description'),
         ('v010.001', 'davidc', 'description'),
         ('v011.001', 'davidc', 'description'),
-        ('v012.001', 'davidc', 'description'),
+        ('v012.001', 'john', 'description'),
     ]
     versions_4 = [
         ('v001.001', 'bob', 'description'),
@@ -107,7 +107,18 @@ def getVersions(path):
         ('v001.008', 'bob', 'description'),
         ('v001.009', 'bob', 'description'),
         ('v001.010', 'bob', 'description'),
-        ('v002.001', 'bob', 'description'),
+        ('v002.001', 'davidc', 'description'),
+        ('v002.002', 'davidc', 'description'),
+        ('v002.003', 'davidc', 'description'),
+        ('v002.004', 'davidc', 'description'),
+        ('v002.005', 'davidc', 'description'),
+        ('v002.006', 'davidc', 'description'),
+        ('v002.007', 'davidc', 'description'),
+        ('v002.008', 'davidc', 'description'),
+        ('v002.009', 'davidc', 'description'),
+        ('v002.010', 'davidc', 'description'),
+        ('v002.011', 'davidc', 'description'),
+        ('v002.012', 'davidc', 'description'),
     ]
     versions = [versions_1, versions_2, versions_3, versions_4]
     version = random.choice(versions)
@@ -226,10 +237,10 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
         self.font = uiUtils.getFont('monospace')
 
         self._path = ''
-        rootNode = nodes.Node('root', data=self._path)
 
-        # Setup data, filter/sorting model.
+        rootNode = nodes.Node('root', data=self._path)
         self.versionModel = VersionModel(rootNode, font=self.font)
+
         self.versionFilterModel = SortFilterProxyModel()
         self.versionFilterModel.setSourceModel(self.versionModel)
         self.versionFilterModel.setDynamicSortFilter(True)

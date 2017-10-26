@@ -72,6 +72,24 @@ def getBaseWindow():
 
 def getFont(name=None):
     font = QtGui.QFont()
-    if name == 'monospace':
+    name = name.lower()
+    if 'normal' in name:
+        font.setPointSize(8)
+        font.setBold(False)
+        font.setItalic(False)
+    elif 'small' in name:
+        font.setPointSize(6)
+    elif 'mediumlarge' in name:
+        font.setPointSize(10)
+    elif 'large' in name:
+        font.setPointSize(12)
+
+    if 'monospace' in name:
         font.setStyleHint(QtGui.QFont.Monospace)
+
+    if 'bold' in name:
+        font.setBold(True)
+
+    if 'italic' in name:
+        font.setItalic(True)
     return font
