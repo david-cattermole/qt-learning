@@ -6,7 +6,6 @@ import Qt.QtWidgets as QtWidgets
 
 import qtLearn.widgets.attributeHelper as attributeHelper
 import qtLearn.windows.fileBrowser.forms.ui_saveOptions as ui_saveOptions
-# reload(ui_saveOptions)
 
 
 class SaveOptions(QtWidgets.QWidget, ui_saveOptions.Ui_Form):

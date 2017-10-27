@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Widget(object):
     def setupUi(self, Widget):
         Widget.setObjectName("Widget")
-        Widget.resize(403, 23)
+        Widget.resize(403, 29)
         self.horizontalLayout = QtWidgets.QHBoxLayout(Widget)
         self.horizontalLayout.setContentsMargins(3, 3, 3, 3)
         self.horizontalLayout.setSpacing(3)
@@ -22,9 +22,9 @@ class Ui_Widget(object):
         self.lineEdit = QtWidgets.QLineEdit(Widget)
         self.lineEdit.setObjectName("lineEdit")
         self.horizontalLayout.addWidget(self.lineEdit)
-        self.pushButton = QtWidgets.QPushButton(Widget)
-        self.pushButton.setObjectName("pushButton")
-        self.horizontalLayout.addWidget(self.pushButton)
+        self.toolButton = QtWidgets.QToolButton(Widget)
+        self.toolButton.setObjectName("toolButton")
+        self.horizontalLayout.addWidget(self.toolButton)
 
         self.retranslateUi(Widget)
         QtCore.QMetaObject.connectSlotsByName(Widget)
@@ -33,5 +33,5 @@ class Ui_Widget(object):
         _translate = QtCore.QCoreApplication.translate
         Widget.setWindowTitle(_translate("Widget", "Form"))
         self.label.setText(_translate("Widget", "Text"))
-        self.pushButton.setText(_translate("Widget", "."))
+        self.toolButton.setText(_translate("Widget", "..."))
 

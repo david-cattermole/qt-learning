@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>343</width>
+    <width>294</width>
     <height>215</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <number>0</number>
    </property>
    <property name="margin">
-    <number>3</number>
+    <number>0</number>
    </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -26,8 +26,49 @@
       <number>3</number>
      </property>
      <property name="margin">
-      <number>3</number>
+      <number>0</number>
      </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="folderLabel">
+         <property name="text">
+          <string>Folder</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="folderComboBox">
+         <property name="font">
+          <font>
+           <family>Monospace</family>
+          </font>
+         </property>
+         <item>
+          <property name="text">
+           <string>&lt;all&gt;</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
      <item>
       <widget class="QLineEdit" name="searchLineEdit">
        <property name="sizePolicy">

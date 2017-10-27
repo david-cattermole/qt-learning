@@ -13,6 +13,8 @@ TODO:
 - Hook everything up.
 """
 
+import sys
+
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
@@ -26,41 +28,50 @@ class FileNode(nodes.Node):
     def __init__(self, name,
                  parent=None,
                  data=None,
+                 icon=None,
                  enabled=True,
                  editable=False,
                  selectable=True,
                  checkable=False,
                  neverHasChildren=False):
+        if icon is None:
+            icon = QtGui.QIcon(QtGui.QPixmap(':/File.png'))
         super(FileNode, self).__init__(name,
-                                       data=data,
                                        parent=parent,
+                                       data=data,
+                                       icon=icon,
                                        editable=editable,
                                        selectable=selectable,
                                        checkable=checkable,
                                        neverHasChildren=neverHasChildren)
-        self._icon = QtGui.QIcon(QtGui.QPixmap(':/File.png'))
         self.typeInfo = 'file'
 
 
 class DeptNode(nodes.Node):
     def __init__(self, name,
-                 parent=None):
+                 parent=None,
+                 data=None):
+        icon = QtGui.QIcon(QtGui.QPixmap(':/Department.png'))
         super(DeptNode, self).__init__(name,
                                        parent=parent,
+                                       data=data,
+                                       icon=icon,
                                        editable=False,
                                        selectable=False)
-        self._icon = QtGui.QIcon(QtGui.QPixmap(':/Department.png'))
         self.typeInfo = 'department'
 
 
 class TaskNode(nodes.Node):
     def __init__(self, name,
-                 parent=None):
+                 parent=None,
+                 data=None):
+        icon = QtGui.QIcon(QtGui.QPixmap(':/Task.png'))
         super(TaskNode, self).__init__(name,
                                        parent=parent,
+                                       data=data,
+                                       icon=icon,
                                        editable=False,
                                        selectable=False)
-        self._icon = QtGui.QIcon(QtGui.QPixmap(':/Task.png'))
         self.typeInfo = 'task'
 
 
@@ -68,12 +79,13 @@ class FileNameNode(nodes.Node):
     def __init__(self, name,
                  parent=None,
                  data=None):
+        icon = QtGui.QIcon(QtGui.QPixmap(':/FileName.png'))
         super(FileNameNode, self).__init__(name,
                                            parent=parent,
+                                           icon=icon,
                                            editable=False,
                                            selectable=True,
                                            data=data)
-        self._icon = QtGui.QIcon(QtGui.QPixmap(':/FileName.png'))
         self.typeInfo = 'filename'
 
 
@@ -82,65 +94,125 @@ def getFileNodes(path):
     rootNode = nodes.Node('root', data=path)
 
     # Matchmove
-    matchmoveDept = DeptNode('matchmove', parent=rootNode)
-    camTask = TaskNode('camera', parent=matchmoveDept)
-    mmTask = TaskNode('matchmove', parent=matchmoveDept)
-    camBg1Name = FileNameNode('bg01', parent=camTask, data='matchmove/camera/bg01')
-    camBg2Name = FileNameNode('bg02', parent=camTask, data='matchmove/camera/bg02')
-    camBg3Name = FileNameNode('bg03', parent=camTask, data='matchmove/camera/bg03')
-    camBg4Name = FileNameNode('bg04', parent=camTask, data='matchmove/camera/bg04')
-    camBg5Name = FileNameNode('bg05', parent=camTask, data='matchmove/camera/bg05')
-    matchmoveName = FileNameNode('john', parent=mmTask, data='matchmove/matchmove/john')
+    data = {'department': 'matchmove'}
+    matchmoveDept = DeptNode('matchmove', parent=rootNode, data=data)
+    data.update(task='camera')
+    camTask = TaskNode('camera', parent=matchmoveDept, data=data)
+    data.update(task='matchmove')
+    mmTask = TaskNode('matchmove', parent=matchmoveDept, data=data)
+    data.update(task='camera')
+    data.update(name='bg01')
+    camBg1Name = FileNameNode('bg01', parent=camTask, data=data)
+    data.update(name='bg02')
+    camBg2Name = FileNameNode('bg02', parent=camTask, data=data)
+    data.update(name='bg03')
+    camBg3Name = FileNameNode('bg03', parent=camTask, data=data)
+    data.update(name='bg04')
+    camBg4Name = FileNameNode('bg04', parent=camTask, data=data)
+    data.update(name='bg05')
+    camBg5Name = FileNameNode('bg05', parent=camTask, data=data)
+    data.update(task='matchmove')
+    data.update(name='john')
+    matchmoveName = FileNameNode('john', parent=mmTask, data=data)
+    # print('data', data)
+    # sys.stdout.flush()
 
     # Layout
-    layoutDept = DeptNode('layout', parent=rootNode)
-    layoutTask = TaskNode('layout', parent=layoutDept)
-    cameraName = FileNameNode('camera', parent=layoutTask, data='layout/layout/camera')
-    envName = FileNameNode('environment', parent=layoutTask, data='layout/layout/environment')
-    layoutName = FileNameNode('layout', parent=layoutTask, data='layout/layout/layout')
+    data = {'department': 'layout'}
+    layoutDept = DeptNode('layout', parent=rootNode, data=data)
+    data.update(task='layout')
+    layoutTask = TaskNode('layout', parent=layoutDept, data=data)
+    data.update(name='camera')
+    cameraName = FileNameNode('camera', parent=layoutTask, data=data)
+    data.update(name='environment')
+    envName = FileNameNode('environment', parent=layoutTask, data=data)
+    data.update(name='layout')
+    layoutName = FileNameNode('layout', parent=layoutTask, data=data)
 
     # Animation
-    animDept = DeptNode('animation', parent=rootNode)
-    animTask = TaskNode('anim', parent=animDept)
-    animationName = FileNameNode('animation', parent=animTask, data='animation/anim/animation')
+    data = {'department': 'animation'}
+    animDept = DeptNode('animation', parent=rootNode, data=data)
+    data.update(task='anim')
+    animTask = TaskNode('anim', parent=animDept, data=data)
+    data.update(name='animation')
+    animationName = FileNameNode('animation', parent=animTask, data=data)
 
     # Lighting
-    lightDept = DeptNode('light', parent=rootNode)
-    lightTask = TaskNode('light', parent=lightDept)
-    lightName = FileNameNode('light', parent=lightTask, data='light/light/light')
+    data = {'department': 'light'}
+    lightDept = DeptNode('light', parent=rootNode, data=data)
+    data.update(task='light')
+    lightTask = TaskNode('light', parent=lightDept, data=data)
+    data.update(name='light')
+    lightName = FileNameNode('light', parent=lightTask, data=data)
 
     # Effects
+    data = {'department': 'effects'}
     effectsDept = DeptNode('effects', parent=rootNode)
-    destTask = TaskNode('destruction', parent=effectsDept)
-    waterTask = TaskNode('water', parent=effectsDept)
-    fireTask = TaskNode('fire', parent=effectsDept)
-    fxName = FileNameNode('fx', parent=destTask, data='fx/destruction/fx')
-    fxName = FileNameNode('fx', parent=waterTask, data='fx/water/fx')
-    fxName = FileNameNode('fx', parent=fireTask, data='fx/fire/fx')
+
+    data = {'department': 'effects', 'task': 'destruction'}
+    destTask = TaskNode('destruction', parent=effectsDept, data=data)
+    data.update(name='fx')
+    fxName = FileNameNode('fx', parent=destTask, data=data)
+
+    data = {'department': 'effects', 'task': 'water'}
+    waterTask = TaskNode('water', parent=effectsDept, data=data)
+    data.update(name='fx')
+    fxName = FileNameNode('fx', parent=waterTask, data=data)
+
+    data = {'department': 'effects', 'task': 'fire'}
+    fireTask = TaskNode('fire', parent=effectsDept, data=data)
+    data.update(name='fx')
+    fxName = FileNameNode('fx', parent=fireTask, data=data)
 
     # Model
-    modelDept = DeptNode('model', parent=rootNode)
-    modelTask = TaskNode('model', parent=modelDept)
-    sculptTask = TaskNode('sculpt', parent=modelDept)
-    modelName = FileNameNode('model', parent=modelTask, data='model/model/model')
-    sculptName = FileNameNode('sculpt', parent=sculptTask, data='model/sculpt/sculpt')
+    data = {'department': 'model'}
+    modelDept = DeptNode('model', parent=rootNode, data=data)
+
+    data.update(task='model')
+    modelTask = TaskNode('model', parent=modelDept, data=data)
+
+    data.update(task='sculpt')
+    sculptTask = TaskNode('sculpt', parent=modelDept, data=data)
+
+    data.update(task='proxy')
+    proxyTask = TaskNode('proxy', parent=modelDept, data=data)
+
+    data.update(name='model')
+    modelName = FileNameNode('model', parent=modelTask, data=data)
+
+    data.update(name='sculpt')
+    sculptName = FileNameNode('sculpt', parent=sculptTask, data=data)
+
+    data.update(name='model')
+    proxyName = FileNameNode('model', parent=proxyTask, data=data)
 
     # Rig
-    rigDept = DeptNode('rig', parent=rootNode)
-    rigTask = TaskNode('rig', parent=rigDept)
-    johnName = FileNameNode('john', parent=rigTask, data='rig/rig/john')
+    data = {'department': 'rig'}
+    rigDept = DeptNode('rig', parent=rootNode, data=data)
+    data.update(task='rig')
+    rigTask = TaskNode('rig', parent=rigDept, data=data)
+    data.update(name='john')
+    johnName = FileNameNode('john', parent=rigTask, data=data)
     
     # Lookdev
-    lookdevDept = DeptNode('lookdev', parent=rootNode)
-    textureTask = TaskNode('texture', parent=lookdevDept)
-    shaderTask = TaskNode('shader', parent=lookdevDept)
-    textureName = FileNameNode('texture', parent=textureTask, data='lookdev/texture/texture')
-    shaderName = FileNameNode('shader', parent=shaderTask, data='lookdev/shader/shader')
+    data = {'department': 'lookdev'}
+    lookdevDept = DeptNode('lookdev', parent=rootNode, data=data)
+    data.update(task='rig')
+    textureTask = TaskNode('texture', parent=lookdevDept, data=data)
+    data.update(task='rig')
+    shaderTask = TaskNode('shader', parent=lookdevDept, data=data)
+    data.update(name='texture')
+    textureName = FileNameNode('texture', parent=textureTask, data=data)
+    data.update(name='shader')
+    shaderName = FileNameNode('shader', parent=shaderTask, data=data)
     
     # Pipeline
-    pipelineDept = DeptNode('pipeline', parent=rootNode)
-    pipelineTask = TaskNode('pipeline', parent=pipelineDept)
-    pipelineName = FileNameNode('pipeline', parent=pipelineTask, data='pipeline/pipeline/pipeline')
+    data = {'department': 'pipeline'}
+    pipelineDept = DeptNode('pipeline', parent=rootNode, data=data)
+    data.update(task='pipeline')
+    pipelineTask = TaskNode('pipeline', parent=pipelineDept, data=data)
+    data.update(name='pipeline')
+    pipelineName = FileNameNode('pipeline', parent=pipelineTask, data=data)
 
     return rootNode
 
@@ -152,9 +224,9 @@ class FileModel(nodes.ItemModel):
         self._column_names = {
             0: 'Name',
         }
-
-    def columnCount(self, parent):
-        return 1
+        self._node_attr_key = {
+            'Name': 'name',
+        }
 
 
 class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
@@ -199,13 +271,26 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
     setTag = QtCore.Signal(str, str)
     changedFile = QtCore.Signal(str)
 
-    def __init__(self, parent):
+    def __init__(self, parent, withFolderFilter=True, withSearchLine=True):
         super(FileSelector, self).__init__()
         self.setupUi(self)
         self.parent = parent
         self.font = uiUtils.getFont('monospace')
-
         self._path = ''
+
+        if withFolderFilter is True:
+            self.folderComboBox.show()
+            self.folderLabel.show()
+        else:
+            self.folderComboBox.hide()
+            self.folderLabel.hide()
+
+        if withSearchLine is True:
+            self.folderComboBox.show()
+            self.folderLabel.show()
+        else:
+            self.folderComboBox.hide()
+            self.folderLabel.hide()
 
         self.rootNode = getFileNodes(self._path)
         self.fileModel = FileModel(self.rootNode, font=self.font)
@@ -228,8 +313,8 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
 
     def searchTextChanged(self, text):
         self.fileFilterModel.setFilterRegExp(text)
-        if len(text) == 0:
-            self.treeView.expandAll()
+        # if len(text) == 0:
+        self.treeView.expandAll()
 
     def departmentChanged(self, value):
         self.fileFilterModel.setDepartment(value)
@@ -251,12 +336,16 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
         data = node.data()
         if data is None:
             return
-        dataSplit = node.data().split('/')
-        if len(dataSplit) == 3:
-            dept = dataSplit[0]
-            task = dataSplit[1]
-            name = dataSplit[2]
-            self.setTag.emit('department', dept)
-            self.setTag.emit('task', task)
-            self.setTag.emit('name', name)
-            self.changedFile.emit(data)
+        changed = False
+        if 'department' in data:
+            self.setTag.emit('department', data['department'])
+            changed = True
+        if 'task' in data:
+            self.setTag.emit('task', data['task'])
+            changed = True
+        if 'name' in data:
+            self.setTag.emit('name', data['name'])
+            changed = True
+        if changed:
+            self.changedFile.emit(data['name'])
+        return

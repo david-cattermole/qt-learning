@@ -2,6 +2,8 @@
 Defines a basic node class able to be used for tree data models.
 """
 
+import sys
+
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
@@ -167,6 +169,10 @@ class ItemModel(QtCore.QAbstractItemModel):
         self._column_names = {
             0: 'Column',
         }
+        self._node_attr_key = {
+            'Column': 'name',
+        }
+
         self._font = font
 
         self.setRootNode(rootNode)
@@ -182,6 +188,9 @@ class ItemModel(QtCore.QAbstractItemModel):
         topLeft = self.createIndex(0, 0)
         self.dataChanged.emit(topLeft, topLeft)
 
+    def columnCount(self, parent):
+        return len(self._column_names.keys())
+
     def rowCount(self, parent):
         if not parent.isValid():
             parentNode = self._rootNode
@@ -189,19 +198,30 @@ class ItemModel(QtCore.QAbstractItemModel):
             parentNode = parent.internalPointer()
         return parentNode.childCount()
 
-    def columnCount(self, parent):
-        return 1
-
     def data(self, index, role):
         if not index.isValid():
             return None
         node = index.internalPointer()
 
         if role == QtCore.Qt.DisplayRole or role == QtCore.Qt.EditRole:
-            if index.column() == 0:
-                return node.name()
+            column_index = index.column()
+            if column_index not in self._column_names:
+                msg = '{0} was not in {1}'.format(column_index, self._column_names)
+                raise ValueError(msg)
+            column_name = self._column_names[column_index]
+            if column_name not in self._node_attr_key:
+                msg = '{0} was not in {1}'.format(column_name, self._node_attr_key)
+                raise ValueError(msg)
+            attr_name = self._node_attr_key[column_name]
+            value = getattr(node, attr_name, None)
+            if value is not None:
+                value = value()
+            # print('node getattr', node.name(), attr_name, value)
+            # sys.stdout.flush()
+            return value
 
         if role == QtCore.Qt.DecorationRole:
+            # TODO: Can we refactor this similar to the DisplayRole above?
             if index.column() == 0:
                 return node.icon()
 

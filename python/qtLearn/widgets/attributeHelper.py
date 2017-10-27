@@ -71,8 +71,8 @@ class AttributeHelper(object):
         if isinstance(class_name, str):
             Model = self._lookupWidgetClass(class_name)
         else:
-            raise ValueError
-            return None
+            msg = 'Incorrect class name given.'
+            raise ValueError(msg)
         widget = Model(label=label, **kwargs)
         self._layout.addWidget(widget)
         return widget
@@ -104,6 +104,9 @@ class AttributeHelper(object):
     def addFloat3Attr(self, label=None):
         return self.addWidget('Float3', label=label)
 
-    def addLineEditAttr(self, label=None):
-        return self.addWidget('LineEdit', label=label)
+    def addLineEditAttr(self, label=None, withLabel=True, withButton=False,
+                        buttonText=None, buttonIcon=None):
+        return self.addWidget('LineEdit', label=label, withLabel=withLabel,
+                              withButton=withButton, buttonText=buttonText,
+                              buttonIcon=buttonIcon)
 

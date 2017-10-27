@@ -1,4 +1,5 @@
 """
+A file browser for displaying and selecting a file or asset.
 
 Usage:
 >>> import qtLearn.windows.fileBrowser.fileBrowserOpenWindow
@@ -15,26 +16,42 @@ import qtLearn.windows.fileBrowser.forms.envFilter as envFilter
 import qtLearn.windows.fileBrowser.forms.fileSelector as fileSelector
 import qtLearn.windows.fileBrowser.forms.pathEdit as pathEdit
 import qtLearn.windows.fileBrowser.forms.versionSelector as versionSelector
+import qtLearn.windows.fileBrowser.forms.previewInfo as previewInfo
 import qtLearn.windows.fileBrowser.ui_fileBrowserOpen as ui_fileBrowserOpen
 
 
 class MainLayout(QtWidgets.QWidget, ui_fileBrowserOpen.Ui_Form):
-    def __init__(self, parent):
+    def __init__(self, parent, withPreviewInfo=True):
         super(MainLayout, self).__init__()
         self.setupUi(self)
         self.parent = parent
 
         self.envFilter = envFilter.EnvFilter(self)
-        self.fileSelector = fileSelector.FileSelector(self)
-        self.versionSelector = versionSelector.VersionSelector(self)
-        self.pathEdit = pathEdit.PathEdit(self)
-
         self.envFilterLayout.addWidget(self.envFilter)
+
+        self.fileSelector = fileSelector.FileSelector(
+            self,
+            withFolderFilter=True,
+            withSearchLine=True
+        )
         self.fileSelectorLayout.addWidget(self.fileSelector)
+
+        self.versionSelector = versionSelector.VersionSelector(
+            self,
+            withTypeFilter=False,
+            withFileFormatFilter=True
+        )
         self.versionSelectorLayout.addWidget(self.versionSelector)
+
+        self.pathEdit = pathEdit.PathEdit(self)
         self.pathEditLayout.addWidget(self.pathEdit)
 
+        if withPreviewInfo is True:
+            self.previewInfo = previewInfo.PreviewInfo(self)
+            self.previewInfoLayout.addWidget(self.previewInfo)
+
         self.fileSelector.setTag.connect(self.pathEdit.setTag)
+        # self.fileSelector.changedFile.connect(self.versionSelector.???)
         self.versionSelector.setTag.connect(self.pathEdit.setTag)
         self.pathEdit.pathUpdated.connect(self.versionSelector.setPath)
 
