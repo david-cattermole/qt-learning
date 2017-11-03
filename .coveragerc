@@ -1,0 +1,9 @@
+[run]
+branch = False
+cover_pylib = False
+data_file = .coverage
+include = *qtLearn*
+omit = *tests*
+
+[html]
+title = 'Qt Learning Project'
