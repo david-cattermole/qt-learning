@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>653</width>
-    <height>40</height>
+    <height>20</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,48 +21,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="envLabel">
-     <property name="text">
-      <string>Environment</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="projectComboBox">
-     <item>
-      <property name="text">
-       <string>project</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="shotComboBox">
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-      </font>
-     </property>
-     <item>
-      <property name="text">
-       <string>shot</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="sequenceComboBox">
-     <property name="font">
-      <font>
-       <family>Monospace</family>
-      </font>
-     </property>
-     <item>
-      <property name="text">
-       <string>seq</string>
-      </property>
-     </item>
-    </widget>
+    <layout class="QHBoxLayout" name="projectSeqShotLayout"/>
    </item>
    <item>
     <spacer name="horizontalSpacer_2">
@@ -81,6 +40,9 @@
     <widget class="QLabel" name="departmentLabel">
      <property name="text">
       <string>Department</string>
+     </property>
+     <property name="buddy">
+      <cstring>departmentComboBox</cstring>
      </property>
     </widget>
    </item>
@@ -146,6 +108,9 @@
      <property name="text">
       <string>User</string>
      </property>
+     <property name="buddy">
+      <cstring>userComboBox</cstring>
+     </property>
     </widget>
    </item>
    <item>
@@ -197,6 +162,10 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>departmentComboBox</tabstop>
+  <tabstop>userComboBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

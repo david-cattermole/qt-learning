@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>838</width>
-    <height>589</height>
+    <width>457</width>
+    <height>251</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,101 +19,173 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="margin">
+    <number>0</number>
+   </property>
    <item>
-    <layout class="QHBoxLayout" name="searchBarLayout"/>
+    <layout class="QVBoxLayout" name="assetSearchLayout">
+     <property name="spacing">
+      <number>3</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMaximumSize</enum>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="searchBarLayout">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+      </layout>
+     </item>
+     <item>
+      <widget class="QFrame" name="searchCustomFrame">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMaximumSize</enum>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QVBoxLayout" name="searchCustomLayout">
+          <property name="spacing">
+           <number>3</number>
+          </property>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="assetListViewLayout">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="assetInfoLayout_2">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="margin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QVBoxLayout" name="assetInfoViewLayout">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="tagViewLayout">
+         <property name="spacing">
+          <number>3</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetMinimumSize</enum>
+         </property>
+        </layout>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </item>
    <item>
-    <widget class="QFrame" name="searchCustomFrame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <item>
-       <layout class="QVBoxLayout" name="searchCustomLayout"/>
-      </item>
-     </layout>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="assetListViewLayout"/>
+    <layout class="QVBoxLayout" name="assetDetailsLayout">
+     <property name="spacing">
+      <number>3</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="shotViewLayout">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="assetDependenciesViewLayout"/>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="keyvalueViewLayout">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="assetDetailsLayout">
+    <layout class="QVBoxLayout" name="assetCartGroupLayout">
+     <property name="spacing">
+      <number>3</number>
+     </property>
      <item>
-      <layout class="QVBoxLayout" name="assetActionsLayout"/>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="assetInfoViewLayout"/>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="assetCartLayout"/>
-     </item>
-     <item>
-      <widget class="QTabWidget" name="tabWidget">
-       <property name="tabShape">
-        <enum>QTabWidget::Rounded</enum>
+      <layout class="QVBoxLayout" name="assetCartLayout">
+       <property name="spacing">
+        <number>3</number>
        </property>
-       <property name="currentIndex">
-        <number>4</number>
+      </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-       <widget class="QWidget" name="shotViewTab">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <attribute name="title">
-         <string>Linked Shots</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <item>
-          <layout class="QVBoxLayout" name="shotViewLayout"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="assetIncomingTab">
-        <attribute name="title">
-         <string>Incoming Assets</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
-         <item>
-          <layout class="QVBoxLayout" name="assetIncomingViewLayout"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="assetOutgoingTab">
-        <attribute name="title">
-         <string>Outgoing Assets</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_9">
-         <item>
-          <layout class="QVBoxLayout" name="assetOutgoingViewLayout"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="tagViewTab">
-        <attribute name="title">
-         <string>Tags</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <item>
-          <layout class="QVBoxLayout" name="tagViewLayout"/>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="keyvalueTab">
-        <attribute name="title">
-         <string>Key Values</string>
-        </attribute>
-        <layout class="QVBoxLayout" name="verticalLayout_7">
-         <item>
-          <layout class="QVBoxLayout" name="keyvalueViewLayout"/>
-         </item>
-        </layout>
-       </widget>
       </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="assetActionsLayout">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+      </layout>
      </item>
     </layout>
    </item>
