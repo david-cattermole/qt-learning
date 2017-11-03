@@ -6,14 +6,9 @@ TODO: Make this UI select Maya files in a specific directory structure:
 
 """
 
-import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
-import Qt.QtWidgets as QtWidgets
 
-import qtLearn.uiUtils as uiUtils
-import qtLearn.windows.fileBrowser.nodes as nodes
 import qtLearn.windows.fileBrowser.forms.versionSelector as versionSelector
-
 
 
 class MajorVersionNode(versionSelector.VersionNode):

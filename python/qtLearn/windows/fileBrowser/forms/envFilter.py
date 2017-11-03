@@ -7,49 +7,32 @@ import getpass
 import Qt.QtCore as QtCore
 import Qt.QtWidgets as QtWidgets
 import qtLearn.windows.fileBrowser.forms.ui_envFilter as ui_envFilter
+import qtLearn.widgets.projectSeqShotComboBox as projectSeqShotComboBox
 
 NONE_STRING = '<none>'
 
 
 class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
-    setTag = QtCore.Signal(str, str)
-
-    changedProject = QtCore.Signal(str)
-    changedSequence = QtCore.Signal(str, str)
-    changedShot = QtCore.Signal(str)
-    changedDepartment = QtCore.Signal(str)
-    changedUser = QtCore.Signal(str)
+    signalSetTagStart = QtCore.Signal()
+    signalSetTag = QtCore.Signal(str, str)
+    signalSetTagEnd = QtCore.Signal()
+    signalSetUser = QtCore.Signal(str)
+    signalSetDepartment = QtCore.Signal(str)
 
     def __init__(self, parent, withDepartmentFilter=True, withUserFilter=True):
         super(EnvFilter, self).__init__()
         self.setupUi(self)
         self.parent = parent
+        self._data = {}
 
-        # Project
-        projData = self.getProjects()
-        # TODO: Refactor getProjects function location. Should we add this to
-        # the class and allow the user to override it?
-        self.projModel = QtCore.QStringListModel(projData)
-        self.projectComboBox.setModel(self.projModel)
-
-        # Sequence
-        # TODO: Refactor getSequences function location. Should we add this to
-        # the class and allow the user to override it?
-        seqData = self.getSequences(None)
-        self.seqModel = QtCore.QStringListModel(seqData)
-        self.sequenceComboBox.setModel(self.seqModel)
-
-        # Shot
-        # TODO: Refactor getShots function location. Should we add this to
-        # the class and allow the user to override it?
-        shotData = self.getShots(None, None)
-        self.shotModel = QtCore.QStringListModel(shotData)
-        self.shotComboBox.setModel(self.shotModel)
+        # Project / Sequence / Shot Filter
+        self.projSeqShotComboBox = projectSeqShotComboBox.ProjectSeqShotComboBox()
+        self.projectSeqShotLayout.addWidget(self.projSeqShotComboBox)
 
         # Department
         # TODO: Should we pick a more generic name for the department filter?
+        self.deptModel = None
         if withDepartmentFilter is True:
-            # TODO: Refactor getDepartments function location.
             deptData = self.getDepartments()
             self.deptModel = QtCore.QStringListModel(deptData)
             self.departmentComboBox.setModel(self.deptModel)
@@ -58,8 +41,8 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
             self.departmentLabel.hide()
 
         # Users
+        self.userModel = None
         if withUserFilter is True:
-            # TODO: Refactor getUsers function location.
             userData = self.getUsers()
             self.userModel = QtCore.QStringListModel(userData)
             self.userComboBox.setModel(self.userModel)
@@ -67,50 +50,30 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
             self.userComboBox.hide()
             self.userLabel.hide()
 
-        self.projectComboBox.currentIndexChanged.connect(self.projectChanged)
-        self.sequenceComboBox.currentIndexChanged.connect(self.sequenceChanged)
-        self.shotComboBox.currentIndexChanged.connect(self.shotChanged)
-        self.departmentComboBox.currentIndexChanged.connect(self.departmentChanged)
-        self.userComboBox.currentIndexChanged.connect(self.userChanged)
+        # signal / slots
+        self.projSeqShotComboBox.signalSetTagStart.connect(self.slotSetTagStart)
+        self.projSeqShotComboBox.signalSetTag.connect(self.slotSetTag)
+        self.projSeqShotComboBox.signalSetTagEnd.connect(self.slotSetTagEnd)
+        self.departmentComboBox.currentIndexChanged.connect(self.slotDepartmentChanged)
+        self.userComboBox.currentIndexChanged.connect(self.slotUserChanged)
 
-        self.changedProject.connect(self.updateSequenceData)
-        self.changedSequence.connect(self.updateShotData)
+    ############################################################################
 
-    def getProjects(self):
-        return list(sorted([
-            '<none>',
-            'babydriver',
-            'bladerunner',
-            'dunkirk',
-            'interstellar',
-            'xmen',
-        ]))
+    def data(self):
+        if self._data is None:
+            return {}
+        return self._data.copy()
 
-    def getSequences(self, project):
-        seqs = []
-        if project is None or project == NONE_STRING:
-            seqs = ['<none>']
-        else:
-            seqs = list(sorted(['sh', 'fin']))
-        return seqs
+    def setData(self, value):
+        self._data = value
 
-    def getShots(self, project, sequence):
-        shots = []
-        if (project is None or sequence is None or
-            project == NONE_STRING or sequence == NONE_STRING):
-            shots = ['<none>']
-        else:
-            tmp_shots = [
-                'fin0010', 'fin0020', 'fin0030', 'fin0040',
-                'sh0010', 'sh0020', 'sh0030', 'sh0040',
-                'sh0050', 'sh0060', 'sh0070', 'sh0080',
-                'sh0090', 'sh0100', 'sh0110', 'sh0120',
-            ]
-            for shot in tmp_shots:
-                if sequence in shot:
-                    shots.append(shot)
-            shots = list(sorted(shots))
-        return shots
+    def getDataValue(self, key, default=None):
+        return self._data.get(key, default)
+
+    def setDataValue(self, key, value):
+        self._data[key] = value
+
+    ############################################################################
 
     def getDepartments(self):
         return [
@@ -124,30 +87,37 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
             '<all users>', '<current user>', 'davidc', 'bob', 'john', 'sally'
         ]
 
-    def projectChanged(self):
-        text = self.projectComboBox.currentText()
-        self.changedProject.emit(text)
-        self.setTag.emit('project', text)
+    ############################################################################
 
-    def sequenceChanged(self):
-        proj = self.projectComboBox.currentText()
-        seq = self.sequenceComboBox.currentText()
-        self.changedSequence.emit(proj, seq)
-        self.setTag.emit('sequence', seq)
+    @QtCore.Slot()
+    def slotSetTagStart(self):
+        self.signalSetTagStart.emit()
+        return
 
-    def shotChanged(self):
-        text = self.shotComboBox.currentText()
-        # self.changedShot.emit(text)
-        self.setTag.emit('shot', text)
+    @QtCore.Slot(str, str)
+    def slotSetTag(self, key, value):
+        self.signalSetTag.emit(key, value)
+        # if key == 'shot':
+        #     self.updateDepartmentData()
+        return
 
-    def departmentChanged(self):
+    @QtCore.Slot()
+    def slotSetTagEnd(self):
+        self.signalSetTagEnd.emit()
+        return
+
+    @QtCore.Slot(int)
+    def slotDepartmentChanged(self, index):
         dept = self.departmentComboBox.currentText()
         dept = dept.lower()
         if not dept.isalpha():
             dept = None
-        self.changedDepartment.emit(dept)
+        self.setDataValue('department', dept)
+        self.signalSetDepartment.emit(dept)
+        self.updateUserData()
 
-    def userChanged(self):
+    @QtCore.Slot(int)
+    def slotUserChanged(self, index):
         user = self.userComboBox.currentText()
         user = user.lower()
         if not user.isalpha():
@@ -156,16 +126,23 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
                 user = user.lower()
             else:
                 user = None
-        self.changedUser.emit(user)
+        self.setDataValue('user', user)
+        self.signalSetUser.emit(user)
 
-    def updateSequenceData(self, project):
-        seqs = self.getSequences(project)
-        self.seqModel.setStringList(seqs)
-        self.sequenceComboBox.setCurrentIndex(0)
+    ############################################################################
 
-    def updateShotData(self, project, sequence):
-        shots = self.getShots(project, sequence)
-        self.shotModel.setStringList(shots)
-        self.shotComboBox.setCurrentIndex(0)
+    def updateDepartmentData(self):
+        if self.deptModel is None:
+            return
+        depts = self.getDepartments()
+        self.deptModel.setStringList(depts)
+        self.departmentComboBox.setCurrentIndex(0)
+
+    def updateUserData(self):
+        if self.userModel is None:
+            return
+        users = self.getUsers()
+        self.userModel.setStringList(users)
+        self.userComboBox.setCurrentIndex(0)
 
 

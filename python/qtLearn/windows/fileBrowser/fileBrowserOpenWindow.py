@@ -25,39 +25,61 @@ class MainLayout(QtWidgets.QWidget, ui_fileBrowserOpen.Ui_Form):
         super(MainLayout, self).__init__()
         self.setupUi(self)
         self.parent = parent
+        pathFormat = '/projects/{project}/{sequence}/{shot}/{department}/{task}/{name}_{major}.{minor}.{ext}'
 
-        self.envFilter = envFilter.EnvFilter(self)
+        self.envFilter = envFilter.EnvFilter(
+            self,
+            withDepartmentFilter=True,
+            withUserFilter=True
+        )
         self.envFilterLayout.addWidget(self.envFilter)
 
         self.fileSelector = fileSelector.FileSelector(
             self,
             withFolderFilter=True,
-            withSearchLine=True
+            folderFilterLabel='Task',
+            folderFilterTagName='task',
+            folderFilterNodeType='task',
+            withSearchLine=True,
+            pathFormat=pathFormat
         )
         self.fileSelectorLayout.addWidget(self.fileSelector)
 
         self.versionSelector = versionSelector.VersionSelector(
             self,
-            withTypeFilter=False,
-            withFileFormatFilter=True
+            withFileFormatFilter=True,
+            fileFormatFilterTagName='ext',
+            fileFormatFilterNodeType=None,
+            pathFormat=pathFormat
         )
         self.versionSelectorLayout.addWidget(self.versionSelector)
 
-        self.pathEdit = pathEdit.PathEdit(self)
+        self.pathEdit = pathEdit.PathEdit(
+            self,
+            pathFormat=pathFormat
+        )
         self.pathEditLayout.addWidget(self.pathEdit)
 
+        self.previewInfo = None
         if withPreviewInfo is True:
             self.previewInfo = previewInfo.PreviewInfo(self)
             self.previewInfoLayout.addWidget(self.previewInfo)
 
-        self.fileSelector.setTag.connect(self.pathEdit.setTag)
-        # self.fileSelector.changedFile.connect(self.versionSelector.???)
-        self.versionSelector.setTag.connect(self.pathEdit.setTag)
-        self.pathEdit.pathUpdated.connect(self.versionSelector.setPath)
-
-        self.envFilter.setTag.connect(self.pathEdit.setTag)
-        self.envFilter.changedDepartment.connect(self.fileSelector.departmentChanged)
-        self.envFilter.changedUser.connect(self.versionSelector.userChanged)
+        self.envFilter.signalSetUser.connect(self.versionSelector.slotSetFilterTagValue)
+        self.envFilter.signalSetDepartment.connect(self.fileSelector.slotSetFilterTagValue)
+        self.envFilter.signalSetTagStart.connect(self.pathEdit.slotSetTagStart)
+        self.envFilter.signalSetTag.connect(self.pathEdit.slotSetTag)
+        self.envFilter.signalSetTagEnd.connect(self.pathEdit.slotSetTagEnd)
+        self.fileSelector.signalSetTagStart.connect(self.pathEdit.slotSetTagStart)
+        self.fileSelector.signalSetTag.connect(self.pathEdit.slotSetTag)
+        self.fileSelector.signalSetTagEnd.connect(self.pathEdit.slotSetTagEnd)
+        # self.fileSelector.signalSetFileName.connect(self.versionSelector.???)
+        self.versionSelector.signalSetTagStart.connect(self.pathEdit.slotSetTagStart)
+        self.versionSelector.signalSetTag.connect(self.pathEdit.slotSetTag)
+        self.versionSelector.signalSetTagEnd.connect(self.pathEdit.slotSetTagEnd)
+        # self.versionSelector.signalSetVersion.connect(self.pathEdit.slotSetVersion)
+        self.pathEdit.signalPathUpdated.connect(self.versionSelector.slotSetPathData)
+        self.pathEdit.signalPathUpdated.connect(self.fileSelector.slotSetPathData)
 
         self.buttonBox.rejected.connect(self.rejected)
         self.buttonBox.accepted.connect(self.accepted)
@@ -89,6 +111,7 @@ class FileBrowserOpenWindow(BaseWindow):
         self.baseHideStatusBar()
         self.baseHideProgressBar()
         self.baseHideStandardButtons()
+        self.baseHideToolBar()
 
 
 ui = None
@@ -96,7 +119,7 @@ ui = None
 
 def main(show=True, widthHeight=(750, 600)):
     global ui
-    print('ui:', ui)
+    # print('ui:', ui)
 
     name = 'FileBrowserOpenWindow'
     app, parent = uiUtils.getParent()
@@ -110,8 +133,7 @@ def main(show=True, widthHeight=(750, 600)):
         ui.show()
 
     if widthHeight:
-        pos = ui.pos()
-        ui.setGeometry(pos.x(), pos.y(), widthHeight[0], widthHeight[1])
+        uiUtils.setWindowWidthHeight(ui, widthHeight)
 
     # Enter Qt application main loop
     if app is not None:

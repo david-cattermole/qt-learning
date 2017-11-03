@@ -8,8 +8,9 @@ import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
+import qtLearn.nodes as nodes
+import qtLearn.paths as paths
 import qtLearn.uiUtils as uiUtils
-import qtLearn.windows.fileBrowser.nodes as nodes
 import qtLearn.windows.fileBrowser.forms.ui_versionSelector as ui_versionSelector
 
 
@@ -68,104 +69,8 @@ class MinorVersionNode(VersionNode):
     def description(self):
         return self._desc
 
-
-def getVersions(path):
-    versions_1 = [
-        ('v001.001', 'john', 'description', 'mb'),
-        ('v002.001', 'davidc', 'description', 'mb'),
-        ('v002.002', 'davidc', 'description', 'mb'),
-        ('v002.003', 'davidc', 'description', 'mb'),
-        ('v002.004', 'john', 'description', 'mb'),
-        ('v003.001', 'bob', 'description', 'mb'),
-    ]
-    versions_2 = [
-        ('v001.001', 'davidc', 'description', 'mb'),
-    ]
-    versions_3 = [
-        ('v001.001', 'davidc', 'description', 'mb'),
-        ('v002.001', 'davidc', 'description', 'mb'),
-        ('v003.001', 'davidc', 'description', 'mb'),
-        ('v004.001', 'davidc', 'description', 'mb'),
-        ('v005.001', 'davidc', 'description', 'mb'),
-        ('v006.001', 'davidc', 'description', 'mb'),
-        ('v007.001', 'davidc', 'description', 'mb'),
-        ('v008.001', 'davidc', 'description', 'mb'),
-        ('v009.001', 'davidc', 'description', 'mb'),
-        ('v010.001', 'davidc', 'description', 'mb'),
-        ('v011.001', 'davidc', 'description', 'mb'),
-        ('v012.001', 'john', 'description', 'mb'),
-    ]
-    versions_4 = [
-        ('v001.001', 'bob', 'description', 'mb'),
-        ('v001.002', 'bob', 'description', 'mb'),
-        ('v001.003', 'bob', 'description', 'mb'),
-        ('v001.004', 'bob', 'description', 'mb'),
-        ('v001.005', 'bob', 'description', 'mb'),
-        ('v001.006', 'bob', 'description', 'mb'),
-        ('v001.007', 'bob', 'description', 'mb'),
-        ('v001.008', 'bob', 'description', 'mb'),
-        ('v001.009', 'bob', 'description', 'mb'),
-        ('v001.010', 'bob', 'description', 'mb'),
-        ('v002.001', 'davidc', 'description', 'mb'),
-        ('v002.002', 'davidc', 'description', 'mb'),
-        ('v002.003', 'davidc', 'description', 'mb'),
-        ('v002.004', 'davidc', 'description', 'mb'),
-        ('v002.005', 'davidc', 'description', 'mb'),
-        ('v002.006', 'davidc', 'description', 'mb'),
-        ('v002.007', 'davidc', 'description', 'mb'),
-        ('v002.008', 'davidc', 'description', 'mb'),
-        ('v002.009', 'davidc', 'description', 'mb'),
-        ('v002.010', 'davidc', 'description', 'mb'),
-        ('v002.011', 'davidc', 'description', 'mb'),
-        ('v002.012', 'davidc', 'description', 'mb'),
-    ]
-    versions = [versions_1, versions_2, versions_3, versions_4]
-    version = random.choice(versions)
-    return version
-
-
-def getVersionNodes(path):
-    versions = getVersions(path)
-
-    major_versions = {}
-    minor_versions = {}
-    rootNode = nodes.Node('ROOT')
-    for version in versions:
-        ver = version[0]
-        split = str(ver).split('.')
-        major_ver = split[0]
-        minor_ver = split[1]
-        user = version[1]
-        desc = version[2]
-        file_ext = version[3]
-        data = {
-            'major': major_ver,
-            'minor': minor_ver,
-            'version': ver,
-            'user': user,
-            'description': desc,
-            'ext': file_ext,
-        }
-
-        # Create Major Version
-        if major_ver in major_versions:
-            majorNode = major_versions[major_ver]
-        else:
-            majorNode = MajorVersionNode(major_ver,
-                                         parent=rootNode,
-                                         data=data)  # major_ver
-
-        # Create Minor Version
-        if ver in minor_versions:
-            minorNode = minor_versions[major_ver]
-        else:
-            minorNode = MinorVersionNode(minor_ver, user, desc,
-                                         parent=majorNode,
-                                         data=data)  # ver
-
-        major_versions[major_ver] = majorNode
-        minor_versions[ver] = minorNode
-    return rootNode
+    def fileFormat(self):
+        return self._data['ext']
 
 
 class VersionModel(nodes.ItemModel):
@@ -173,72 +78,71 @@ class VersionModel(nodes.ItemModel):
         super(VersionModel, self).__init__(root, font=font)
         self._column_names = {
             0: 'Version',
+            # 1: 'Format',
             1: 'User',
             2: 'Description',
         }
         self._node_attr_key = {
             'Version': 'name',
+            # 'Format': 'fileFormat',
             'User': 'user',
             'Description': 'description',
         }
 
 
-class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
-    def __init__(self):
-        super(SortFilterProxyModel, self).__init__()
-        self._user = ''
-
-    def user(self):
-        return self._user
-
-    def setUser(self, value):
-        self._user = value
-        self.invalidateFilter()
-
-    def filterAcceptsRow(self, sourceRow, sourceParent):
-        result = False
-        srcModel = self.sourceModel()
-        column = self.filterKeyColumn()
-        if column < 0:
-            column = 0
-        index = srcModel.index(sourceRow, column, sourceParent)
-        node = index.internalPointer()
-        filterUser = self.user()
-        nodeUser = node.data().get('user')
-        if filterUser is None or len(filterUser) == 0:
-            result = True
-        elif nodeUser == filterUser:
-            result = True
-        return result
-
-
 class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
-    setTag = QtCore.Signal(str, str)
+    signalSetTagStart = QtCore.Signal()
+    signalSetTag = QtCore.Signal(str, str)
+    signalSetTagEnd = QtCore.Signal()
 
     def __init__(self, parent,
-                 withTypeFilter=False,
-                 withFileFormatFilter=True):
+                 withFileFormatFilter=True,
+                 fileFormatFilterTagName=None,
+                 fileFormatFilterNodeType=None,
+                 pathFormat=None):
         super(VersionSelector, self).__init__()
         self.setupUi(self)
         self.parent = parent
         self.font = uiUtils.getFont('monospace')
+        self._data = {}
         self._path = ''
+        self.__internalRemap = {}
 
-        # Hide unneeded UI elements.
-        if withTypeFilter is False:
-            self.typeLabel.hide()
-            self.typeComboBox.hide()
-        if withFileFormatFilter is False:
+        self._pathFormat = pathFormat
+        if pathFormat is None:
+            self._pathFormat = '/projects/{project}/{sequence}/{shot}/{department}/{task}/{name}_{major}.{minor}.{ext}'
+
+        # File Format Filter
+        self.fileFormatModel = None
+        self._fileFormatFilterTagName = None
+        self._fileFormatFilterNodeType = None
+        if withFileFormatFilter is True:
+            filterData = self.__getFileFormatNames()
+            self.fileFormatModel = QtCore.QStringListModel(filterData)
+            self.fileFormatComboBox.setModel(self.fileFormatModel)
+            if fileFormatFilterTagName is not None:
+                if isinstance(fileFormatFilterTagName, str):
+                    self._fileFormatFilterTagName = fileFormatFilterTagName
+                else:
+                    raise ValueError
+            if fileFormatFilterNodeType is not None:
+                if isinstance(fileFormatFilterNodeType, str):
+                    self._fileFormatFilterNodeType = fileFormatFilterNodeType
+                else:
+                    raise ValueError
+        else:
             self.fileFormatLabel.hide()
             self.fileFormatComboBox.hide()
 
         rootNode = nodes.Node('root', data=self._path)
         self.versionModel = VersionModel(rootNode, font=self.font)
 
-        self.versionFilterModel = SortFilterProxyModel()
+        self.versionFilterModel = nodes.SortFilterProxyModel()
         self.versionFilterModel.setSourceModel(self.versionModel)
         self.versionFilterModel.setDynamicSortFilter(True)
         self.versionFilterModel.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
+        self.versionFilterModel.setFilterTagName(self._fileFormatFilterTagName)
+        self.versionFilterModel.setFilterTagNodeType(self._fileFormatFilterNodeType)
 
         self.treeView.setModel(self.versionFilterModel)
         self.treeView.setSortingEnabled(True)
@@ -246,40 +150,220 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
         self.treeView.expandAll()
 
         self.selectionModel = self.treeView.selectionModel()
-        self.selectionModel.currentChanged.connect(self.currentChangedFunc)
+        self.selectionModel.currentChanged.connect(self.slotCurrentChanged)
 
-    def getFileFormats(self):
+        self.fileFormatComboBox.currentIndexChanged.connect(self.slotFileFormatFilterChanged)
+
+    ############################################################################
+
+    def __getFileFormatNames(self):
+        data = self.getFileFormatsData()
+        names = map(lambda x: x[1], data)
+        # names = list(names)
+        # print('getFileFormatNames:', names)
+        return names
+
+    def __getFileFormatExtensions(self):
+        data = self.getFileFormatsData()
+        exts = map(lambda x: x[0], data)
+        # exts = list(exts)
+        # print('getFileFormatExtensions:', exts)
+        return exts
+
+    def data(self):
+        if self._data is None:
+            return {}
+        return self._data.copy()
+
+    def setData(self, value):
+        self._data = value
+
+    def getDataValue(self, key, default=None):
+        return self._data.get(key, default)
+
+    def setDataValue(self, key, value):
+        self._data[key] = value
+
+    def getFileFormatFilterTagName(self):
+        return self._fileFormatFilterTagName
+
+    def getFileFormatFilterTagNodeType(self):
+        return self._fileFormatFilterNodeType
+
+    ############################################################################
+
+    def getFileFormatsData(self):
         return [
-            ('.ma', 'Maya ASCII (*.ma)'),
-            ('.mb', 'Maya Binary (*.mb)')
+            # (None, '<all file formats>'),
+            # ('.ma', 'Maya ASCII (*.ma)'),
+            # ('.mb', 'Maya Binary (*.mb)')
+            (None, '<all file formats>'),
+            ('.ma', 'ma'),
+            ('.mb', 'mb')
         ]
 
-    @QtCore.Slot(str)
-    def userChanged(self, value):
-        self.versionFilterModel.setUser(value)
+    def getVersionNodes(self):
+        # TODO: Use 'path' to look up versions rather than hard-coding test data.
+        tags = self.data()
+        pth = paths.Path(tags, format=self._pathFormat)
+        path = pth.getPath()
+        # print('VersionSelector getVersionNodes path:', path)
+        rootNode = self.__internalRemap.get(path)
+        if rootNode is not None:
+            return rootNode
+
+        exts = ['mb', 'ma']
+
+        versions_1 = [
+            ('v001.001', 'john', 'description', random.choice(exts)),
+            ('v002.001', 'davidc', 'description', random.choice(exts)),
+            ('v002.002', 'davidc', 'description', random.choice(exts)),
+            ('v002.003', 'davidc', 'description', random.choice(exts)),
+            ('v002.004', 'john', 'description', random.choice(exts)),
+            ('v003.001', 'bob', 'description', random.choice(exts)),
+        ]
+        versions_2 = [
+            ('v001.001', 'davidc', 'description', random.choice(exts)),
+        ]
+        versions_3 = [
+            ('v001.001', 'davidc', 'description', random.choice(exts)),
+            ('v002.001', 'davidc', 'description', random.choice(exts)),
+            ('v003.001', 'davidc', 'description', random.choice(exts)),
+            ('v004.001', 'davidc', 'description', random.choice(exts)),
+            ('v005.001', 'davidc', 'description', random.choice(exts)),
+            ('v006.001', 'davidc', 'description', random.choice(exts)),
+            ('v007.001', 'davidc', 'description', random.choice(exts)),
+            ('v008.001', 'davidc', 'description', random.choice(exts)),
+            ('v009.001', 'davidc', 'description', random.choice(exts)),
+            ('v010.001', 'davidc', 'description', random.choice(exts)),
+            ('v011.001', 'davidc', 'description', random.choice(exts)),
+            ('v012.001', 'john', 'description', random.choice(exts)),
+        ]
+        versions_4 = [
+            ('v001.001', 'bob', 'description', random.choice(exts)),
+            ('v001.002', 'bob', 'description', random.choice(exts)),
+            ('v001.003', 'bob', 'description', random.choice(exts)),
+            ('v001.004', 'bob', 'description', random.choice(exts)),
+            ('v001.005', 'bob', 'description', random.choice(exts)),
+            ('v001.006', 'bob', 'description', random.choice(exts)),
+            ('v001.007', 'bob', 'description', random.choice(exts)),
+            ('v001.008', 'bob', 'description', random.choice(exts)),
+            ('v001.009', 'bob', 'description', random.choice(exts)),
+            ('v001.010', 'bob', 'description', random.choice(exts)),
+            ('v002.001', 'davidc', 'description', random.choice(exts)),
+            ('v002.002', 'davidc', 'description', random.choice(exts)),
+            ('v002.003', 'davidc', 'description', random.choice(exts)),
+            ('v002.004', 'davidc', 'description', random.choice(exts)),
+            ('v002.005', 'davidc', 'description', random.choice(exts)),
+            ('v002.006', 'davidc', 'description', random.choice(exts)),
+            ('v002.007', 'davidc', 'description', random.choice(exts)),
+            ('v002.008', 'davidc', 'description', random.choice(exts)),
+            ('v002.009', 'davidc', 'description', random.choice(exts)),
+            ('v002.010', 'davidc', 'description', random.choice(exts)),
+            ('v002.011', 'davidc', 'description', random.choice(exts)),
+            ('v002.012', 'davidc', 'description', random.choice(exts)),
+        ]
+        versions = [versions_1, versions_2, versions_3, versions_4]
+        versions = random.choice(versions)
+
+        major_versions = {}
+        minor_versions = {}
+        rootNode = nodes.Node('ROOT')
+        for version in versions:
+            ver = version[0]
+            split = str(ver).split('.')
+            major_ver = split[0]
+            minor_ver = split[1]
+            user = version[1]
+            desc = version[2]
+            file_ext = version[3]
+            data = {
+                'major': major_ver,
+                'minor': minor_ver,
+                'version': ver,
+                'user': user,
+                'description': desc,
+                'ext': file_ext,
+            }
+
+            # Create Major Version
+            if major_ver in major_versions:
+                majorNode = major_versions[major_ver]
+            else:
+                majorNode = MajorVersionNode(major_ver,
+                                             parent=rootNode,
+                                             data=data)
+
+            # Create Minor Version
+            if ver in minor_versions:
+                minorNode = minor_versions[major_ver]
+            else:
+                minorNode = MinorVersionNode(minor_ver, user, desc,
+                                             parent=majorNode,
+                                             data=data)
+
+            major_versions[major_ver] = majorNode
+            minor_versions[ver] = minorNode
+
+        self.__internalRemap[path] = rootNode
+        return rootNode
+
+    ############################################################################
+
+    @QtCore.Slot(int)
+    def slotFileFormatFilterChanged(self, index):
+        text = self.fileFormatComboBox.currentText()
+        text = text.lower()
+        if not text.isalpha():
+            text = None
+        # print('VersionSelector slotFileFormatFilterChanged', text)
+        self.versionFilterModel.setFilterTagValue(text)
         self.treeView.expandAll()
 
     @QtCore.Slot(str)
-    def setPath(self, path):
-        self._path = path
-        rootNode = getVersionNodes(self._path)
+    def slotSetFilterTagValue(self, value):
+        # print('VersionSelector slotSetFilterTagValue', value)
+        self.versionFilterModel.setFilterTagValue(value)
+        self.treeView.expandAll()
+
+    @QtCore.Slot(dict)
+    def slotSetPathData(self, tags):
+        # print('VersionSelector slotSetPathData tags:', tags)
+        if not isinstance(tags, dict):
+            return
+        allowedTagKeys = ['project', 'sequence', 'shot', 'name', 'task', 'department']
+        for key in tags.copy().keys():
+            if key not in allowedTagKeys:
+                tags.pop(key)
+        self._data.update(**tags)
+        # print('VersionSelector slotSetPathData changed:', self._data)
+        rootNode = self.getVersionNodes()
         self.versionModel.setRootNode(rootNode)
         self.treeView.expandAll()
+        return
 
-    def currentChangedFunc(self, index, prevIndex):
+    def slotCurrentChanged(self, index, prevIndex):
+        # print('VersionSelector currentChanged START')
+
         if not index.isValid():
             return
         index_map = self.versionFilterModel.mapToSource(index)
         node = index_map.internalPointer()
         if node is None:
             return
-        data = node.data()
-        if data is None:
+        nodeData = node.data()
+        if nodeData is None:
             return
-        if 'minor' in data:
-            self.setTag.emit('minor', data['minor'])
-        if 'major' in data:
-            self.setTag.emit('major', data['major'])
-        if 'ext' in data:
-            self.setTag.emit('ext', data['ext'])
 
+        # Emit tag signals
+        self.signalSetTagStart.emit()
+        # print('VersionSelector currentChanged keys', nodeData.keys())
+        for key in nodeData.keys():
+            value = nodeData.get(key)
+            # print('VersionSelector currentChanged value', key, newValue)
+            self.setDataValue(key, nodeData[key])
+            self.signalSetTag.emit(key, value)
+        self.signalSetTagEnd.emit()
+
+        # print('VersionSelector currentChanged END', repr(nodeData))
+        return

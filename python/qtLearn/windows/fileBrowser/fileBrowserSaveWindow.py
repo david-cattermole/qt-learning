@@ -33,11 +33,11 @@ class FileBrowserSaveLayout(QtWidgets.QWidget, ui_fileBrowserSave.Ui_Form):
         self.saveOptionsLayout.addWidget(self.saveOptions)
         self.pathEditLayout.addWidget(self.pathEdit)
 
-        self.fileSelector.setTag.connect(self.pathEdit.setTag)
+        self.fileSelector.signalSetTag.connect(self.pathEdit.setTagValue)
         # self.pathEdit.pathUpdated.connect(self.versionSelector.setPath)
 
-        self.envFilter.setTag.connect(self.pathEdit.setTag)
-        self.envFilter.changedDepartment.connect(self.fileSelector.departmentChanged)
+        self.envFilter.signalSetTag.connect(self.pathEdit.setTagValue)
+        self.envFilter.changedDepartment.connect(self.fileSelector.slotSetFilterTagValue)
 
         self.buttonBox.rejected.connect(self.rejected)
         self.buttonBox.accepted.connect(self.accepted)
