@@ -40,6 +40,10 @@ class BaseStandaloneWindow(QtWidgets.QMainWindow,
         self.menubar.hide()
         return
 
+    def baseHideToolBar(self):
+        self.toolBar.hide()
+        return
+
     def baseHideProgressBar(self):
         self.progressBar.hide()
         return
@@ -56,13 +60,13 @@ class BaseStandaloneWindow(QtWidgets.QMainWindow,
         return True
 
 
-def main():
-    name = 'StandaloneBaseWindow'
-    app = QtWidgets.QApplication(sys.argv)
-    ui = BaseStandaloneWindow(name=name)
-    ui.show()
-    return sys.exit(app.exec_())
+# def main():
+#     name = 'StandaloneBaseWindow'
+#     app = QtWidgets.QApplication(sys.argv)
+#     ui = BaseStandaloneWindow(name=name)
+#     ui.show()
+#     return sys.exit(app.exec_())
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()

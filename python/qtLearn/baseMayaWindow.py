@@ -89,6 +89,10 @@ class BaseMayaWindow(MayaQWidgetBaseMixin,
         self.menubar.hide()
         return
 
+    def baseHideToolBar(self):
+        self.toolBar.hide()
+        return
+
     def baseHideProgressBar(self):
         self.progressBar.hide()
         return

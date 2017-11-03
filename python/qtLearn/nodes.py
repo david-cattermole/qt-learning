@@ -2,8 +2,6 @@
 Defines a basic node class able to be used for tree data models.
 """
 
-import sys
-
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
@@ -29,6 +27,8 @@ class Node(object):
         self._name = name
         self._toolTip = toolTip
         self._statusTip = statusTip
+        if isinstance(data, dict):
+            data = data.copy()
         self._data = data
 
         self._enabled = enabled
@@ -61,10 +61,12 @@ class Node(object):
         self._statusTip = statusTip
 
     def data(self):
-        return self._data
+        if self._data is None:
+            return {}
+        return self._data.copy()
 
     def setData(self, value):
-        self._data = value
+        self._data = value.copy()
 
     def enabled(self):
         """Can the data be enabled?"""
@@ -216,8 +218,6 @@ class ItemModel(QtCore.QAbstractItemModel):
             value = getattr(node, attr_name, None)
             if value is not None:
                 value = value()
-            # print('node getattr', node.name(), attr_name, value)
-            # sys.stdout.flush()
             return value
 
         if role == QtCore.Qt.DecorationRole:
@@ -312,3 +312,75 @@ class ItemModel(QtCore.QAbstractItemModel):
         self.endRemoveRows()
         return success
 
+
+class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
+    def __init__(self):
+        super(SortFilterProxyModel, self).__init__()
+        self._filterTagName = ''
+        self._filterTagValue = ''
+        self._filterTagNodeType = ''
+        # TODO: Support multiple named tags for filtering, currently only supports 1.
+
+    ############################################################################
+
+    def filterTagName(self):
+        return self._filterTagName
+
+    def setFilterTagName(self, value):
+        # print('setFilterTagName:', repr(value))
+        self._filterTagName = value
+        self.invalidateFilter()
+
+    def filterTagValue(self):
+        return self._filterTagValue
+
+    def setFilterTagValue(self, value):
+        # print('setFilterTagValue:', repr(value))
+        self._filterTagValue = value
+        self.invalidateFilter()
+
+    def filterTagNodeType(self):
+        return self._filterTagNodeType
+
+    def setFilterTagNodeType(self, value):
+        # print('setFilterTagNodeType:', repr(value))
+        self._filterTagNodeType = value
+        self.invalidateFilter()
+
+    ############################################################################
+
+    def filterAcceptsRow(self, sourceRow, sourceParent):
+        result = False
+        srcModel = self.sourceModel()
+        column = self.filterKeyColumn()
+        if column < 0:
+            column = 0
+        index = srcModel.index(sourceRow, column, sourceParent)
+        node = index.internalPointer()
+
+        tagName = self.filterTagName()
+        if tagName is None or len(tagName) == 0:
+            return True
+
+        filterNodeType = self.filterTagNodeType()
+        typeInfo = node.typeInfo
+
+        if filterNodeType is None or typeInfo == filterNodeType:
+            tagValue = self.filterTagValue()
+            nodeData = node.data()
+            nodeDataValue = nodeData.get(tagName)
+            if tagValue is None or len(tagValue) == 0:
+                result = True
+            elif nodeDataValue == tagValue:
+                result = True
+            else:
+                result = False
+        else:
+            pattern = self.filterRegExp().pattern()
+            if len(pattern) == 0:
+                result = True
+            else:
+                path = node.allTags()
+                if pattern in path:
+                    result = True
+        return result

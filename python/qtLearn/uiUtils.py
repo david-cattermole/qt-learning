@@ -37,7 +37,6 @@ def getMayaMainWindow():
 
 def getParent():
     host = getHostApplication()
-    print('getParent host:', host)
 
     # try running outside of maya
     app = None
@@ -56,7 +55,6 @@ def getBaseWindow():
     BaseWindow = None
     baseModule = None
     host = getHostApplication()
-    print(host)
     if host == 'standalone':
         import qtLearn.baseStandaloneWindow as baseModule
         # reload(baseModule)
@@ -93,3 +91,9 @@ def getFont(name=None):
     if 'italic' in name:
         font.setItalic(True)
     return font
+
+
+def setWindowWidthHeight(ui, widthHeight):
+    pos = ui.pos()
+    ui.setGeometry(pos.x(), pos.y(), widthHeight[0], widthHeight[1])
+    return None
