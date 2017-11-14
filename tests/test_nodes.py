@@ -1,5 +1,5 @@
 """
-Tests for the 'paths' module.
+Tests for the 'nodes' module.
 """
 
 import sys
