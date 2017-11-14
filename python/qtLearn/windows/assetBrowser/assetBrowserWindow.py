@@ -58,6 +58,8 @@ class AssetActions(QtWidgets.QWidget, ui_assetActions.Ui_Form):
         self.setupUi(self)
 
 
+# TODO: The Asset Cart should be a tree view for a hierarchical view of added
+# assets, showing the high-level package and it's contents.
 class AssetCart(QtWidgets.QWidget, ui_assetCart.Ui_Form):
     def __init__(self):
         super(AssetCart, self).__init__()
