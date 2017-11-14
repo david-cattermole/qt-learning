@@ -1,65 +1,53 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'P:\qt-learning\ui\windows\assetBrowser\forms\tagView.ui'
+# Form implementation generated from reading ui file '/data/Public/qt-learning/ui/windows/assetBrowser/forms/tagView.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created: Tue Nov 14 18:49:58 2017
+#      by: PyQt4 UI code generator 4.6.2
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt4 import QtCore, QtGui
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(172, 140)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.label = QtWidgets.QLabel(Form)
+        self.label = QtGui.QLabel(Form)
         self.label.setObjectName("label")
         self.verticalLayout.addWidget(self.label)
-        self.tagsListWidget = QtWidgets.QListWidget(Form)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        self.tagsListWidget = QtGui.QListWidget(Form)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.tagsListWidget.sizePolicy().hasHeightForWidth())
         self.tagsListWidget.setSizePolicy(sizePolicy)
         self.tagsListWidget.setObjectName("tagsListWidget")
-        item = QtWidgets.QListWidgetItem()
-        self.tagsListWidget.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.tagsListWidget.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.tagsListWidget.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.tagsListWidget.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.tagsListWidget.addItem(item)
-        item = QtWidgets.QListWidgetItem()
-        self.tagsListWidget.addItem(item)
+        QtGui.QListWidgetItem(self.tagsListWidget)
+        QtGui.QListWidgetItem(self.tagsListWidget)
+        QtGui.QListWidgetItem(self.tagsListWidget)
+        QtGui.QListWidgetItem(self.tagsListWidget)
+        QtGui.QListWidgetItem(self.tagsListWidget)
+        QtGui.QListWidgetItem(self.tagsListWidget)
         self.verticalLayout.addWidget(self.tagsListWidget)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.label.setText(_translate("Form", "Tags"))
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.label.setText(QtGui.QApplication.translate("Form", "Tags", None, QtGui.QApplication.UnicodeUTF8))
         __sortingEnabled = self.tagsListWidget.isSortingEnabled()
         self.tagsListWidget.setSortingEnabled(False)
-        item = self.tagsListWidget.item(0)
-        item.setText(_translate("Form", "tag1"))
-        item = self.tagsListWidget.item(1)
-        item.setText(_translate("Form", "tag2"))
-        item = self.tagsListWidget.item(2)
-        item.setText(_translate("Form", "tag2"))
-        item = self.tagsListWidget.item(3)
-        item.setText(_translate("Form", "tag3"))
-        item = self.tagsListWidget.item(4)
-        item.setText(_translate("Form", "tag4"))
-        item = self.tagsListWidget.item(5)
-        item.setText(_translate("Form", "tag5"))
+        self.tagsListWidget.item(0).setText(QtGui.QApplication.translate("Form", "tag1", None, QtGui.QApplication.UnicodeUTF8))
+        self.tagsListWidget.item(1).setText(QtGui.QApplication.translate("Form", "tag2", None, QtGui.QApplication.UnicodeUTF8))
+        self.tagsListWidget.item(2).setText(QtGui.QApplication.translate("Form", "tag2", None, QtGui.QApplication.UnicodeUTF8))
+        self.tagsListWidget.item(3).setText(QtGui.QApplication.translate("Form", "tag3", None, QtGui.QApplication.UnicodeUTF8))
+        self.tagsListWidget.item(4).setText(QtGui.QApplication.translate("Form", "tag4", None, QtGui.QApplication.UnicodeUTF8))
+        self.tagsListWidget.item(5).setText(QtGui.QApplication.translate("Form", "tag5", None, QtGui.QApplication.UnicodeUTF8))
         self.tagsListWidget.setSortingEnabled(__sortingEnabled)
 

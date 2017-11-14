@@ -1,34 +1,34 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'P:\qt-learning\ui\windows\fileBrowser\forms\pathEdit.ui'
+# Form implementation generated from reading ui file '/data/Public/qt-learning/ui/windows/fileBrowser/forms/pathEdit.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created: Tue Nov 14 18:49:58 2017
+#      by: PyQt4 UI code generator 4.6.2
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt4 import QtCore, QtGui
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(300, 27)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        Form.resize(300, 31)
+        self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setSpacing(3)
+        self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setSpacing(3)
+        self.horizontalLayout.setMargin(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.lineEdit = QtWidgets.QLineEdit(Form)
+        self.lineEdit = QtGui.QLineEdit(Form)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lineEdit.setFont(font)
-        self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
         self.horizontalLayout.addWidget(self.lineEdit)
-        self.pushButton = QtWidgets.QPushButton(Form)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        self.pushButton = QtGui.QPushButton(Form)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
@@ -43,8 +43,6 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.lineEdit.setPlaceholderText(_translate("Form", "File Path..."))
-        self.pushButton.setText(_translate("Form", "..."))
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton.setText(QtGui.QApplication.translate("Form", "...", None, QtGui.QApplication.UnicodeUTF8))
 

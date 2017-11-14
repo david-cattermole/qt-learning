@@ -1,49 +1,47 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'P:\qt-learning\ui\windows\assetBrowser\forms\assetOutgoingView.ui'
+# Form implementation generated from reading ui file '/data/Public/qt-learning/ui/windows/assetBrowser/forms/assetOutgoingView.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created: Tue Nov 14 18:49:58 2017
+#      by: PyQt4 UI code generator 4.6.2
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt4 import QtCore, QtGui
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(123, 141)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.checkBox = QtWidgets.QCheckBox(Form)
+        self.checkBox = QtGui.QCheckBox(Form)
         self.checkBox.setChecked(True)
         self.checkBox.setObjectName("checkBox")
         self.verticalLayout.addWidget(self.checkBox)
-        self.assetsListWidget = QtWidgets.QListWidget(Form)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        self.assetsListWidget = QtGui.QListWidget(Form)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.assetsListWidget.sizePolicy().hasHeightForWidth())
         self.assetsListWidget.setSizePolicy(sizePolicy)
-        self.assetsListWidget.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.assetsListWidget.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.assetsListWidget.setFrameShape(QtGui.QFrame.StyledPanel)
+        self.assetsListWidget.setFrameShadow(QtGui.QFrame.Sunken)
         self.assetsListWidget.setObjectName("assetsListWidget")
-        item = QtWidgets.QListWidgetItem()
-        self.assetsListWidget.addItem(item)
+        QtGui.QListWidgetItem(self.assetsListWidget)
         self.verticalLayout.addWidget(self.assetsListWidget)
 
         self.retranslateUi(Form)
-        self.checkBox.toggled['bool'].connect(self.assetsListWidget.setVisible)
+        QtCore.QObject.connect(self.checkBox, QtCore.SIGNAL("toggled(bool)"), self.assetsListWidget.setVisible)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.checkBox.setText(_translate("Form", "Asset Outgoing View"))
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkBox.setText(QtGui.QApplication.translate("Form", "Asset Outgoing View", None, QtGui.QApplication.UnicodeUTF8))
         __sortingEnabled = self.assetsListWidget.isSortingEnabled()
         self.assetsListWidget.setSortingEnabled(False)
-        item = self.assetsListWidget.item(0)
-        item.setText(_translate("Form", "another asset"))
+        self.assetsListWidget.item(0).setText(QtGui.QApplication.translate("Form", "another asset", None, QtGui.QApplication.UnicodeUTF8))
         self.assetsListWidget.setSortingEnabled(__sortingEnabled)
 
