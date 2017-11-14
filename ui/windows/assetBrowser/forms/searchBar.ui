@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>514</width>
-    <height>20</height>
+    <width>773</width>
+    <height>35</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -118,8 +118,8 @@
      <property name="text">
       <string/>
      </property>
-     <property name="placeholderText">
-      <string>Search Text Here</string>
+     <property name="placeholderText" stdset="0">
+      <string/>
      </property>
     </widget>
    </item>
