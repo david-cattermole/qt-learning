@@ -49,7 +49,7 @@ class MainLayout(QtWidgets.QWidget, ui_fileBrowserOpen.Ui_Form):
             self,
             withFileFormatFilter=True,
             fileFormatFilterTagName='ext',
-            fileFormatFilterNodeType=None,
+            fileFormatFilterNodeType='minorversion',
             pathFormat=pathFormat
         )
         self.versionSelectorLayout.addWidget(self.versionSelector)
@@ -65,21 +65,24 @@ class MainLayout(QtWidgets.QWidget, ui_fileBrowserOpen.Ui_Form):
             self.previewInfo = previewInfo.PreviewInfo(self)
             self.previewInfoLayout.addWidget(self.previewInfo)
 
-        self.envFilter.signalSetUser.connect(self.versionSelector.slotSetFilterTagValue)
+        self.envFilter.signalSetUser.connect(self.versionSelector.slotSetUserFilterValue)
         self.envFilter.signalSetDepartment.connect(self.fileSelector.slotSetFilterTagValue)
         self.envFilter.signalSetTagStart.connect(self.pathEdit.slotSetTagStart)
         self.envFilter.signalSetTag.connect(self.pathEdit.slotSetTag)
         self.envFilter.signalSetTagEnd.connect(self.pathEdit.slotSetTagEnd)
+
         self.fileSelector.signalSetTagStart.connect(self.pathEdit.slotSetTagStart)
         self.fileSelector.signalSetTag.connect(self.pathEdit.slotSetTag)
         self.fileSelector.signalSetTagEnd.connect(self.pathEdit.slotSetTagEnd)
         # self.fileSelector.signalSetFileName.connect(self.versionSelector.???)
+
         self.versionSelector.signalSetTagStart.connect(self.pathEdit.slotSetTagStart)
         self.versionSelector.signalSetTag.connect(self.pathEdit.slotSetTag)
         self.versionSelector.signalSetTagEnd.connect(self.pathEdit.slotSetTagEnd)
         # self.versionSelector.signalSetVersion.connect(self.pathEdit.slotSetVersion)
-        self.pathEdit.signalPathUpdated.connect(self.versionSelector.slotSetPathData)
+
         self.pathEdit.signalPathUpdated.connect(self.fileSelector.slotSetPathData)
+        self.pathEdit.signalPathUpdated.connect(self.versionSelector.slotSetPathData)
 
         self.buttonBox.rejected.connect(self.rejected)
         self.buttonBox.accepted.connect(self.accepted)
