@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>27</height>
+    <height>31</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,8 +38,8 @@
        <property name="text">
         <string/>
        </property>
-       <property name="placeholderText">
-        <string>File Path...</string>
+       <property name="placeholderText" stdset="0">
+        <string/>
        </property>
       </widget>
      </item>

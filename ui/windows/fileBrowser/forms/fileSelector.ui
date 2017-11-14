@@ -96,8 +96,8 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="placeholderText">
-        <string>Filter...</string>
+       <property name="placeholderText" stdset="0">
+        <string/>
        </property>
       </widget>
      </item>
@@ -115,6 +115,9 @@
          <height>0</height>
         </size>
        </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
        <attribute name="headerVisible">
         <bool>false</bool>
        </attribute>
