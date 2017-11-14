@@ -17,6 +17,7 @@ import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
+import qtLearn.uiModels
 import qtLearn.nodes as nodes
 import qtLearn.uiUtils as uiUtils
 import qtLearn.windows.fileBrowser.forms.ui_fileSelector as ui_fileSelector
@@ -33,7 +34,7 @@ class FileNode(nodes.Node):
                  checkable=False,
                  neverHasChildren=False):
         if icon is None:
-            icon = QtGui.QIcon(QtGui.QPixmap(':/File.png'))
+            icon = ':/File.png'
         super(FileNode, self).__init__(name,
                                        parent=parent,
                                        data=data,
@@ -49,7 +50,7 @@ class DeptNode(nodes.Node):
     def __init__(self, name,
                  parent=None,
                  data=None):
-        icon = QtGui.QIcon(QtGui.QPixmap(':/Department.png'))
+        icon = ':/Department.png'
         super(DeptNode, self).__init__(name,
                                        parent=parent,
                                        data=data,
@@ -63,7 +64,7 @@ class TaskNode(nodes.Node):
     def __init__(self, name,
                  parent=None,
                  data=None):
-        icon = QtGui.QIcon(QtGui.QPixmap(':/Task.png'))
+        icon = ':/Task.png'
         super(TaskNode, self).__init__(name,
                                        parent=parent,
                                        data=data,
@@ -77,7 +78,7 @@ class FileNameNode(nodes.Node):
     def __init__(self, name,
                  parent=None,
                  data=None):
-        icon = QtGui.QIcon(QtGui.QPixmap(':/FileName.png'))
+        icon = ':/FileName.png'
         super(FileNameNode, self).__init__(name,
                                            parent=parent,
                                            icon=icon,
@@ -87,18 +88,18 @@ class FileNameNode(nodes.Node):
         self.typeInfo = 'filename'
 
 
-class FileModel(nodes.ItemModel):
+class FileModel(qtLearn.uiModels.ItemModel):
     def __init__(self, root, font=None):
-        super(FileModel, self).__init__(root, font=font)
-        self._rootNode = root
         self._column_names = {
             0: 'Name',
         }
         self._node_attr_key = {
             'Name': 'name',
         }
+        super(FileModel, self).__init__(root, font=font)
 
-class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
+
+class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form, uiUtils.QtInfoMixin):
     signalSetTagStart = QtCore.Signal()
     signalSetTag = QtCore.Signal(str, str)
     signalSetTagEnd = QtCore.Signal()
@@ -139,13 +140,15 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
 
         if withSearchLine is True:
             self.searchLineEdit.show()
+            if self.qtEqualOrAbove_4_7_X():
+                self.searchLineEdit.setPlaceholderText("Filter...")
         else:
             self.searchLineEdit.hide()
 
         self.rootNode = self.getFileNodes()
         self.fileModel = FileModel(self.rootNode, font=self.font)
 
-        self.fileFilterModel = nodes.SortFilterProxyModel()
+        self.fileFilterModel = qtLearn.uiModels.SortFilterProxyModel()
         self.fileFilterModel.setSourceModel(self.fileModel)
         self.fileFilterModel.setDynamicSortFilter(True)
         self.fileFilterModel.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
@@ -363,7 +366,6 @@ class FileSelector(QtWidgets.QWidget, ui_fileSelector.Ui_Form):
 
     @QtCore.Slot(dict)
     def slotSetPathData(self, tags):
-        # print('FileSelector slotSetPathData', tags)
         if not isinstance(tags, dict):
             return
         self._data.update(**tags)

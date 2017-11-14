@@ -10,7 +10,6 @@ import qtLearn.uiUtils as uiUtils
 import qtLearn.windows.fileBrowser.forms.ui_pathEdit as ui_pathEdit
 
 
-
 def computeToolTip(pth, pathFormat, tags):
     assert isinstance(pth, paths.Path)
     assert isinstance(pathFormat, paths.PathFormat)
@@ -32,7 +31,7 @@ def computeToolTip(pth, pathFormat, tags):
     return tooltip.strip()
 
 
-class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
+class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form, uiUtils.QtInfoMixin):
     signalPathUpdated = QtCore.Signal(dict)
 
     def __init__(self, parent, pathFormat=None):
@@ -52,7 +51,7 @@ class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
         self.lineEdit.setFont(self.font)
         self.lineEdit.setText(self._pathFormat)
 
-        # self.lineEdit.textEdited.connect(self.slotPathTextUpdated)
+        self.lineEdit.textEdited.connect(self.slotPathTextUpdated)
 
     ############################################################################
 
@@ -113,18 +112,21 @@ class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
         self._tagChanged = {}
         return
 
-    # @QtCore.Slot(str)
-    # def slotPathTextUpdated(self, text):
-    #     # print('PathEdit slotPathTextUpdated 1', text)
-    #     fmt = paths.PathFormat(self.pathFormat())
-    #     pth = paths.Path(text, format=fmt)
-    #     path = pth.getPath(showMissingKeys=True)
-    #     pos = self.lineEdit.cursorPosition()
-    #     self.lineEdit.setText(path)
-    #     self.lineEdit.setCursorPosition(pos)
-    #     # print('PathEdit slotPathTextUpdated 2', path)
-    #     # self.updatePathText()
-    #     return
+    @QtCore.Slot(str)
+    def slotPathTextUpdated(self, text):
+        print('PathEdit slotPathTextUpdated', text)
+        fmt = paths.PathFormat(self.pathFormat())
+        pth = paths.Path(text, format=fmt)
+        path = pth.getPath(showMissingKeys=True)
+        print('slotPathTextUpdated path:', path)
+
+        # pos = self.lineEdit.cursorPosition()
+        # self.lineEdit.setText(path)
+        # self.lineEdit.setCursorPosition(pos)
+
+        # print('PathEdit slotPathTextUpdated 2', path)
+        # self.updatePathText()
+        return
 
     ############################################################################
 
@@ -147,6 +149,7 @@ class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
 
         # print('PathEdit updatePathText last index:', index)
         # print('PathEdit updatePathText tagChanged:', self._tagChanged)
+
         if index < 0:
             return
 
@@ -159,14 +162,18 @@ class PathEdit(QtWidgets.QWidget, ui_pathEdit.Ui_Form):
         tooltip = computeToolTip(pth, fmt, tagData)
 
         path = pth.getPath(showMissingKeys=True)
+
         # print('PathEdit updatePathText path:', path)
         # print('PathEdit updatePathText path tags:', pth.getTags())
         # print('PathEdit updatePathText path tag values:', pth.getTagValuesOrdered())
         # print('PathEdit updatePathText path tag keys:', pth.getTagKeysOrdered())
+
         self.lineEdit.setText(path)
         self.lineEdit.setToolTip(tooltip)
+        if self.qtEqualOrAbove_4_7_X():
+            self.lineEdit.setPlaceholderText("File Path...")
 
         # tagData['path'] = path
         # tagData['tooltip'] = tooltip
         self.signalPathUpdated.emit(tagData)
-        print('PathEdit updatePathText path:', repr(path), tagData)
+        # print('PathEdit updatePathText path:', repr(path), tagData)

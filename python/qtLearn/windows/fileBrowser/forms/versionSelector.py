@@ -8,6 +8,7 @@ import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
 
+import qtLearn.uiModels
 import qtLearn.nodes as nodes
 import qtLearn.paths as paths
 import qtLearn.uiUtils as uiUtils
@@ -25,7 +26,7 @@ class VersionNode(nodes.Node):
                  checkable=False,
                  neverHasChildren=False):
         if icon is None:
-            icon = QtGui.QIcon(QtGui.QPixmap(':/Version.png'))
+            icon = ':/Version.png'
         super(VersionNode, self).__init__(name,
                                           data=data,
                                           parent=parent,
@@ -40,7 +41,7 @@ class VersionNode(nodes.Node):
 
 class MajorVersionNode(VersionNode):
     def __init__(self, name, data=None, parent=None):
-        icon = QtGui.QIcon(QtGui.QPixmap(':/MajorVersion.png'))
+        icon = ':/MajorVersion.png'
         super(MajorVersionNode, self).__init__(name,
                                                data=data,
                                                parent=parent,
@@ -52,7 +53,7 @@ class MajorVersionNode(VersionNode):
 
 class MinorVersionNode(VersionNode):
     def __init__(self, name, user, desc, data=None, parent=None):
-        icon = QtGui.QIcon(QtGui.QPixmap(':/MinorVersion.png'))
+        icon = ':/MinorVersion.png'
         super(MinorVersionNode, self).__init__(name,
                                                data=data,
                                                parent=parent,
@@ -73,7 +74,7 @@ class MinorVersionNode(VersionNode):
         return self._data['ext']
 
 
-class VersionModel(nodes.ItemModel):
+class VersionModel(qtLearn.uiModels.ItemModel):
     def __init__(self, root, font=None):
         super(VersionModel, self).__init__(root, font=font)
         self._column_names = {
@@ -137,7 +138,7 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
         rootNode = nodes.Node('root', data=self._path)
         self.versionModel = VersionModel(rootNode, font=self.font)
 
-        self.versionFilterModel = nodes.SortFilterProxyModel()
+        self.versionFilterModel = qtLearn.uiModels.SortFilterProxyModel()
         self.versionFilterModel.setSourceModel(self.versionModel)
         self.versionFilterModel.setDynamicSortFilter(True)
         self.versionFilterModel.setFilterCaseSensitivity(QtCore.Qt.CaseInsensitive)
@@ -153,6 +154,7 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
         self.selectionModel.currentChanged.connect(self.slotCurrentChanged)
 
         self.fileFormatComboBox.currentIndexChanged.connect(self.slotFileFormatFilterChanged)
+        # self.fileFormatComboBox.currentIndexChanged.connect(self.slotSetFilterTagValue)
 
     ############################################################################
 
@@ -321,7 +323,7 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
         self.treeView.expandAll()
 
     @QtCore.Slot(str)
-    def slotSetFilterTagValue(self, value):
+    def slotSetUserFilterValue(self, value):
         # print('VersionSelector slotSetFilterTagValue', value)
         self.versionFilterModel.setFilterTagValue(value)
         self.treeView.expandAll()
@@ -331,17 +333,23 @@ class VersionSelector(QtWidgets.QWidget, ui_versionSelector.Ui_Form):
         # print('VersionSelector slotSetPathData tags:', tags)
         if not isinstance(tags, dict):
             return
-        allowedTagKeys = ['project', 'sequence', 'shot', 'name', 'task', 'department']
-        for key in tags.copy().keys():
-            if key not in allowedTagKeys:
-                tags.pop(key)
-        self._data.update(**tags)
+        allowedTagKeys = [
+            'project', 'sequence', 'shot',
+            'name', 'task', 'department'
+        ]
+        for key in tags.keys():
+            if key in allowedTagKeys:
+                self._data[key] = tags.get(key)
+            else:
+                if key in self._data:
+                    self._data.pop(key)
         # print('VersionSelector slotSetPathData changed:', self._data)
         rootNode = self.getVersionNodes()
         self.versionModel.setRootNode(rootNode)
         self.treeView.expandAll()
         return
 
+    @QtCore.Slot(QtCore.QModelIndex, QtCore.QModelIndex)
     def slotCurrentChanged(self, index, prevIndex):
         # print('VersionSelector currentChanged START')
 

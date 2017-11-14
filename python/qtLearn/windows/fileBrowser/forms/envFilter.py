@@ -108,7 +108,7 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
 
     @QtCore.Slot(int)
     def slotDepartmentChanged(self, index):
-        dept = self.departmentComboBox.currentText()
+        dept = self.departmentComboBox.currentText() or ''
         dept = dept.lower()
         if not dept.isalpha():
             dept = None
@@ -118,7 +118,7 @@ class EnvFilter(QtWidgets.QWidget, ui_envFilter.Ui_Form):
 
     @QtCore.Slot(int)
     def slotUserChanged(self, index):
-        user = self.userComboBox.currentText()
+        user = self.userComboBox.currentText() or ''
         user = user.lower()
         if not user.isalpha():
             if 'current' in user:
