@@ -2,10 +2,6 @@
 Defines a basic node class able to be used for tree data models.
 """
 
-import Qt.QtCore as QtCore
-import Qt.QtGui as QtGui
-import Qt.QtWidgets as QtWidgets
-
 
 class Node(object):
     def __init__(self, name,
@@ -20,7 +16,7 @@ class Node(object):
                  checkable=False,
                  neverHasChildren=False):
         if icon is None:
-            icon = QtGui.QIcon(QtGui.QPixmap(':/Node.png'))
+            icon = ':/Node.png'
         self._children = []
         self._parent = parent
 
@@ -37,7 +33,8 @@ class Node(object):
         self._selectable = selectable
         self._neverHasChildren = neverHasChildren
 
-        self._icon = icon
+        self._iconPath = icon
+        self._icon = None
         self.typeInfo = 'node'
         if parent is not None:
             parent.addChild(self)
@@ -97,13 +94,17 @@ class Node(object):
         self._selectable = value
 
     def neverHasChildren(self):
-        """Optimisation, only turn this to True if this is surely the last child"""
+        """Optimisation, only set True if this is surely the last child node."""
         return self._neverHasChildren
 
     def setNeverHasChildren(self, value):
         self._neverHasChildren = value
 
     def icon(self):
+        assert isinstance(self._iconPath, str)
+        if self._icon is None:
+            import qtLearn.uiUtils as uiUtils
+            self._icon = uiUtils.getIcon(self._iconPath)
         return self._icon
 
     def addChild(self, child):
@@ -124,36 +125,17 @@ class Node(object):
         return True
 
     def child(self, row):
-        return self._children[row]
+        result = self._children[row]
+        return result
 
     def childCount(self):
         return len(self._children)
 
-    def childTags(self):
-        # TODO: Clean up this function and make a more efficient way of
-        # generating these tags.
-        result = ''
+    def children(self):
+        nodes = []
         for i in range(self.childCount()):
-            node = self.child(i)
-            if node.childCount() == 0:
-                result += '|' + node.name()
-            else:
-                result += '|' + node.childTags()
-        return result
-
-    def allTags(self):
-        # TODO: Clean up this function and make a more efficient way of
-        # generating these tags.
-        result = self.name()
-        result += self.childTags()
-
-        node = self.parent()
-        while node:
-            node = node.parent()
-            # Allows us to skip the root node.
-            if node is not None:
-                result += '|' + node.name()
-        return result
+            nodes.append(self.child(i))
+        return nodes
 
     def parent(self):
         return self._parent
@@ -161,226 +143,54 @@ class Node(object):
     def row(self):
         if self._parent is not None:
             return self._parent._children.index(self)
-        return
+        return 0
 
+    def parentTags(self):
+        """
+        Get list of names for all nodes above the current node.
 
-class ItemModel(QtCore.QAbstractItemModel):
-    def __init__(self, rootNode, font=None):
-        super(ItemModel, self).__init__()
-        self._rootNode = None
-        self._column_names = {
-            0: 'Column',
-        }
-        self._node_attr_key = {
-            'Column': 'name',
-        }
-
-        self._font = font
-
-        self.setRootNode(rootNode)
-
-    def rootNode(self):
-        return self._rootNode
-
-    def setRootNode(self, rootNode):
-        super(ItemModel, self).beginResetModel()
-        self._rootNode = rootNode
-        super(ItemModel, self).endResetModel()
-
-        topLeft = self.createIndex(0, 0)
-        self.dataChanged.emit(topLeft, topLeft)
-
-    def columnCount(self, parent):
-        return len(self._column_names.keys())
-
-    def rowCount(self, parent):
-        if not parent.isValid():
-            parentNode = self._rootNode
-        else:
-            parentNode = parent.internalPointer()
-        return parentNode.childCount()
-
-    def data(self, index, role):
-        if not index.isValid():
-            return None
-        node = index.internalPointer()
-
-        if role == QtCore.Qt.DisplayRole or role == QtCore.Qt.EditRole:
-            column_index = index.column()
-            if column_index not in self._column_names:
-                msg = '{0} was not in {1}'.format(column_index, self._column_names)
-                raise ValueError(msg)
-            column_name = self._column_names[column_index]
-            if column_name not in self._node_attr_key:
-                msg = '{0} was not in {1}'.format(column_name, self._node_attr_key)
-                raise ValueError(msg)
-            attr_name = self._node_attr_key[column_name]
-            value = getattr(node, attr_name, None)
-            if value is not None:
-                value = value()
-            return value
-
-        if role == QtCore.Qt.DecorationRole:
-            # TODO: Can we refactor this similar to the DisplayRole above?
-            if index.column() == 0:
-                return node.icon()
-
-        if role == QtCore.Qt.ToolTipRole:
-            return node.toolTip()
-
-        if role == QtCore.Qt.StatusTipRole:
-            return node.statusTip()
-
-        if role == QtCore.Qt.FontRole:
-            if self._font is not None:
-                return self._font
-
-    def setData(self, index, value, role=QtCore.Qt.EditRole):
-        if index.isValid():
-            node = index.internalPointer()
-            if not node.editable():
-                return False
-            if role == QtCore.Qt.EditRole:
-                node.setName(value)
-            self.dataChanged.emit(index, index, [role])
-            return True
-        return False
-
-    def headerData(self, section, orientation, role):
-        if role == QtCore.Qt.DisplayRole:
-            return self._column_names.get(section, 'Column')
-
-    def flags(self, index):
-        v = QtCore.Qt.NoItemFlags
-        node = index.internalPointer()
-        if node.enabled():
-            v = v | QtCore.Qt.ItemIsEnabled
-        if node.checkable():
-            v = v | QtCore.Qt.ItemIsUserCheckable
-        if node.neverHasChildren():
-            v = v | QtCore.Qt.ItemNeverHasChildren
-        if node.selectable():
-            v = v | QtCore.Qt.ItemIsSelectable
-        if node.editable():
-            v = v | QtCore.Qt.ItemIsEditable
-        return v
-
-    def parent(self, index):
-        node = self.getNode(index)  # index.internalPointer()
-        if node is None:
-            return QtCore.QModelIndex()
-        parentNode = node.parent()
-        if parentNode == self._rootNode:
-            return QtCore.QModelIndex()
-        if parentNode is None:
-            return QtCore.QModelIndex()
-        row = parentNode.row()
-        return self.createIndex(row, 0, parentNode)
-
-    def index(self, row, column, parent):
-        parentNode = self.getNode(parent)
-        childItem = parentNode.child(row)
-        if childItem:
-            return self.createIndex(row, column, childItem)
-        return QtCore.QModelIndex()
-
-    def getNode(self, index):
-        node = None
-        if index.isValid():
-            node = index.internalPointer()
+        :return: list of strs
+        """
+        tags = []
+        node = self
+        while node:
+            # Allows us to skip the root node.
             if node is not None:
-                return node
-        return self._rootNode
+                tags.append(node.name())
+                node = node.parent()
+        return tags
 
-    def insertRows(self, position, rows, parent=QtCore.QModelIndex()):
-        parentNode = self.getNode(parent)
-        self.beginInsertRows(parent, position, position + rows - 1)
-        success = None
-        for row in range(rows):
-            childCount = parentNode.childCount()
-            childNode = Node("untitled" + str(childCount))
-            success = parentNode.insertChild(position, childNode)
-        self.endInsertRows()
-        return success
+    def childrenTags(self):
+        """
+        Get list of names for nodes below the current node.
 
-    def removeRows(self, position, rows, parent=QtCore.QModelIndex()):
-        parentNode = self.getNode(parent)
-        self.beginRemoveRows(parent, position, position + rows - 1)
-        success = None
-        for row in range(rows):
-            success = parentNode.removeChild(position)
-        self.endRemoveRows()
-        return success
+        :return: list of strs
+        """
+        tags = []
+        node = self
+        if node.childCount() > 0:
+            children = node.children()
+            for child in children:
+                tags.append(child.name())
+                tags += child.childrenTags()
+        return tags
 
+    def allTags(self):
+        """
+        Get list of names for nodes above and below the current node.
 
-class SortFilterProxyModel(QtCore.QSortFilterProxyModel):
-    def __init__(self):
-        super(SortFilterProxyModel, self).__init__()
-        self._filterTagName = ''
-        self._filterTagValue = ''
-        self._filterTagNodeType = ''
-        # TODO: Support multiple named tags for filtering, currently only supports 1.
+        :return: list of strs
+        """
+        parent_tags = self.parentTags()
+        children_tags = self.childrenTags()
 
-    ############################################################################
-
-    def filterTagName(self):
-        return self._filterTagName
-
-    def setFilterTagName(self, value):
-        # print('setFilterTagName:', repr(value))
-        self._filterTagName = value
-        self.invalidateFilter()
-
-    def filterTagValue(self):
-        return self._filterTagValue
-
-    def setFilterTagValue(self, value):
-        # print('setFilterTagValue:', repr(value))
-        self._filterTagValue = value
-        self.invalidateFilter()
-
-    def filterTagNodeType(self):
-        return self._filterTagNodeType
-
-    def setFilterTagNodeType(self, value):
-        # print('setFilterTagNodeType:', repr(value))
-        self._filterTagNodeType = value
-        self.invalidateFilter()
-
-    ############################################################################
-
-    def filterAcceptsRow(self, sourceRow, sourceParent):
-        result = False
-        srcModel = self.sourceModel()
-        column = self.filterKeyColumn()
-        if column < 0:
-            column = 0
-        index = srcModel.index(sourceRow, column, sourceParent)
-        node = index.internalPointer()
-
-        tagName = self.filterTagName()
-        if tagName is None or len(tagName) == 0:
-            return True
-
-        filterNodeType = self.filterTagNodeType()
-        typeInfo = node.typeInfo
-
-        if filterNodeType is None or typeInfo == filterNodeType:
-            tagValue = self.filterTagValue()
-            nodeData = node.data()
-            nodeDataValue = nodeData.get(tagName)
-            if tagValue is None or len(tagValue) == 0:
-                result = True
-            elif nodeDataValue == tagValue:
-                result = True
-            else:
-                result = False
-        else:
-            pattern = self.filterRegExp().pattern()
-            if len(pattern) == 0:
-                result = True
-            else:
-                path = node.allTags()
-                if pattern in path:
-                    result = True
+        result = []
+        result += parent_tags
+        result += children_tags
         return result
+
+    def allTagsStr(self):
+        result = self.allTags()
+        result = '|'.join(result)
+        return result
+

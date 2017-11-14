@@ -4,7 +4,7 @@
 
 import sys
 
-import Qt # __version__, __binding__, __qt_version__, __binding_version__
+import Qt
 import Qt.QtCore as QtCore
 import Qt.QtGui as QtGui
 import Qt.QtWidgets as QtWidgets
@@ -83,7 +83,8 @@ def getFont(name=None):
         font.setPointSize(12)
 
     if 'monospace' in name:
-        font.setStyleHint(QtGui.QFont.Monospace)
+        if 'monospace' in QtGui.QFont.__dict__:
+            font.setStyleHint(QtGui.QFont.Monospace)
 
     if 'bold' in name:
         font.setBold(True)
@@ -93,7 +94,57 @@ def getFont(name=None):
     return font
 
 
+def getIcon(path):
+    assert isinstance(path, str)
+    icon = QtGui.QIcon(QtGui.QPixmap(path))
+    return icon
+
+
 def setWindowWidthHeight(ui, widthHeight):
     pos = ui.pos()
     ui.setGeometry(pos.x(), pos.y(), widthHeight[0], widthHeight[1])
     return None
+
+
+class QtInfoMixin(object):
+    def __init__(self):
+        super(QtInfoMixin, self).__init__()
+        self.qtInitVersion()
+
+    def qtInitVersion(self):
+        # Save the Qt version number
+        qt_ver = Qt.__qt_version__.split('.')
+        self.qt_ver = qt_ver
+
+        assert len(qt_ver) == 3
+        self.qt_ver_major = int(self.qt_ver[0])
+        self.qt_ver_minor = int(self.qt_ver[1])
+        self.qt_ver_patch = int(self.qt_ver[2])
+        return qt_ver
+
+    def qtAboveVersion(self, major, minor, patch):
+        self.qtInitVersion()
+        return (self.qt_ver_major >= major and
+                self.qt_ver_minor >= minor and
+                self.qt_ver_patch >= patch)
+
+    def qtEqualOrAbove_4_6_X(self):
+        self.qtInitVersion()
+        return self.qt_ver_major == 4 and self.qt_ver_minor >= 6
+
+    def qtEqualOrAbove_4_7_X(self):
+        self.qtInitVersion()
+        return self.qt_ver_major == 4 and self.qt_ver_minor >= 7
+
+    def qtEqualOrAbove_4_8_X(self):
+        self.qtInitVersion()
+        return self.qt_ver_major == 4 and self.qt_ver_minor >= 8
+
+    def qtEqual_4_X_X(self):
+        self.qtInitVersion()
+        return self.qt_ver_major == 4
+
+    def qtEqual_5_X_X(self):
+        self.qtInitVersion()
+        return self.qt_ver_major == 5
+

@@ -85,7 +85,10 @@ class PathFormat(object):
 
 
 class Path(object):
-    def __init__(self, *args, path=None, tags=None, format=None, **kwargs):
+    def __init__(self, *args, **kwargs):
+        path = kwargs.get('path')
+        tags = kwargs.get('tags')
+        format = kwargs.get('format')
         arg = None
         if len(args) == 1:
             arg = args[0]
@@ -136,7 +139,6 @@ class Path(object):
                 result = result.replace(k, value)
         elif showMissingKeys is False:
             for key in keys:
-                # if key in tags:
                 value = tags.get(key)
                 k = '{' + key + '}'
                 if value is None:
@@ -158,7 +160,6 @@ class Path(object):
             result = result[:index]
         else:
             raise ValueError
-
         return result
 
     @classmethod

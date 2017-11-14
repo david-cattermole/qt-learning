@@ -37,6 +37,7 @@ if __name__ == '__main__':
 
     # Put all test module imports here.
     import test_paths
+    import test_nodes
 
     func = None
     msg = ''
