@@ -1,28 +1,29 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'P:\qt-learning\ui\windows\reparent\forms\getNodes.ui'
+# Form implementation generated from reading ui file '/data/Public/qt-learning/ui/windows/reparent/forms/getNodes.ui'
 #
-# Created by: PyQt5 UI code generator 5.9
+# Created: Tue Nov 14 18:49:58 2017
+#      by: PyQt4 UI code generator 4.6.2
 #
 # WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt4 import QtCore, QtGui
 
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(395, 46)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Form)
+        self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.childNodesLayout = QtWidgets.QHBoxLayout()
+        self.childNodesLayout = QtGui.QHBoxLayout()
         self.childNodesLayout.setObjectName("childNodesLayout")
-        self.childNodesLabel = QtWidgets.QLabel(Form)
+        self.childNodesLabel = QtGui.QLabel(Form)
         self.childNodesLabel.setObjectName("childNodesLabel")
         self.childNodesLayout.addWidget(self.childNodesLabel)
         self.verticalLayout.addLayout(self.childNodesLayout)
-        self.parentNodeLayout = QtWidgets.QHBoxLayout()
+        self.parentNodeLayout = QtGui.QHBoxLayout()
         self.parentNodeLayout.setObjectName("parentNodeLayout")
-        self.parentNodeLabel = QtWidgets.QLabel(Form)
+        self.parentNodeLabel = QtGui.QLabel(Form)
         self.parentNodeLabel.setObjectName("parentNodeLabel")
         self.parentNodeLayout.addWidget(self.parentNodeLabel)
         self.verticalLayout.addLayout(self.parentNodeLayout)
@@ -31,8 +32,7 @@ class Ui_Form(object):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
-        self.childNodesLabel.setText(_translate("Form", "Children"))
-        self.parentNodeLabel.setText(_translate("Form", "Parent"))
+        Form.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
+        self.childNodesLabel.setText(QtGui.QApplication.translate("Form", "Children", None, QtGui.QApplication.UnicodeUTF8))
+        self.parentNodeLabel.setText(QtGui.QApplication.translate("Form", "Parent", None, QtGui.QApplication.UnicodeUTF8))
 
