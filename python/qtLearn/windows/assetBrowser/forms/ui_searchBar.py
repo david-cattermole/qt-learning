@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/data/Public/qt-learning/ui/windows/assetBrowser/forms/searchBar.ui'
 #
-# Created: Tue Nov 14 18:49:58 2017
+# Created: Tue Nov 14 19:29:10 2017
 #      by: PyQt4 UI code generator 4.6.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PyQt4 import QtCore, QtGui
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(514, 20)
+        Form.resize(773, 35)
         self.horizontalLayout = QtGui.QHBoxLayout(Form)
         self.horizontalLayout.setSpacing(3)
         self.horizontalLayout.setMargin(0)
@@ -69,6 +69,5 @@ class Ui_Form(object):
         self.userFilterComboBox.setItemText(1, QtGui.QApplication.translate("Form", "All Users", None, QtGui.QApplication.UnicodeUTF8))
         self.userFilterComboBox.setItemText(2, QtGui.QApplication.translate("Form", "Upstream Users", None, QtGui.QApplication.UnicodeUTF8))
         self.userFilterComboBox.setItemText(3, QtGui.QApplication.translate("Form", "Dowstream Users", None, QtGui.QApplication.UnicodeUTF8))
-        self.searchText.setPlaceholderText(QtGui.QApplication.translate("Form", "Search Text Here", None, QtGui.QApplication.UnicodeUTF8))
         self.clearButton.setText(QtGui.QApplication.translate("Form", "Clear", None, QtGui.QApplication.UnicodeUTF8))
 

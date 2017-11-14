@@ -108,13 +108,17 @@ class KeyvalueView(QtWidgets.QWidget, ui_keyvalueView.Ui_Form):
         self.setupUi(self)
 
 
-class AssetBrowserLayout(QtWidgets.QWidget, ui_assetBrowser.Ui_Form):
+class AssetBrowserLayout(QtWidgets.QWidget,
+                         ui_assetBrowser.Ui_Form,
+                         uiUtils.QtInfoMixin):
     def __init__(self, parent):
         super(AssetBrowserLayout, self).__init__()
         self.setupUi(self)
 
         self.searchBarForm = SearchBar()
         self.searchBarLayout.addWidget(self.searchBarForm)
+        if self.qtEqualOrAbove_4_7_X():
+            self.searchBarForm.searchText.setPlaceholderText("Search Text Here")
 
         self.searchCustomFrame.hide()
         self.searchTagFinderForm = SearchTagFinder()
@@ -126,6 +130,8 @@ class AssetBrowserLayout(QtWidgets.QWidget, ui_assetBrowser.Ui_Form):
         self.searchCustomLayout.addWidget(self.searchCustomFieldForm)
 
         self.assetListViewForm = AssetListView()
+        # self.assetListViewForm.assetTableWidget.hide()
+        self.assetListViewForm.assetListWidget.hide()
         self.assetListViewLayout.addWidget(self.assetListViewForm)
 
         self.assetActionsForm = AssetActions()

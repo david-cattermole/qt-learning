@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file '/data/Public/qt-learning/ui/windows/assetBrowser/forms/assetInfoView.ui'
 #
-# Created: Tue Nov 14 18:49:57 2017
+# Created: Tue Nov 14 19:29:10 2017
 #      by: PyQt4 UI code generator 4.6.2
 #
 # WARNING! All changes made in this file will be lost!
