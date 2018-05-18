@@ -16,16 +16,50 @@ Dependencies:
 Optional Dependencies:
 - Autodesk Maya
 
-Run this:
+To install, run this:
 ```commandline
-$ # run this. 
+$ cd <project root> 
+
+$ su
+# Enter password here.
+
+$ python setup.py install
+``` 
+
+Or, if you have virtualenv installed:
+```commandline
+$ cd <project root> 
+
+$ mkdir virtenv
+
+$ virtualenv virtenv
+
+$ virtenv/bin
+
+$ source activate
+
+$ cd ../..
+
+$ pip install Qt.py
+
+$ pip install python-pyqt5
+
+# Optional, required for running tests only.
+$ pip install coverage
+
+$ python setup.py install
+
+# Use package as needed.
+
+# Clean up when you're done.
+$ deactivate
 ``` 
 
 # Usage and Testing
 
 Here is an example usage:
 ```commandline
-$ # run this. 
+$ python runStandalone.py
 ```
 
 Or if you'd like to use the widgets inside your own UIs, try this:
@@ -34,6 +68,9 @@ Or if you'd like to use the widgets inside your own UIs, try this:
 ```
 
 To open all the UIs in this project for testing, run the following command:
+```commandline
+$ python runStandalone.py
+```
 
 
 # Development
